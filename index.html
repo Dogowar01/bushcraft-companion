@@ -1211,7 +1211,53 @@ const PLANTS = [
    eat:['Ripe fruit of this species dries on the bush to a raisin-like morsel','Strong caramel/tamarillo flavour; ground as "kutjera" spice','Eaten dried rather than green'],
    id_notes:'Small greyish desert shrub; purple star flowers; yellow-brown fruit that dries on the plant.',
    caution:'DANGER: many Solanum (nightshade) relatives — including unripe/green fruit of some bush tomatoes and lookalikes such as Solanum quadriloculatum — are TOXIC. Only eat correctly identified S. centrale, fully ripe/dried. If unsure, do NOT eat.',
-   content:'A central-desert staple (kutjera) with an intense flavour, but the single most important bush food to get identification right on, given its toxic relatives.'}
+   content:'A central-desert staple (kutjera) with an intense flavour, but the single most important bush food to get identification right on, given its toxic relatives.'},
+
+  /* ---- FUNGI / MUSHROOMS ---- */
+  {id:'plant-mushroom-deathcap',name:'Death Cap',sci:'Amanita phalloides',states:['ACT','NSW','VIC','SA','WA','TAS'],
+   summary:'The world\'s most deadly mushroom — responsible for 90% of fatal mushroom poisonings globally.',
+   toxic:true,
+   eat:['DEADLY — even a small bite can be fatal','The toxin (amatoxin) survives cooking, drying and freezing — preparation does not make it safe','Symptoms delayed 6–24 hours; organ failure typically develops within days'],
+   id_notes:'Cap pale yellow-green to olive, 5–15cm across. Gills WHITE and free, not attached to stipe. Stipe white with a skirt-like ring (annulus) and a distinctive cup (volva) at the base — often buried in soil. Spore print white. Found under introduced oaks, elms and exotic trees, particularly in the ACT/Canberra, Melbourne suburbs and Adelaide hills.',
+   caution:'DEADLY POISONOUS. Responsible for multiple deaths in Australia. Easily confused with paddy straw mushrooms (Volvariella volvacea) by Southeast Asian communities unfamiliar with it. If you suspect ingestion, call Poisons Information Centre 13 11 26 immediately — do not wait for symptoms to appear.',
+   content:'Introduced to Australia with its European host trees. The amatoxins destroy the liver and kidneys. There is a characteristic pattern: severe nausea 6–24 hours after eating, then a deceptive recovery period, then catastrophic organ failure. By the time the second wave hits, the damage is often irreversible. The single most important mushroom to know in Australia.'},
+
+  {id:'plant-mushroom-ghost',name:'Ghost Fungus',sci:'Omphalotus nidiformis',states:['QLD','NSW','VIC','SA','WA','TAS'],
+   summary:'Native Australian fungus that glows green in the dark — beautiful but toxic.',
+   toxic:true,
+   eat:['TOXIC — causes severe vomiting and stomach cramps within an hour of eating','Sometimes mistaken for oyster mushrooms (Pleurotus ostreatus) — do NOT eat','The bioluminescent glow is not a sign of safety — it marks the toxic illudin compounds'],
+   id_notes:'Fan- or funnel-shaped cap, creamy white to pale grey-brown, up to 30cm across. Gills WHITE, run down the stipe (decurrent), and GLOW GREEN in complete darkness — a unique feature. Grows in clusters at the base of dead or dying hardwood, especially eucalyptus. Found in sclerophyll forest and woodland across Australia.',
+   caution:'TOXIC. Symptoms — violent vomiting and cramps — typically begin within an hour of eating. Commonly confused with the edible oyster mushroom (Pleurotus), which has a similar shape but grows on different substrates and does not glow. If in doubt, do not eat. Call 13 11 26 if ingested.',
+   content:'One of the most striking fungi in Australia. The bioluminescence is produced by the same illudin compounds responsible for the toxicity. While not typically lethal, ingestion causes very severe and prolonged gastrointestinal distress. A beautiful thing to see in the dark — not to eat.'},
+
+  {id:'plant-mushroom-flyagaric',name:'Fly Agaric',sci:'Amanita muscaria',states:['VIC','NSW','ACT','SA','TAS','WA'],
+   summary:'The iconic red cap with white spots — toxic and psychoactive, found in pine plantations.',
+   toxic:true,
+   eat:['TOXIC — causes nausea, hallucinations, confusion and in large doses can be fatal','Contains ibotenic acid and muscimol; neither cooking nor drying eliminates the toxicity','Do not eat under any circumstances in a field/survival context'],
+   id_notes:'Unmistakable: bright scarlet to orange-red cap, 8–20cm, dotted with white "warts" (remnants of the universal veil — can wash off in rain). Gills WHITE and free. Stipe white with a ring and bulbous base (volva). Found only under introduced pines and birches — mainly in plantation areas of southeast Australia and Tasmania.',
+   caution:'TOXIC. The white wart spots can wash off in rain, and colour fades in age. Found wherever pine plantations exist — these are the same forests where Saffron Milk Caps and Slippery Jacks grow. Keep species strictly separated when foraging. Call 13 11 26 if ingested.',
+   content:'Found in Australian pine plantations from Victoria to WA wherever introduced pines grow. Despite its fame in folklore, Amanita muscaria is genuinely dangerous. The related species Amanita pantherina (Panther Cap), also in Australian plantations, is even more toxic. Any Amanita with white gills and a ring and volva should be avoided.'},
+
+  {id:'plant-mushroom-saffron',name:'Saffron Milk Cap',sci:'Lactarius deliciosus',states:['VIC','NSW','ACT','SA','TAS','WA'],
+   summary:'A choice edible of pine forests — identified by its vivid orange latex.',
+   eat:['Slice thickly and fry in butter — the orange intensifies with heat','Grill or roast whole caps; flesh stays firm','Do not eat raw — mild stomach upset possible uncooked; always cook thoroughly'],
+   id_notes:'Cap carrot-orange to salmon, 5–14cm, developing a funnel shape when mature, often with concentric bands. FLESH orange; cut it and it oozes orange-carrot coloured "milk" (latex) — this is the definitive identifier. Gills orange, crowded. Stipe orange, becoming hollow. Found exclusively under pine trees (especially Pinus radiata). WARNING: if the cut flesh bleeds white milk, it is NOT L. deliciosus — do not eat.',
+   caution:'One of the safer wild mushrooms when correctly identified. Key check every time: the cut flesh must bleed orange milk. Any white milk means it is a different Lactarius species and may be inedible or toxic. Found in the same pine forests as Fly Agaric — keep species strictly separate and never mix your basket.',
+   content:'A prized edible mushroom found in pine plantations across southeast Australia and SA from autumn onwards. The orange latex is the unmistakable confirmation. Common in pine forests of Victoria, ACT, NSW, South Australia and WA wherever radiata pine grows.'},
+
+  {id:'plant-mushroom-field',name:'Field Mushroom',sci:'Agaricus campestris',states:['QLD','NSW','VIC','TAS','SA','WA','NT'],
+   summary:'The classic paddock mushroom — but demands careful identification to avoid deadly lookalikes.',
+   eat:['Edible when gills are pink to chocolate-brown; caps typically 5–12cm','Use in any recipe calling for cultivated mushrooms — sautéed, grilled, or raw','Pick young, fresh caps only; discard if gills have blackened or cap is slimy'],
+   id_notes:'Cap white to pale cream, 5–12cm. Gills start PINK in young buttons, turning dark chocolate brown with age — NEVER white. Stipe white, with a ring, and NO volva (cup) at the base — this absence is critical. Found in open grassland and paddocks, especially after autumn rain. Smells pleasantly mushroomy.',
+   caution:'CRITICAL CHECKS: (1) Yellow-staining Mushroom (Agaricus xanthodermus): slice the base of the stipe — if the cut turns bright chrome-yellow, discard immediately (it causes severe stomach upset). (2) Death Cap (Amanita phalloides): in its white "button" stage it grows in grassland and can look similar — but it always has WHITE gills and a cup (volva) at the base. If gills are white and there is any cup at the base, do not eat.',
+   content:'Found in improved pastures and roadsides across all Australian states. One of the most widely foraged wild mushrooms — but also one of the most commonly confused, with potentially deadly results. The yellow-staining test and gill colour check are mandatory before eating any field Agaricus.'},
+
+  {id:'plant-mushroom-slippery',name:'Slippery Jack',sci:'Suillus luteus',states:['VIC','NSW','ACT','SA','TAS'],
+   summary:'A bolete of pine plantations — distinctly slimy cap, yellow pores, reliably edible.',
+   eat:['PEEL the slimy cap skin off before cooking — it causes gastric upset in most people','Slice thickly and sauté until moisture evaporates; the yellow pore layer (underside) softens — many remove it','Best used fresh; dries and pickles well'],
+   id_notes:'Cap brown, 5–12cm, distinctly SLIMY and slippery when wet (hence the name). Underside has YELLOW SPONGY PORES (not gills) — a bolete feature that makes it easy to identify. Stipe pale with a purple-brown ring zone. Found only under pine trees. Any bolete with RED or orange pores, or flesh that stains BLUE when cut, should not be eaten.',
+   caution:'Edible when properly prepared (peeled), with no deadly lookalikes in Australian pine forests. Do not eat any bolete with red/orange pores or flesh that turns blue when cut — these rules apply to all boletes globally. Avoid consuming the slimy skin and pore layer if particularly sensitive; some people tolerate these fine.',
+   content:'One of the most reliably identified edible mushrooms in Australian pine plantations. Found from autumn onwards under Pinus radiata in Victoria, NSW, ACT, South Australia and Tasmania. The slimy cap, yellow spongy underside, and strict association with pines make misidentification very unlikely when all three features are confirmed.'}
 ];
 
 /* ============================================================
@@ -1375,9 +1421,9 @@ function findArticle(type,id){
   return null;
 }
 function titleOf(type,a){return a.title||a.name;}
-function accentOf(type,a){if(type==='fa')return a.urgency;if(type==='knot')return 'knot';if(type==='proj')return 'project';if(type==='plant')return 'food';if(type==='weather')return a.omen==='danger'?'critical':(a.omen==='fair'?'standard':'urgent');if(type==='track')return 'food';return a.category;}
-function iconOf(type,a){if(type==='enc')return CAT_ICON[a.category];if(type==='fa')return FA_CAT_ICON[a.category]||'cross';if(type==='knot')return 'knot';if(type==='proj')return 'hammer';if(type==='plant')return 'leaf';if(type==='weather')return 'sun';if(type==='track')return 'compass';}
-function kickerOf(type,a){if(type==='fa')return a.urgency;if(type==='knot')return a.category.replace('-',' / ');if(type==='proj')return a.category.replace('-',' ');if(type==='plant')return 'Bush Tucker';if(type==='weather')return a.omen==='danger'?'Danger':(a.omen==='fair'?'Fair sign':'Weather warning');if(type==='track')return 'Animal Sign';return CAT_LABELS[a.category];}
+function accentOf(type,a){if(type==='fa')return a.urgency;if(type==='knot')return 'knot';if(type==='proj')return 'project';if(type==='plant')return a.toxic?'danger':'food';if(type==='weather')return a.omen==='danger'?'critical':(a.omen==='fair'?'standard':'urgent');if(type==='track')return 'food';return a.category;}
+function iconOf(type,a){if(type==='enc')return CAT_ICON[a.category];if(type==='fa')return FA_CAT_ICON[a.category]||'cross';if(type==='knot')return 'knot';if(type==='proj')return 'hammer';if(type==='plant')return a.toxic?'warn':'leaf';if(type==='weather')return 'sun';if(type==='track')return 'compass';}
+function kickerOf(type,a){if(type==='fa')return a.urgency;if(type==='knot')return a.category.replace('-',' / ');if(type==='proj')return a.category.replace('-',' ');if(type==='plant')return a.toxic?'Toxic Fungi':'Bush Tucker';if(type==='weather')return a.omen==='danger'?'Danger':(a.omen==='fair'?'Fair sign':'Weather warning');if(type==='track')return 'Animal Sign';return CAT_LABELS[a.category];}
 
 /* ---- Photo helpers ---- (unique photo per article; knots use their SVG diagram) */
 function imgFor(type,a){
@@ -1456,7 +1502,7 @@ function renderHome(){
     ${browseCard('knot','knot','Reference','Knot Library','12 essential knots with step-by-step instructions.',"switchTab('guides');setTimeout(()=>switchSub('knots'),0)")}
     ${browseCard('cross','critical','Emergency','First Aid','20 ARC-aligned protocols, AU snake &amp; spider bites.',"switchTab('firstaid')")}
     ${browseCard('hammer','project','Build','Bushcraft Projects','7 practical builds with field checklists.',"switchTab('projects')")}
-    ${browseCard('leaf','food','Forage','Bush Tucker','12 edible Australian plants, tagged by state.',"switchTab('guides');setTimeout(()=>switchSub('plants'),0)")}
+    ${browseCard('leaf','food','Forage','Bush Tucker & Fungi','18 plants &amp; mushrooms — edible and deadly, tagged by state.',"switchTab('guides');setTimeout(()=>switchSub('plants'),0)")}
     ${browseCard('sun','warning','Read the Sky','Weather Signs','9 sky signs and what they mean for you.',"switchTab('guides');setTimeout(()=>switchSub('weather'),0)")}
     ${browseCard('compass','water','Track','Animal Tracker','12 Australian animals — sign, water & danger.',"switchTab('guides');setTimeout(()=>switchSub('tracks'),0)")}`;
 }
@@ -1540,7 +1586,7 @@ function quickFav(btn,type,id){toggleFav(type,id);const on=isFav(type,id);btn.cl
 function renderKnots(){document.getElementById('guides-body').innerHTML=KNOTS.map(k=>fullCard('knot',k)).join('');}
 function renderPlants(){
   const safety=`<div class="safety-bar">${ICON.warn}<div><div class="st">Identify before you eat</div>
-    <div class="sd">Never eat any wild plant unless you have <strong>positively identified it</strong>. Many Australian plants are toxic and some mimic edible species. This guide is a starting reference, not a substitute for expert identification.</div></div></div>`;
+    <div class="sd">Never eat any wild plant or fungus unless you have <strong>positively identified it</strong>. Many Australian plants and mushrooms are toxic — some fatally so — and closely mimic edible species. Toxic entries are marked <strong style="color:var(--danger)">Toxic Fungi</strong> and included for recognition only. Poisons Info: <strong>13 11 26</strong>.</div></div></div>`;
   document.getElementById('guides-body').innerHTML=safety+PLANTS.map(p=>fullCard('plant',p)).join('');
 }
 function renderWeather(){
@@ -1767,21 +1813,27 @@ function projArticleHtml(p){
   </article>`;
 }
 function plantArticleHtml(p){
-  const eat=p.eat.map(e=>`<li>${e}</li>`).join('');
+  const eatItems=p.eat.map(e=>`<li>${e}</li>`).join('');
+  const eatSection=p.toxic
+    ?`<div class="caution-box" style="margin-bottom:var(--s2)"><div class="label">${ICON.warn} Do NOT eat — Poisonous</div><ul style="color:#e7bdbd;font-size:.88rem;padding-left:1.1em;margin:6px 0 0">${eatItems}</ul></div>`
+    :`<div class="section-label">How it's used</div><ul class="content" style="margin:0 0 var(--s2) 1.1em">${eatItems}</ul>`;
+  const kicker=p.toxic?'Toxic Fungi':'Bush Tucker';
+  const kClass=p.toxic?'t-danger':'t-food';
+  const topBar=p.toxic
+    ?`<div class="caution-box" style="margin-bottom:var(--s2)"><div class="label">${ICON.warn} Included for identification &amp; avoidance only</div><div class="sd" style="font-size:.85rem;color:#e7bdbd">This species is <strong>not edible</strong>. Learn to recognise it so you never accidentally eat it.</div></div>`
+    :`<div class="safety-bar">${ICON.warn}<div><div class="st">Positively identify first</div><div class="sd">Do not eat unless you are certain of the species. Toxic lookalikes exist.</div></div></div>`;
   return `<article class="article">
     <div class="article-head"><div style="flex:1">
-      <div class="section-label t-food" style="margin-top:0">Bush Tucker</div>
+      <div class="section-label ${kClass}" style="margin-top:0">${kicker}</div>
       <h1 style="margin-top:0">${p.name}</h1>
       <div style="font-style:italic;color:var(--text-secondary);font-size:.92rem;margin-top:2px">${p.sci}</div></div>${favButton('plant',p.id)}</div>
     <div class="states-row">${p.states.map(s=>`<span class="state-chip">${s}</span>`).join('')}</div>
     <p style="color:var(--text-secondary);margin-bottom:8px">${p.summary}</p>
-    <div class="safety-bar">${ICON.warn}<div><div class="st">Positively identify first</div>
-      <div class="sd">Do not eat unless you are certain of the species. Toxic lookalikes exist.</div></div></div>
-    <div class="section-label">How it's used</div>
-    <ul class="content" style="margin:0 0 var(--s2) 1.1em">${eat}</ul>
+    ${topBar}
+    ${eatSection}
     <div class="section-label">Identifying it</div>
     <div class="content"><p>${p.id_notes}</p></div>
-    <div class="caution-box"><div class="label">${ICON.warn} Caution</div><div class="sd" style="font-size:.88rem;color:#e7bdbd">${p.caution}</div></div>
+    <div class="caution-box"><div class="label">${ICON.warn} ${p.toxic?'Warning':'Caution'}</div><div class="sd" style="font-size:.88rem;color:#e7bdbd">${p.caution}</div></div>
     <div class="content"><p>${p.content}</p></div>
   </article>`;
 }
@@ -1828,7 +1880,7 @@ function buildSearchIndex(){
   FIRST_AID.forEach(a=>SEARCH_INDEX.push({type:'fa',id:a.id,title:a.title,kw:(a.title+' '+a.summary+' '+a.category+' first aid').toLowerCase()}));
   KNOTS.forEach(a=>SEARCH_INDEX.push({type:'knot',id:a.id,title:a.name,kw:(a.name+' '+a.uses.join(' ')+' '+a.category+' knot').toLowerCase()}));
   PROJECTS.forEach(a=>SEARCH_INDEX.push({type:'proj',id:a.id,title:a.title,kw:(a.title+' '+a.category+' project').toLowerCase()}));
-  PLANTS.forEach(a=>SEARCH_INDEX.push({type:'plant',id:a.id,title:a.name,kw:(a.name+' '+a.sci+' '+a.summary+' bush tucker edible plant food '+a.states.join(' ')).toLowerCase()}));
+  PLANTS.forEach(a=>SEARCH_INDEX.push({type:'plant',id:a.id,title:a.name,kw:(a.name+' '+a.sci+' '+a.summary+' bush tucker '+(a.toxic?'toxic poisonous deadly fungi mushroom':'edible plant food')+' '+a.states.join(' ')).toLowerCase()}));
   WEATHER.forEach(a=>SEARCH_INDEX.push({type:'weather',id:a.id,title:a.name,kw:(a.name+' '+a.sign+' '+a.means+' weather sky cloud forecast storm rain').toLowerCase()}));
   TRACKS.forEach(a=>SEARCH_INDEX.push({type:'track',id:a.id,title:a.name,kw:(a.name+' '+a.sci+' '+a.track+' '+a.where+' animal track sign scat').toLowerCase()}));
 }

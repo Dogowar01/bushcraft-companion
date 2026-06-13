@@ -128,12 +128,12 @@
   "query": "Santalum acuminatum fruit"
  },
  "plant-bunya": {
-  "file": "File:Araucaria bidwillii - pollen cones.jpg",
-  "artist": "tree-species",
-  "license": "CC BY 2.0",
-  "descurl": "https://commons.wikimedia.org/wiki/File%3AAraucaria_bidwillii_-_pollen_cones.jpg",
-  "bytes": 58756,
-  "query": "Araucaria bidwillii cone"
+  "file": "File:Bunya Cone.jpg",
+  "artist": "D. Gordon E. Robertson",
+  "license": "CC BY-SA 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ABunya_Cone.jpg",
+  "bytes": 572183,
+  "query": "Bunya Araucaria bidwillii food cone nuts"
  },
  "plant-kakadu-plum": {
   "file": "File:Terminalia ferdinandiana fruit.jpg",
@@ -336,12 +336,12 @@
   "query": "Group hikers helping trail"
  },
  "fa-heat": {
-  "file": "File:Fictional planet system that has habitable planet 1.png",
-  "artist": "Merikanto",
-  "license": "CC0",
-  "descurl": "https://commons.wikimedia.org/wiki/File%3AFictional_planet_system_that_has_habitable_planet_1.png",
-  "bytes": 5485,
-  "query": "Hydration water hat sun heat"
+  "file": "File:Heat stroke treatment, Baton Rouge, 2016 Louisiana floods.jpg",
+  "artist": "Master Sgt. Dan Farrell / The National Guard",
+  "license": "CC BY 2.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AHeat_stroke_treatment%2C_Baton_Rouge%2C_2016_Louisiana_floods.jpg",
+  "bytes": 498022,
+  "query": "Heat stroke treatment first aid"
  },
  "fa-fractures": {
   "file": "File:Upper arm splint.jpg",
@@ -384,12 +384,12 @@
   "query": "Adrenaline autoinjector epipen"
  },
  "proj-stretcher": {
-  "file": "File:Frank Goldsborough death in The Post-Star of Glens Falls, New York on 17 July 1930.jpg",
-  "artist": "Anonymous Unknown author",
+  "file": "File:Stretcher miloufs.jpg",
+  "artist": "Lance Corporal Joey R. Garza, USMC",
   "license": "Public domain",
-  "descurl": "https://commons.wikimedia.org/wiki/File%3AFrank_Goldsborough_death_in_The_Post-Star_of_Glens_Falls%2C_New_York_on_17_July_1930.jpg",
-  "bytes": 29178,
-  "query": "Improvised stretcher rescue carry"
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AStretcher_miloufs.jpg",
+  "bytes": 516224,
+  "query": "Field stretcher casualty carry rescue USMC"
  },
  "weather-red-sky": {
   "file": "File:Red clouds over Mekong banks with dwellings and pirogues at sunrise in Don Det Laos.jpg",
@@ -608,12 +608,12 @@
   "query": "Bivouac tent"
  },
  "water-finding": {
-  "file": "File:Equus quagga (Namutoni, 2012).jpg",
-  "artist": "Yathin S Krishnappa",
+  "file": "File:Coopers Creek Bullah waterhole.JPG",
+  "artist": "Peterdownunder",
   "license": "CC BY-SA 3.0",
-  "descurl": "https://commons.wikimedia.org/wiki/File%3AEquus_quagga_%28Namutoni%2C_2012%29.jpg",
-  "bytes": 36960,
-  "query": "Waterhole"
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ACoopers_Creek_Bullah_waterhole.JPG",
+  "bytes": 320427,
+  "query": "Australian waterhole Coopers Creek Queensland"
  },
  "water-rain-dew": {
   "file": "File:Rainwater harvesting tank - flood management water butt.jpg",
@@ -798,5 +798,53 @@
   "descurl": "https://commons.wikimedia.org/wiki/File%3AFootprints_to_follow_at_the_beach_of_Gopalpur_on_the_sea.jpg",
   "bytes": 78937,
   "query": "Footprints sand beach"
+ },
+ "plant-mushroom-deathcap": {
+  "file": "File:Amanita phalloides 1.JPG",
+  "artist": "Archenzo",
+  "license": "CC BY-SA 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AAmanita_phalloides_1.JPG",
+  "bytes": 592586,
+  "query": "Amanita phalloides death cap mushroom poisonous"
+ },
+ "plant-mushroom-ghost": {
+  "file": "File:2007-05-22 Omphalotus nidiformis (Berk.) O.K. Mill 12860.jpg",
+  "artist": "Alan Rockefeller",
+  "license": "CC BY-SA 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3A2007-05-22_Omphalotus_nidiformis_%28Berk.%29_O.K._Mill_12860.jpg",
+  "bytes": 93529,
+  "query": "Omphalotus nidiformis ghost fungus Australia"
+ },
+ "plant-mushroom-flyagaric": {
+  "file": "File:Amanita muscaria (fly agaric).JPG",
+  "artist": "MichaelMaggs",
+  "license": "CC BY-SA 2.5",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AAmanita_muscaria_%28fly_agaric%29.JPG",
+  "bytes": 464651,
+  "query": "Amanita muscaria fly agaric red white spots"
+ },
+ "plant-mushroom-saffron": {
+  "file": "File:2009-09-28 Lactarius deliciosus.jpg",
+  "artist": "furtwangl (Flickr)",
+  "license": "CC BY 2.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3A2009-09-28_Lactarius_deliciosus.jpg",
+  "bytes": 1233450,
+  "query": "Lactarius deliciosus saffron milk cap edible mushroom"
+ },
+ "plant-mushroom-field": {
+  "file": "File:2010-08-07 Agaricus campestris.jpg",
+  "artist": "Andreas Kunze",
+  "license": "CC BY-SA 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3A2010-08-07_Agaricus_campestris.jpg",
+  "bytes": 1920328,
+  "query": "Agaricus campestris field mushroom edible"
+ },
+ "plant-mushroom-slippery": {
+  "file": "File:2007-10-17 Suillus luteus (L.) Roussel 6983.jpg",
+  "artist": "chuah (Mushroom Observer)",
+  "license": "CC BY-SA 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3A2007-10-17_Suillus_luteus_%28L.%29_Roussel_6983.jpg",
+  "bytes": 293276,
+  "query": "Suillus luteus slippery jack edible bolete pine"
  }
 }
