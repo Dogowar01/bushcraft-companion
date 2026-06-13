@@ -2,12 +2,16 @@
    Simple cache-first strategy. Caches the app shell on install,
    serves from cache on fetch, falls back to network. */
 
-const CACHE = 'bushcraft-v3';
+const CACHE = 'bushcraft-v4';
 const ASSETS = [
   './',
   './index.html',
   './sw.js',
-  './manifest.json'
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
+  './apple-touch-icon.png',
+  './favicon-32.png'
 ];
 
 self.addEventListener('install', (event) => {
