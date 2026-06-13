@@ -2,7 +2,7 @@
    Simple cache-first strategy. Caches the app shell on install,
    serves from cache on fetch, falls back to network. */
 
-const CACHE = 'bushcraft-v6';
+const CACHE = 'bushcraft-v7';
 const ASSETS = [
   './',
   './index.html',
@@ -14,10 +14,23 @@ const ASSETS = [
   './apple-touch-icon.png',
   './favicon-32.png'
 ];
+// Bundled photos — best-effort precache (failure of any one must not abort install).
+const IMG = [
+  'ban-guides','ban-firstaid','ban-projects','ban-notes','ban-plants',
+  'cat-fire','cat-shelter','cat-water','cat-food','cat-signalling','cat-psychology',
+  'fa-snake-brown','fa-snake-tiger','fa-snake-taipan','fa-snake-rbb','fa-snake-deathadder',
+  'fa-spider-funnelweb','fa-spider-redback','fa-spider-whitetail',
+  'plant-quandong','plant-finger-lime','plant-macadamia','plant-bunya','plant-warrigal-greens',
+  'plant-pigface','plant-lilly-pilly','plant-native-raspberry','plant-kakadu-plum',
+  'plant-wattleseed','plant-river-mint','plant-bush-tomato'
+].map((n) => './img/' + n + '.jpg').concat(['./img/credits.json']);
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE).then((cache) => cache.addAll(ASSETS)).then(() => self.skipWaiting())
+    caches.open(CACHE).then(async (cache) => {
+      await cache.addAll(ASSETS);
+      await Promise.allSettled(IMG.map((u) => cache.add(u)));
+    }).then(() => self.skipWaiting())
   );
 });
 

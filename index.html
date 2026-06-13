@@ -431,6 +431,47 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .em-confirm{background:var(--danger);color:#fff;border-color:var(--danger);}
 
 @media (max-width:340px){.quick-grid{grid-template-columns:repeat(2,1fr);}}
+
+/* ---------- Photos: banners, thumbnails, plant module ---------- */
+.banner{position:relative;border-radius:14px;overflow:hidden;margin-bottom:var(--s3);min-height:132px;
+  display:flex;flex-direction:column;justify-content:flex-end;border:1px solid var(--border);
+  box-shadow:0 10px 26px rgba(0,0,0,.35);}
+.banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.banner .b-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,14,11,.15),rgba(15,14,11,.4) 55%,rgba(15,14,11,.92));}
+.banner .b-text{position:relative;padding:var(--s2);}
+.banner .page-title{margin:0;text-shadow:0 2px 10px rgba(0,0,0,.7);}
+.banner .page-sub{margin:4px 0 0;color:#d8d2c6;text-shadow:0 1px 6px rgba(0,0,0,.8);}
+
+.card-thumb{width:68px;height:60px;border-radius:9px;overflow:hidden;flex:none;background:var(--elevated);position:relative;
+  box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 2px 6px rgba(0,0,0,.3);}
+.card-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.card-thumb.knot{background:radial-gradient(120% 120% at 30% 20%,#241e16,#16120d);display:flex;align-items:center;justify-content:center;}
+.card-thumb.knot svg{width:100%;height:100%;}
+
+.art-photo{position:relative;height:155px;border-radius:13px;overflow:hidden;margin:4px 0 16px;border:1px solid var(--border);box-shadow:0 8px 22px rgba(0,0,0,.34);}
+.art-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+.art-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(21,20,15,.5));}
+.article-hero{position:relative;border-radius:14px;overflow:hidden;margin:6px 0 var(--s2);min-height:170px;
+  display:flex;flex-direction:column;justify-content:flex-end;border:1px solid var(--border);box-shadow:0 10px 26px rgba(0,0,0,.35);}
+.article-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.article-hero .ah-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,14,11,.1),rgba(15,14,11,.35) 50%,rgba(15,14,11,.94));}
+.article-hero .ah-text{position:relative;padding:var(--s2);display:flex;align-items:flex-end;gap:10px;}
+.article-hero h1{font-size:1.45rem;line-height:1.15;text-transform:uppercase;letter-spacing:.02em;margin:6px 0 0;flex:1;text-shadow:0 2px 10px rgba(0,0,0,.8);}
+.article-hero .badges{position:absolute;top:12px;left:12px;display:flex;gap:7px;flex-wrap:wrap;}
+
+.safety-bar{display:flex;gap:11px;align-items:flex-start;background:rgba(201,149,42,.12);border:1px solid rgba(201,149,42,.45);
+  border-radius:10px;padding:13px 15px;margin-bottom:var(--s2);}
+.safety-bar svg{width:22px;height:22px;color:var(--warning);flex:none;margin-top:1px;}
+.safety-bar .st{font-weight:700;color:var(--warning);font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;}
+.safety-bar .sd{font-size:.84rem;color:var(--text-secondary);}
+.states-row{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 var(--s2);}
+.state-chip{font-size:.66rem;font-weight:700;letter-spacing:.06em;padding:4px 9px;border-radius:5px;
+  background:rgba(107,140,90,.16);color:var(--nature);border:1px solid rgba(107,140,90,.3);}
+.caution-box{background:rgba(184,59,59,.1);border:1px solid rgba(184,59,59,.42);border-radius:10px;padding:13px 15px;margin:var(--s2) 0;}
+.caution-box .label{color:var(--danger);margin-bottom:7px;display:flex;align-items:center;gap:7px;font-weight:700;text-transform:uppercase;font-size:.78rem;letter-spacing:.05em;}
+.caution-box .label svg{width:16px;height:16px;}
+.credit-list{font-size:.78rem;color:var(--text-secondary);line-height:1.7;}
+.credit-list a{color:var(--water);}
 </style>
 </head>
 <body>
@@ -510,6 +551,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
     <div class="set-row"><div><div class="st">Saved articles</div><div class="sd" id="setSaved"></div></div></div>
     <div class="set-row" style="border:none"><div><div class="st">Notes stored</div><div class="sd" id="setNotes"></div></div></div>
     <p style="color:var(--text-secondary);font-size:.78rem;margin:var(--s2) 0;">All data stays on this device. Nothing is sent anywhere. Emergency numbers: <strong style="color:var(--text-primary)">000</strong> (primary), <strong style="color:var(--text-primary)">112</strong> (any mobile), <strong style="color:var(--text-primary)">106</strong> (text/TTY).</p>
+    <div class="set-row" style="border:none;cursor:pointer" onclick="toggleCredits()"><div><div class="st">Image credits</div><div class="sd">Photos via Wikimedia Commons — tap to view</div></div></div>
+    <div id="creditsBox" class="credit-list" style="display:none;max-height:240px;overflow-y:auto;margin-bottom:var(--s2)"></div>
     <button class="btn btn-ghost" onclick="closeSettings()">Done</button>
   </div>
 </div>
@@ -1093,6 +1136,85 @@ const EMERGENCY_TILES = [
 ];
 
 /* ============================================================
+   BUSH TUCKER — edible/useful Australian plants
+   Photos are decorative references; safety warnings are mandatory.
+   ============================================================ */
+const PLANTS = [
+  {id:'plant-quandong',name:'Quandong',sci:'Santalum acuminatum',states:['SA','WA','NSW','NT','QLD','VIC'],
+   summary:'The "desert peach" — a tart, vitamin-C-rich red fruit of the arid inland.',
+   eat:['Bright red fleathery flesh eaten raw when ripe (tart) or dried','Dried fruit rehydrates well for jams, pies and stewing','The hard, dimpled stone holds an edible kernel (eat sparingly — can be mildly purgative)'],
+   id_notes:'Spreading shrub/small tree to ~4m, dull grey-green leaves; round fruit ripening glossy bright red, ~2–3cm, with a distinctive deeply pitted woody stone.',
+   caution:'A hemi-parasite of other roots — found near host shrubs. Eat the kernel only in small amounts. As with all bush food, be certain of identification.',
+   content:'A prized arid-zone bush food across central and southern Australia. Very high in vitamin C; traditionally eaten fresh or dried and pounded into cakes that store for long periods.'},
+  {id:'plant-finger-lime',name:'Finger Lime',sci:'Citrus australasica',states:['QLD','NSW'],
+   summary:'Rainforest citrus whose "caviar" pearls burst with sharp lime flavour.',
+   eat:['Cut the finger-shaped fruit and squeeze out the juicy citrus pearls','Use fresh over seafood, in drinks or desserts','Skin colour varies green/red/black; flesh pink to green'],
+   id_notes:'Thorny understorey shrub/small tree of subtropical rainforest margins in SE QLD and NE NSW; cylindrical fruit 4–8cm.',
+   caution:'A true Citrus — flesh is safe, but confirm the plant before harvesting from the wild. Thorns are sharp.',
+   content:'Now a celebrated gourmet ingredient. The vesicles release like citrus caviar. Grows wild in the rainforests of the Queensland–NSW border ranges.'},
+  {id:'plant-macadamia',name:'Macadamia Nut',sci:'Macadamia integrifolia',states:['QLD','NSW'],
+   summary:'Australia’s native gourmet nut, from SE Queensland rainforest.',
+   eat:['Rich, buttery kernel inside an extremely hard round shell','Best eaten roasted or raw once cracked','Falls to the ground when mature'],
+   id_notes:'Rainforest tree to 12m with whorled, often prickly-margined glossy leaves; long sprays of cream flowers; hard round nuts in a green husk.',
+   caution:'Macadamia integrifolia and M. tetraphylla are edible. The shell is very hard. Note: macadamias are TOXIC TO DOGS.',
+   content:'The only Australian native food crop grown commercially on a large scale. Indigenous to the rainforests of southeast Queensland and northern NSW.'},
+  {id:'plant-bunya',name:'Bunya Nut',sci:'Araucaria bidwillii',states:['QLD'],
+   summary:'Huge cones of a primeval conifer — a major traditional gathering food.',
+   eat:['Large starchy nuts inside enormous cones (cones can weigh up to ~10kg)','Boil or roast the nuts; flesh is like a starchy chestnut','Can be ground into a paste/flour'],
+   id_notes:'Tall, dome-crowned conifer with stiff, sharp, glossy dark-green leaves; massive football-sized cones that drop summer–autumn.',
+   caution:'Falling cones are extremely heavy and dangerous — never sit under a fruiting bunya. Eat nuts cooked.',
+   content:'Bunya trees triggered great inter-clan gatherings every few years when the cones matured in the Bunya Mountains and ranges of southeast Queensland.'},
+  {id:'plant-warrigal-greens',name:'Warrigal Greens',sci:'Tetragonia tetragonioides',states:['QLD','NSW','VIC','TAS','SA','WA'],
+   summary:'"Native spinach" — a sprawling coastal leafy green.',
+   eat:['Use the soft triangular leaves and tips like spinach','BLANCH first (1–2 min) and discard the water to reduce oxalates','Good in soups, pies and stir-fries'],
+   id_notes:'Low sprawling succulent-leaved groundcover of coastal dunes and estuaries; soft, fleshy, triangular green leaves with a slightly crystalline surface.',
+   caution:'Contains oxalates — always blanch and drain before eating, and don’t eat large amounts raw. Avoid if prone to kidney stones.',
+   content:'Collected by Captain Cook’s crew as an anti-scurvy green. Widespread on Australian coasts; one of the easiest native greens to use once blanched.'},
+  {id:'plant-pigface',name:'Pigface',sci:'Carpobrotus glaucescens',states:['QLD','NSW','VIC','TAS','SA','WA'],
+   summary:'Coastal succulent with edible salty-sweet fruit and leaves.',
+   eat:['Ripe reddish fruit pulp is salty-sweet, eaten fresh','Fleshy leaves can be eaten raw or cooked (salty); juice soothes stings/burns','Strawberry-like flavour when fully ripe'],
+   id_notes:'Mat-forming succulent of coastal dunes; thick 3-sided leaves; large daisy-like pink/purple flowers; fleshy fig-shaped fruit.',
+   caution:'Edible Carpobrotus is distinctive, but confirm ID. Eat only ripe fruit. Leaf juice is a well-known topical for jellyfish/insect stings.',
+   content:'A reliable, widespread coastal bush food and first-aid plant found right around the southern Australian coastline.'},
+  {id:'plant-lilly-pilly',name:'Lilly Pilly',sci:'Syzygium smithii',states:['QLD','NSW','VIC'],
+   summary:'Glossy rainforest shrub with crisp, tart pink-white berries.',
+   eat:['Crisp, tart-to-bland berries eaten fresh','Popular for jams and jellies (high pectin)','Ripe fruit is white to magenta-pink'],
+   id_notes:'Dense glossy-leaved shrub/tree, common in gardens and east-coast rainforest; fluffy cream flowers; clusters of rounded berries with a small dimple at the tip.',
+   caution:'True Syzygium lilly pillies are edible, but many ornamental "lilly pilly" hybrids are bland — and never assume an unknown garden berry is safe. Confirm the species.',
+   content:'A classic east-coast bush food and hedge plant. Fruits abundantly; flavour ranges from tart-apple to faintly clove-like.'},
+  {id:'plant-native-raspberry',name:'Native Raspberry',sci:'Rubus parvifolius',states:['QLD','NSW','VIC','TAS','SA'],
+   summary:'A genuine wild raspberry of eastern and southern Australia.',
+   eat:['Small red aggregate berries eaten fresh','Sweet-tart, like a small garden raspberry','Ripe late spring to summer'],
+   id_notes:'Scrambling prickly cane with trifoliate leaves, white-felted undersides; pink flowers; small red raspberry-like fruit.',
+   caution:'Rubus berries (raspberry/blackberry form) are a safe, easily recognised group — but introduced blackberry is a noxious weed; harvest responsibly.',
+   content:'One of the few Australian fruits instantly familiar to most people. Found along forest edges and clearings in the wetter south and east.'},
+  {id:'plant-kakadu-plum',name:'Kakadu Plum',sci:'Terminalia ferdinandiana',states:['NT','WA','QLD'],
+   summary:'The world’s richest known natural source of vitamin C.',
+   eat:['Small green-yellow fruit eaten fresh (tart, slightly stewed-apple)','Now used in powders, jams and health products','Single stone inside'],
+   id_notes:'Slender tropical tree of northern savannas; pale bark; broad leaves clustered at branch ends; almond-shaped fruit ripening pale green-yellow.',
+   caution:'A culturally significant food of northern Australia. Harvesting on Aboriginal land requires permission. Confirm ID before eating.',
+   content:'Also called gubinge or billygoat plum. Contains extraordinary levels of vitamin C — many times that of an orange — and is a major emerging bush-food industry.'},
+  {id:'plant-wattleseed',name:'Wattleseed',sci:'Acacia victoriae',states:['NSW','QLD','SA','WA','NT','VIC'],
+   summary:'Roasted, ground acacia seed — a nutty, coffee-like staple.',
+   eat:['Seeds of select edible wattles are roasted and ground','Nutty, roasted-coffee/hazelnut flavour used in baking and drinks','A high-protein traditional staple flour'],
+   id_notes:'Many Acacia species; edible-seed types like Elegant/Prickly Wattle (A. victoriae) bear seed pods that are dried and the hard seeds extracted.',
+   caution:'CRITICAL: only specific wattle species have edible seed — some Acacia seeds and green pods are toxic. Use only known edible species, properly roasted. Do not experiment.',
+   content:'A staple energy food across arid Australia for tens of thousands of years. Today a popular native flavouring — but species selection is essential for safety.'},
+  {id:'plant-river-mint',name:'River Mint',sci:'Mentha australis',states:['QLD','NSW','VIC','TAS','SA'],
+   summary:'A true native mint for tea and flavouring.',
+   eat:['Aromatic leaves used fresh or dried for tea and seasoning','Strong peppermint-like scent when crushed','Traditionally used as a flavouring and for colds'],
+   id_notes:'Soft-stemmed herb of creek banks and damp ground; opposite leaves; unmistakable mint smell when crushed; small pale flowers.',
+   caution:'The crushed-leaf mint scent is the key confirmation. Avoid large medicinal doses, especially in pregnancy. Confirm ID.',
+   content:'Grows along watercourses across much of eastern and southern Australia. The aroma makes it one of the more confidently identifiable bush herbs.'},
+  {id:'plant-bush-tomato',name:'Bush Tomato',sci:'Solanum centrale',states:['NT','SA','WA'],
+   summary:'A raisin-like desert fruit — but the Solanum genus demands caution.',
+   eat:['Ripe fruit of this species dries on the bush to a raisin-like morsel','Strong caramel/tamarillo flavour; ground as "kutjera" spice','Eaten dried rather than green'],
+   id_notes:'Small greyish desert shrub; purple star flowers; yellow-brown fruit that dries on the plant.',
+   caution:'DANGER: many Solanum (nightshade) relatives — including unripe/green fruit of some bush tomatoes and lookalikes such as Solanum quadriloculatum — are TOXIC. Only eat correctly identified S. centrale, fully ripe/dried. If unsure, do NOT eat.',
+   content:'A central-desert staple (kutjera) with an intense flavour, but the single most important bush food to get identification right on, given its toxic relatives.'}
+];
+
+/* ============================================================
    STORAGE
    ============================================================ */
 const LS={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v);}catch(e){return d;}},
@@ -1115,12 +1237,31 @@ function findArticle(type,id){
   if(type==='fa')return FIRST_AID.find(a=>a.id===id);
   if(type==='knot')return KNOTS.find(a=>a.id===id);
   if(type==='proj')return PROJECTS.find(a=>a.id===id);
+  if(type==='plant')return PLANTS.find(a=>a.id===id);
   return null;
 }
 function titleOf(type,a){return a.title||a.name;}
-function accentOf(type,a){if(type==='fa')return a.urgency;if(type==='knot')return 'knot';if(type==='proj')return 'project';return a.category;}
-function iconOf(type,a){if(type==='enc')return CAT_ICON[a.category];if(type==='fa')return FA_CAT_ICON[a.category]||'cross';if(type==='knot')return 'knot';if(type==='proj')return 'hammer';}
-function kickerOf(type,a){if(type==='fa')return a.urgency;if(type==='knot')return a.category.replace('-',' / ');if(type==='proj')return a.category.replace('-',' ');return CAT_LABELS[a.category];}
+function accentOf(type,a){if(type==='fa')return a.urgency;if(type==='knot')return 'knot';if(type==='proj')return 'project';if(type==='plant')return 'food';return a.category;}
+function iconOf(type,a){if(type==='enc')return CAT_ICON[a.category];if(type==='fa')return FA_CAT_ICON[a.category]||'cross';if(type==='knot')return 'knot';if(type==='proj')return 'hammer';if(type==='plant')return 'leaf';}
+function kickerOf(type,a){if(type==='fa')return a.urgency;if(type==='knot')return a.category.replace('-',' / ');if(type==='proj')return a.category.replace('-',' ');if(type==='plant')return 'Bush Tucker';return CAT_LABELS[a.category];}
+
+/* ---- Photo helpers ---- */
+const FA_PHOTO=new Set(['fa-snake-brown','fa-snake-tiger','fa-snake-taipan','fa-snake-rbb','fa-snake-deathadder','fa-spider-funnelweb','fa-spider-redback','fa-spider-whitetail']);
+const PROJ_IMG={'camp-comfort':'ban-projects','camp-cooking':'cat-fire','food':'cat-food','shelter':'cat-shelter','first-aid':'ban-firstaid','water':'cat-water'};
+function imgFor(type,a){
+  if(type==='enc')return 'img/cat-'+a.category+'.jpg';
+  if(type==='fa')return FA_PHOTO.has(a.id)?('img/'+a.id+'.jpg'):'img/ban-firstaid.jpg';
+  if(type==='proj')return 'img/'+(PROJ_IMG[a.category]||'ban-projects')+'.jpg';
+  if(type==='plant')return 'img/'+a.id+'.jpg';
+  return null; /* knots use their SVG diagram */
+}
+function knotThumb(id){return `<svg viewBox="0 0 300 204" xmlns="http://www.w3.org/2000/svg">${KSVG[id]||''}</svg>`;}
+function cardThumb(type,a){
+  if(type==='knot')return `<div class="card-thumb knot">${knotThumb(a.id)}</div>`;
+  const src=imgFor(type,a);
+  return src?`<div class="card-thumb"><img loading="lazy" src="${src}" alt=""></div>`
+    :`<div class="card-ico b-${accentOf(type,a)}">${ICON[iconOf(type,a)]}</div>`;
+}
 
 /* ============================================================
    NAV
@@ -1181,15 +1322,16 @@ function renderHome(){
     ${recent.length?recent.map(r=>{const a=findArticle(r.type,r.id);return a?miniCard(r.type,a):'';}).join(''):`<div class="empty-hint">Articles you open will appear here for quick access.</div>`}
 
     <div class="section-label">Browse Everything</div>
-    ${browseCard('book','fire','Encyclopedia','Survival Guides','30 guides — fire, shelter, water, food, signalling, mindset.',"switchTab('guides')")}
+    ${browseCard('book','fire','Encyclopedia','Survival Guides','33 guides — fire, shelter, water, food, signalling, mindset.',"switchTab('guides')")}
     ${browseCard('knot','knot','Reference','Knot Library','12 essential knots with step-by-step instructions.',"switchTab('guides');setTimeout(()=>switchSub('knots'),0)")}
     ${browseCard('cross','critical','Emergency','First Aid','20 ARC-aligned protocols, AU snake &amp; spider bites.',"switchTab('firstaid')")}
-    ${browseCard('hammer','project','Build','Bushcraft Projects','7 practical builds with field checklists.',"switchTab('projects')")}`;
+    ${browseCard('hammer','project','Build','Bushcraft Projects','7 practical builds with field checklists.',"switchTab('projects')")}
+    ${browseCard('leaf','food','Forage','Bush Tucker','12 edible Australian plants, tagged by state.',"switchTab('guides');setTimeout(()=>switchSub('plants'),0)")}`;
 }
 function miniCard(type,a){
   const acc=accentOf(type,a);
   return `<a class="card c-${acc}" onclick="openArticle('${type}','${a.id}')">
-    <div class="card-ico b-${acc}">${ICON[iconOf(type,a)]}</div>
+    ${cardThumb(type,a)}
     <div class="card-body"><div class="cat-label t-${acc}">${kickerOf(type,a)}</div>
     <div class="card-title">${titleOf(type,a)}</div></div></a>`;
 }
@@ -1199,6 +1341,10 @@ function browseCard(icon,acc,kick,title,sum,action){
     <div class="card-body"><div class="cat-label t-${acc}">${kick}</div>
     <div class="card-title">${title}</div><div class="card-sum">${sum}</div></div></a>`;
 }
+function banner(imgKey,title,sub){
+  return `<div class="banner"><img src="img/${imgKey}.jpg" alt="" loading="eager"><div class="b-scrim"></div>
+    <div class="b-text"><div class="page-title">${title}</div><div class="page-sub">${sub}</div></div></div>`;
+}
 
 /* ============================================================
    GUIDES
@@ -1206,14 +1352,17 @@ function browseCard(icon,acc,kick,title,sum,action){
 let guidesSub='encyclopedia',encFilter='all';
 function renderGuides(){
   document.getElementById('screen-guides').innerHTML=`
-    <div class="page-title">Guides</div><div class="page-sub">Field-manual reference, fully offline.</div>
+    ${banner('ban-guides','Guides','Field-manual reference, fully offline.')}
     <div class="searchbar" onclick="openSearch()">${ICON.search}<input placeholder="Search all content…" readonly style="pointer-events:none"></div>
     <div class="filter-row">
-      <button class="filter-pill ${guidesSub==='encyclopedia'?'active':''}" onclick="switchSub('encyclopedia')">${ICON.book.replace('width="22"','')} Encyclopedia</button>
+      <button class="filter-pill ${guidesSub==='encyclopedia'?'active':''}" onclick="switchSub('encyclopedia')">Encyclopedia</button>
       <button class="filter-pill ${guidesSub==='knots'?'active':''}" onclick="switchSub('knots')">Knots</button>
+      <button class="filter-pill ${guidesSub==='plants'?'active':''}" onclick="switchSub('plants')">Bush Tucker</button>
     </div>
     <div id="guides-body"></div>`;
-  if(guidesSub==='encyclopedia')renderEncyclopedia();else renderKnots();
+  if(guidesSub==='encyclopedia')renderEncyclopedia();
+  else if(guidesSub==='knots')renderKnots();
+  else renderPlants();
 }
 function switchSub(sub){guidesSub=sub;renderGuides();}
 function renderEncyclopedia(){
@@ -1229,7 +1378,7 @@ function setEncFilter(c){encFilter=c;renderEncyclopedia();}
 function fullCard(type,a){
   const acc=accentOf(type,a);
   return `<a class="card c-${acc}" onclick="openArticle('${type}','${a.id}')">
-    <div class="card-ico b-${acc}">${ICON[iconOf(type,a)]}</div>
+    ${cardThumb(type,a)}
     <div class="card-body">
       <div class="cat-label t-${acc}">${kickerOf(type,a)}</div>
       <div class="card-title">${titleOf(type,a)}</div>
@@ -1238,7 +1387,8 @@ function fullCard(type,a){
         ${a.difficulty?`<span class="chip diff-${a.difficulty}">${a.difficulty}</span>`:''}
         ${type==='knot'?`<span class="chip">Strength ${a.strengthRating}/5</span>`:''}
         ${type==='fa'&&a.callEmergency?'<span class="chip solid-danger">Call 000</span>':''}
-        ${(type==='enc'&&a.australianNote)||(type==='fa'&&a.australianOnly)?'<span class="chip">AU</span>':''}
+        ${type==='plant'?`<span class="chip">${a.states.length} states</span>`:''}
+        ${(type==='enc'&&a.australianNote)||(type==='fa'&&a.australianOnly)||type==='plant'?'<span class="chip">AU</span>':''}
       </div>
     </div>
     <button class="fav-star ${isFav(type,a.id)?'on':''}" onclick="event.stopPropagation();quickFav(this,'${type}','${a.id}')">${isFav(type,a.id)?ICON.starFill:ICON.star}</button>
@@ -1246,6 +1396,11 @@ function fullCard(type,a){
 }
 function quickFav(btn,type,id){toggleFav(type,id);const on=isFav(type,id);btn.classList.toggle('on',on);btn.innerHTML=on?ICON.starFill:ICON.star;}
 function renderKnots(){document.getElementById('guides-body').innerHTML=KNOTS.map(k=>fullCard('knot',k)).join('');}
+function renderPlants(){
+  const safety=`<div class="safety-bar">${ICON.warn}<div><div class="st">Identify before you eat</div>
+    <div class="sd">Never eat any wild plant unless you have <strong>positively identified it</strong>. Many Australian plants are toxic and some mimic edible species. This guide is a starting reference, not a substitute for expert identification.</div></div></div>`;
+  document.getElementById('guides-body').innerHTML=safety+PLANTS.map(p=>fullCard('plant',p)).join('');
+}
 
 /* ============================================================
    FIRST AID
@@ -1253,8 +1408,7 @@ function renderKnots(){document.getElementById('guides-body').innerHTML=KNOTS.ma
 function renderFirstAid(){
   const order=['bleeding','burns','hypothermia','heat','snakes','spiders','fractures','shock','cpr','drowning','eye','allergy'];
   const grouped={};FIRST_AID.forEach(a=>{(grouped[a.category]=grouped[a.category]||[]).push(a);});
-  let html=`<div class="page-title">First Aid</div>
-    <div class="page-sub">Protocols aligned with Australian Resuscitation Council guidance.</div>
+  let html=`${banner('ban-firstaid','First Aid','Protocols aligned with Australian Resuscitation Council guidance.')}
     <a class="call-000" href="tel:000"><div class="ring">${ICON.phone}</div>
       <div><div class="big">CALL 000</div><div class="sub">Ambulance · Fire · Police</div></div>
       <div class="tap">Tap to call</div></a>`;
@@ -1273,7 +1427,7 @@ function renderProjects(){
     return `<button class="filter-pill ${projFilter===d?'active':''}" onclick="setProjFilter('${d}')">${d} <span class="cnt">${n}</span></button>`;}).join('')}</div>`;
   const items=PROJECTS.filter(p=>projFilter==='all'||p.difficulty===projFilter);
   document.getElementById('screen-projects').innerHTML=
-    `<div class="page-title">Projects</div><div class="page-sub">Practical bushcraft builds with field checklists.</div>`+filterHtml+items.map(p=>fullCard('proj',p)).join('');
+    banner('ban-projects','Projects','Practical bushcraft builds with field checklists.')+filterHtml+items.map(p=>fullCard('proj',p)).join('');
 }
 function setProjFilter(d){projFilter=d;renderProjects();}
 
@@ -1289,9 +1443,11 @@ function openArticle(type,id){
   else if(type==='fa')html=faArticleHtml(a);
   else if(type==='knot')html=knotArticleHtml(a);
   else if(type==='proj')html=projArticleHtml(a);
-  const fav=isFav(type,id);
+  else if(type==='plant')html=plantArticleHtml(a);
+  const src=imgFor(type,a);
+  const photo=src?`<div class="art-photo"><img src="${src}" alt="" loading="eager"></div>`:'';
   const head=`<button class="back-btn" onclick="switchTab('${articleReturnTab}')">${ICON.back} Back</button>`;
-  document.getElementById('screen-article').innerHTML=head+`<div data-fav-type="${type}" data-fav-id="${id}">${html}</div>`;
+  document.getElementById('screen-article').innerHTML=head+photo+`<div data-fav-type="${type}" data-fav-id="${id}">${html}</div>`;
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('screen-article').classList.add('active');
   document.getElementById('noteFab').style.display='none';
@@ -1458,6 +1614,25 @@ function projArticleHtml(p){
     ${p.tips?`<div class="tip-box"><div class="label">Tip</div>${p.tips}</div>`:''}
   </article>`;
 }
+function plantArticleHtml(p){
+  const eat=p.eat.map(e=>`<li>${e}</li>`).join('');
+  return `<article class="article">
+    <div class="article-head"><div style="flex:1">
+      <div class="section-label t-food" style="margin-top:0">Bush Tucker</div>
+      <h1 style="margin-top:0">${p.name}</h1>
+      <div style="font-style:italic;color:var(--text-secondary);font-size:.92rem;margin-top:2px">${p.sci}</div></div>${favButton('plant',p.id)}</div>
+    <div class="states-row">${p.states.map(s=>`<span class="state-chip">${s}</span>`).join('')}</div>
+    <p style="color:var(--text-secondary);margin-bottom:8px">${p.summary}</p>
+    <div class="safety-bar">${ICON.warn}<div><div class="st">Positively identify first</div>
+      <div class="sd">Do not eat unless you are certain of the species. Toxic lookalikes exist.</div></div></div>
+    <div class="section-label">How it's used</div>
+    <ul class="content" style="margin:0 0 var(--s2) 1.1em">${eat}</ul>
+    <div class="section-label">Identifying it</div>
+    <div class="content"><p>${p.id_notes}</p></div>
+    <div class="caution-box"><div class="label">${ICON.warn} Caution</div><div class="sd" style="font-size:.88rem;color:#e7bdbd">${p.caution}</div></div>
+    <div class="content"><p>${p.content}</p></div>
+  </article>`;
+}
 function pstepTap(id,idx,li){toggleCheck(id,idx);const on=getChecks(id).includes(idx);
   li.classList.toggle('done',on);li.querySelector('.stepnum').innerHTML=on?ICON.check:findArticle('proj',id).steps[idx].step;updateProg(id);}
 
@@ -1471,6 +1646,7 @@ function buildSearchIndex(){
   FIRST_AID.forEach(a=>SEARCH_INDEX.push({type:'fa',id:a.id,title:a.title,kw:(a.title+' '+a.summary+' '+a.category+' first aid').toLowerCase()}));
   KNOTS.forEach(a=>SEARCH_INDEX.push({type:'knot',id:a.id,title:a.name,kw:(a.name+' '+a.uses.join(' ')+' '+a.category+' knot').toLowerCase()}));
   PROJECTS.forEach(a=>SEARCH_INDEX.push({type:'proj',id:a.id,title:a.title,kw:(a.title+' '+a.category+' project').toLowerCase()}));
+  PLANTS.forEach(a=>SEARCH_INDEX.push({type:'plant',id:a.id,title:a.name,kw:(a.name+' '+a.sci+' '+a.summary+' bush tucker edible plant food '+a.states.join(' ')).toLowerCase()}));
 }
 function openSearch(){document.getElementById('search').classList.add('open');document.body.style.overflow='hidden';
   const inp=document.getElementById('searchInput');inp.value='';runSearch('');setTimeout(()=>inp.focus(),50);}
@@ -1499,6 +1675,18 @@ function openSettings(){
 function closeSettings(){document.getElementById('settingsModal').classList.remove('open');document.body.style.overflow='';}
 function setTextSize(size){const s=LS.get('bc_settings',{});s.textSize=size;LS.set('bc_settings',s);applySettings();
   document.querySelectorAll('#textSizeSeg button').forEach(b=>b.classList.toggle('active',b.dataset.size===size));}
+let creditsLoaded=false;
+function toggleCredits(){
+  const box=document.getElementById('creditsBox');
+  if(box.style.display==='none'){box.style.display='block';
+    if(!creditsLoaded){creditsLoaded=true;box.innerHTML='Loading…';
+      fetch('img/credits.json').then(r=>r.json()).then(cr=>{
+        const rows=Object.values(cr).map(c=>`<div>• <a href="${c.descurl}" target="_blank" rel="noopener">${escapeHtml((c.file||'').replace(/^File:/,''))}</a> — ${escapeHtml(c.artist||'Unknown')}${c.license?' ('+escapeHtml(c.license)+')':''}</div>`).join('');
+        box.innerHTML=`<p style="margin-bottom:8px">Photographs sourced from Wikimedia Commons under their respective licences (CC BY / CC BY-SA / public domain). Full source & licence per image:</p>${rows}`;
+      }).catch(()=>{box.innerHTML='Photos sourced from Wikimedia Commons contributors under CC / public-domain licences. See the project repository for per-image credits.';});
+    }
+  } else box.style.display='none';
+}
 
 /* ============================================================
    EMERGENCY MODE
@@ -1541,7 +1729,7 @@ function renderNotes(){
       ${(n.tags||[]).slice(0,3).map(t=>`<span class="chip">${escapeHtml(t)}</span>`).join('')}
       <span class="nc-date">${fmtDate(n.updatedAt)}</span></div></div>`).join('');}
   document.getElementById('screen-notes').innerHTML=
-    `<div class="page-title">Notes</div><div class="page-sub">Offline field journal. ${total} note${total===1?'':'s'}.</div>`+
+    banner('ban-notes','Notes',`Offline field journal. ${total} note${total===1?'':'s'}.`)+
     (total?`<div class="searchbar">${ICON.search}<input placeholder="Search notes…" value="${escapeHtml(noteSearch)}" oninput="noteSearch=this.value;renderNotes()" id="noteSearchInp"></div>`:'')+body;
   if(noteSearch){const i=document.getElementById('noteSearchInp');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length);}}
 }
