@@ -1215,6 +1215,138 @@ const PLANTS = [
 ];
 
 /* ============================================================
+   WEATHER SIGNS — reading the sky in the field
+   ============================================================ */
+const WEATHER = [
+  {id:'weather-red-sky',name:'Red Sky',omen:'warning',sign:'A deep red sky at sunrise; or a glowing red sky at sunset.',
+   means:'"Red sky at night, shepherd’s delight; red sky in morning, shepherd’s warning." A red sunset means dry, dust-laden air is to your west (and weather generally moves west→east), so fine weather is likely coming. A red sunrise means that fine air has already passed east and wetter, unsettled weather may be moving in.',
+   action:'Red dawn: expect deteriorating weather within ~12–24h — secure camp, prep shelter. Red dusk: a settled night is likely.',
+   content:'A genuinely useful rule of thumb in the mid-latitudes where systems track west to east, as across southern Australia.'},
+  {id:'weather-mares-tails',name:"Mares' Tails (Cirrus)",omen:'warning',sign:'High, wispy streaks of cloud with curled, feathery ends, drawn out across a high blue sky.',
+   means:'High cirrus is often the leading edge of an approaching warm front and low-pressure system. "Mares’ tails and mackerel scales make tall ships carry low sails."',
+   action:'If cirrus thickens and lowers over the next 12–36h, rain and wind are likely on the way. Use the fine window now to gather wood and firm up shelter.',
+   content:'Cirrus alone is not rain, but a steady progression cirrus → thicker altocumulus → lowering grey cloud is a classic deteriorating sequence.'},
+  {id:'weather-mackerel',name:'Mackerel Sky',omen:'warning',sign:'Rows of small, rippled white cloudlets like fish scales (altocumulus/cirrocumulus) covering much of the sky.',
+   means:'Mid-level instability and moisture — often ahead of a front. Change is usually 6–24 hours away.',
+   action:'Treat as a "weather coming" sign. Finish any exposed travel and prepare for wind and rain.',
+   content:'Paired with mares’ tails it is a strong indicator of an approaching system.'},
+  {id:'weather-halo',name:'Ring Around Sun or Moon',omen:'warning',sign:'A bright ring (often 22°) circling the sun or moon, sometimes faintly rainbow-edged.',
+   means:'The halo is light refracting through ice crystals in high cirrus/cirrostratus — again the advance guard of a warm front. Rain often follows within ~12–24 hours.',
+   action:'A halo, especially with a falling barometer or freshening wind, is a reliable "rain soon" sign. Prepare shelter and water collection.',
+   content:'The brighter and more complete the ring, the more reliable the warning tends to be.'},
+  {id:'weather-lenticular',name:'Lenticular Clouds',omen:'warning',sign:'Smooth, lens or saucer-shaped clouds hanging near or downwind of mountains, often stacked.',
+   means:'Strong, moisture-laden winds aloft being forced over high terrain. They signal high winds at altitude and often an approaching change.',
+   action:'In hill or mountain country, expect strong gusty winds — avoid exposed ridgelines and pitch shelter in the lee.',
+   content:'Beautiful but a clear marker of powerful winds aloft and unsettled mountain weather.'},
+  {id:'weather-cumulonimbus',name:'Towering Storm Cloud',omen:'danger',sign:'A huge cauliflower cloud building tall and dark, often with a flat, spreading "anvil" top.',
+   means:'Cumulonimbus = thunderstorm: lightning, downpours, hail, violent gusts and flash flooding. The anvil points the way the storm is heading.',
+   action:'Get off ridges, summits and open ground. Avoid lone trees, water and metal. Move to lower ground (but NOT a creek bed/gully that can flash-flood). Shelter low and wait it out.',
+   content:'The most dangerous everyday sky. Building cumulus by mid-morning on a hot, humid day warns of afternoon storms.'},
+  {id:'weather-lowering',name:'Lowering, Darkening Cloud',omen:'warning',sign:'A grey cloud layer steadily thickening and dropping lower through the day; horizon hazing out.',
+   means:'A front or rain band is arriving. Falling cloud base + freshening wind + dropping pressure = rain is close.',
+   action:'Rain within hours. Get shelter fully weatherproof, stow dry tinder, and set out water collection.',
+   content:'One of the most dependable short-range signs — the sky literally closing in.'},
+  {id:'weather-fog',name:'Morning Valley Fog',omen:'fair',sign:'Mist pooling in valleys and over water at dawn, under a clear sky.',
+   means:'Radiation fog forms on clear, calm nights — usually a sign of a stable high-pressure system and a fine day ahead once it burns off.',
+   action:'Generally good news: expect a clear, settling day. Wait for the fog to lift before navigating; conserve energy meanwhile.',
+   content:'Fog that forms under clear calm skies differs from low cloud rolling in off a front, which signals worsening weather.'},
+  {id:'weather-wind',name:'Wind Shift & Rising Wind',omen:'warning',sign:'Wind strengthening and changing direction; in the southern hemisphere a wind backing (shifting anticlockwise) often precedes bad weather.',
+   means:'Rising, shifting wind marks an approaching front or low. A sudden cold gusty change can arrive fast (a "southerly buster" on the east coast).',
+   action:'Reinforce and re-angle shelter to the new wind, weight down gear, and expect a temperature drop and possible rain.',
+   content:'Combine wind behaviour with cloud signs: rising wind + lowering cloud + halo together is a confident bad-weather call.'}
+];
+
+/* ============================================================
+   ANIMAL TRACKER — reading sign to find water, food & danger
+   ============================================================ */
+const TRACKS = [
+  {id:'track-kangaroo',name:'Kangaroo',sci:'Macropus spp.',where:'All mainland states; open forest, grassland, scrub.',
+   track:'Long, narrow hind-foot prints (up to ~15cm) in pairs; a big central toe. Front paws and tail only mark the ground when moving slowly.',
+   sign:'Scattered dark fibrous pellets; flattened "forms" where they rest in grass; clear pads worn to water.',
+   behaviour:'Most active dawn and dusk; rests in shade midday. Hops — wide-spaced paired prints mean fast travel.',
+   value:'Pads reliably lead to water at dawn/dusk. Major game animal where legal in survival need.',
+   danger:'A cornered large male can kick dangerously with its hind claws — never corner one.',
+   content:'The most common large track in the Australian bush. Following well-worn kangaroo pads downhill very often leads to water.'},
+  {id:'track-wallaby',name:'Wallaby',sci:'Wallabia / Notamacropus spp.',where:'Eastern & northern states, Tas; denser forest and scrub edges than roos.',
+   track:'Like a kangaroo but smaller; paired hind prints, narrower, often in thicker cover.',
+   sign:'Smaller pellet scats; tunnels and runs pushed through dense undergrowth.',
+   behaviour:'Shy, crepuscular; sticks to cover and well-used runs between feeding clearings and shelter.',
+   value:'Runs lead between water, feed and shelter — useful for trap/snare placement in genuine survival.',
+   danger:'Generally harmless; will bolt.',
+   content:'Wallaby runs through scrub are obvious tunnels — handy navigation and trapping lines.'},
+  {id:'track-wombat',name:'Wombat',sci:'Vombatus / Lasiorhinus',where:'SE Australia & Tas (common wombat); cooler forest and grassland.',
+   track:'Broad, pigeon-toed prints with strong claw marks; rolling, low gait.',
+   sign:'Unmistakable CUBE-shaped droppings left on logs and rocks as markers; large (30–60cm) burrow entrances.',
+   behaviour:'Nocturnal, slow but powerful; uses regular paths between burrow and feeding ground.',
+   value:'Burrows and pads mark sheltered ground; cube scats confirm the maker instantly.',
+   danger:'Strong and can injure if cornered at a burrow; do not block a burrow you may need to pass.',
+   content:'The cubic droppings are one of the most distinctive animal signs on Earth — diagnostic at a glance.'},
+  {id:'track-emu',name:'Emu',sci:'Dromaius novaehollandiae',where:'Most of mainland Australia; open plains, woodland, farmland.',
+   track:'Large THREE-toed prints (~13–15cm), arrow-like, with the centre toe longest. Walking stride is long.',
+   sign:'Large dark droppings full of seeds and plant matter; dust bathing scrapes.',
+   behaviour:'Diurnal, wide-ranging; follows food and water, sometimes long distances.',
+   value:'Seed-filled droppings indicate what fruit/seed is around; emus travel to water.',
+   danger:'Large birds with a powerful forward kick — keep your distance, especially near chicks.',
+   content:'The big three-toed print is hard to confuse with anything except the (range-limited) cassowary.'},
+  {id:'track-dingo',name:'Dingo',sci:'Canis familiaris dingo',where:'Mainland Australia (not Tas); deserts to forests.',
+   track:'Dog-like four-toed print with claw marks; tends to register in a neat, direct line of travel.',
+   sign:'Twisted, fur/bone-filled scats often left on tracks and junctions as territory markers.',
+   behaviour:'Mostly crepuscular/nocturnal; territorial; travels established routes and ridgelines.',
+   value:'Their routes and scats reveal active game trails and territory edges.',
+   danger:'Generally wary, but can be bold around camps/food (e.g. K’gari/Fraser Island). Never feed them; secure food.',
+   content:'Distinguish from feral dogs by the neat, direct trotting trail and consistent print size.'},
+  {id:'track-echidna',name:'Echidna',sci:'Tachyglossus aculeatus',where:'All states; almost any habitat with ants/termites.',
+   track:'Pigeon-toed prints with long claw marks; often alongside diggings.',
+   sign:'Conical nose-probe holes and torn-open ant/termite nests; cylindrical scats full of soil and insect cuticle.',
+   behaviour:'Solitary, slow; active by day in cooler weather, dusk in heat. Digs straight down when threatened.',
+   value:'Diggings indicate insect food sources; harmless to share ground with.',
+   danger:'None to humans — the spines are purely defensive.',
+   content:'Fresh nose-probe diggings and torn termite mounds are the giveaway sign.'},
+  {id:'track-possum',name:'Brushtail Possum',sci:'Trichosurus vulpecula',where:'Most of Australia; forest, woodland and towns.',
+   track:'Small hand-like prints with opposable inner "thumb"; often around tree bases.',
+   sign:'Scratch marks on trunks; clusters of dark cylindrical droppings under den trees; loud guttural night calls.',
+   behaviour:'Nocturnal, arboreal; dens in tree hollows and roofs; emerges after dark to feed.',
+   value:'Active hollows mark shelter trees; a confidently identified food source where legal in survival.',
+   danger:'Will scratch/bite if cornered; otherwise harmless.',
+   content:'The hand-shaped print and the deep coughing call at night are the easiest cues.'},
+  {id:'track-goanna',name:'Goanna (Monitor)',sci:'Varanus spp.',where:'Most of mainland; the lace monitor in eastern forests.',
+   track:'Clawed five-toed prints either side of a continuous wavy TAIL-DRAG line — diagnostic.',
+   sign:'Large scats; deep claw marks climbing trees; raided nests.',
+   behaviour:'Diurnal, fast; basks, forages widely, climbs trees when alarmed.',
+   value:'The tail-drag-with-footprints trail is unmistakable; indicates active reptile country.',
+   danger:'Powerful claws and a strong bite; if frightened it may run up the nearest vertical object — including a person. Give it space.',
+   content:'No other common Australian animal leaves footprints astride a continuous tail line.'},
+  {id:'track-feral-pig',name:'Feral Pig',sci:'Sus scrofa',where:'Widespread, esp. northern & eastern wetlands and rivers.',
+   track:'Cloven (two-toe) print, broader and blunter than deer, with dew-claw marks often showing.',
+   sign:'Extensive ground "rooting", muddy wallows, rubbed mud on tree trunks, churned creek banks.',
+   behaviour:'Mostly nocturnal near water; travels in mobs; never far from water and mud.',
+   value:'Rooting and wallows point straight to water and damp ground — useful when seeking water.',
+   danger:'Can be aggressive, especially boars and sows with young; give a wide berth.',
+   content:'Wallows and rooting are a strong "water is near" indicator in dry country.'},
+  {id:'track-deer',name:'Feral Deer',sci:'Cervus / Dama spp.',where:'Growing populations in eastern & southern ranges and forests.',
+   track:'Cloven heart-shaped (two-toe) print, narrower and more pointed than pig; toes splay when running.',
+   sign:'Oval pellet scats in piles; "rubs" and frayed bark on saplings; well-worn trails between feed and bedding.',
+   behaviour:'Crepuscular; beds in cover by day, feeds in clearings dawn/dusk; uses regular trails.',
+   value:'Deer trails are clear travel routes and good trap/ambush lines for survival hunting where legal.',
+   danger:'Rutting stags can be aggressive; otherwise flighty.',
+   content:'Distinguish from pig by the narrower, more pointed, heart-shaped slot.'},
+  {id:'track-platypus',name:'Platypus',sci:'Ornithorhynchus anatinus',where:'Eastern Australia & Tas; permanent freshwater creeks, rivers, dams.',
+   track:'Rarely tracked on land; webbed prints and a belly/tail slide near the water’s edge; burrow entrances in banks.',
+   sign:'Burrow holes just above water level in earthen banks; ripples and dive rings at dawn/dusk.',
+   behaviour:'Shy, mainly nocturnal/crepuscular, aquatic; forages along the streambed.',
+   value:'Its presence CONFIRMS permanent, reasonably clean freshwater — a strong water indicator.',
+   danger:'Males have a venomous ankle spur that causes severe pain — never handle one.',
+   content:'You rarely see tracks, but a known platypus stretch reliably marks year-round water.'},
+  {id:'track-cassowary',name:'Southern Cassowary',sci:'Casuarius casuarius',where:'Wet tropics of far north QLD only; dense rainforest.',
+   track:'Huge three-toed print, even larger than emu, with a formidable inner claw.',
+   sign:'Large piles of droppings full of whole rainforest fruits; trails through dense undergrowth.',
+   behaviour:'Solitary, wary but bold near food; males mind the chicks.',
+   value:'Its droppings reveal which rainforest fruits are about.',
+   danger:'POTENTIALLY DEADLY: a powerful kick with a dagger-like claw can kill. Never approach, corner, or feed one — back away slowly and keep something between you and it.',
+   content:'The one Australian animal whose track should make you cautious rather than hopeful — treat with great respect.'}
+];
+
+/* ============================================================
    STORAGE
    ============================================================ */
 const LS={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v);}catch(e){return d;}},
@@ -1238,22 +1370,20 @@ function findArticle(type,id){
   if(type==='knot')return KNOTS.find(a=>a.id===id);
   if(type==='proj')return PROJECTS.find(a=>a.id===id);
   if(type==='plant')return PLANTS.find(a=>a.id===id);
+  if(type==='weather')return WEATHER.find(a=>a.id===id);
+  if(type==='track')return TRACKS.find(a=>a.id===id);
   return null;
 }
 function titleOf(type,a){return a.title||a.name;}
-function accentOf(type,a){if(type==='fa')return a.urgency;if(type==='knot')return 'knot';if(type==='proj')return 'project';if(type==='plant')return 'food';return a.category;}
-function iconOf(type,a){if(type==='enc')return CAT_ICON[a.category];if(type==='fa')return FA_CAT_ICON[a.category]||'cross';if(type==='knot')return 'knot';if(type==='proj')return 'hammer';if(type==='plant')return 'leaf';}
-function kickerOf(type,a){if(type==='fa')return a.urgency;if(type==='knot')return a.category.replace('-',' / ');if(type==='proj')return a.category.replace('-',' ');if(type==='plant')return 'Bush Tucker';return CAT_LABELS[a.category];}
+function accentOf(type,a){if(type==='fa')return a.urgency;if(type==='knot')return 'knot';if(type==='proj')return 'project';if(type==='plant')return 'food';if(type==='weather')return a.omen==='danger'?'critical':(a.omen==='fair'?'standard':'urgent');if(type==='track')return 'food';return a.category;}
+function iconOf(type,a){if(type==='enc')return CAT_ICON[a.category];if(type==='fa')return FA_CAT_ICON[a.category]||'cross';if(type==='knot')return 'knot';if(type==='proj')return 'hammer';if(type==='plant')return 'leaf';if(type==='weather')return 'sun';if(type==='track')return 'compass';}
+function kickerOf(type,a){if(type==='fa')return a.urgency;if(type==='knot')return a.category.replace('-',' / ');if(type==='proj')return a.category.replace('-',' ');if(type==='plant')return 'Bush Tucker';if(type==='weather')return a.omen==='danger'?'Danger':(a.omen==='fair'?'Fair sign':'Weather warning');if(type==='track')return 'Animal Sign';return CAT_LABELS[a.category];}
 
-/* ---- Photo helpers ---- */
-const FA_PHOTO=new Set(['fa-snake-brown','fa-snake-tiger','fa-snake-taipan','fa-snake-rbb','fa-snake-deathadder','fa-spider-funnelweb','fa-spider-redback','fa-spider-whitetail']);
-const PROJ_IMG={'camp-comfort':'ban-projects','camp-cooking':'cat-fire','food':'cat-food','shelter':'cat-shelter','first-aid':'ban-firstaid','water':'cat-water'};
+/* ---- Photo helpers ---- (unique photo per article; knots use their SVG diagram) */
 function imgFor(type,a){
-  if(type==='enc')return 'img/cat-'+a.category+'.jpg';
-  if(type==='fa')return FA_PHOTO.has(a.id)?('img/'+a.id+'.jpg'):'img/ban-firstaid.jpg';
-  if(type==='proj')return 'img/'+(PROJ_IMG[a.category]||'ban-projects')+'.jpg';
-  if(type==='plant')return 'img/'+a.id+'.jpg';
-  return null; /* knots use their SVG diagram */
+  if(type==='knot')return null;
+  if(type==='proj')return 'img/proj-'+a.id+'.jpg';
+  return 'img/'+a.id+'.jpg';
 }
 function knotThumb(id){return `<svg viewBox="0 0 300 204" xmlns="http://www.w3.org/2000/svg">${KSVG[id]||''}</svg>`;}
 function cardThumb(type,a){
@@ -1326,7 +1456,9 @@ function renderHome(){
     ${browseCard('knot','knot','Reference','Knot Library','12 essential knots with step-by-step instructions.',"switchTab('guides');setTimeout(()=>switchSub('knots'),0)")}
     ${browseCard('cross','critical','Emergency','First Aid','20 ARC-aligned protocols, AU snake &amp; spider bites.',"switchTab('firstaid')")}
     ${browseCard('hammer','project','Build','Bushcraft Projects','7 practical builds with field checklists.',"switchTab('projects')")}
-    ${browseCard('leaf','food','Forage','Bush Tucker','12 edible Australian plants, tagged by state.',"switchTab('guides');setTimeout(()=>switchSub('plants'),0)")}`;
+    ${browseCard('leaf','food','Forage','Bush Tucker','12 edible Australian plants, tagged by state.',"switchTab('guides');setTimeout(()=>switchSub('plants'),0)")}
+    ${browseCard('sun','warning','Read the Sky','Weather Signs','9 sky signs and what they mean for you.',"switchTab('guides');setTimeout(()=>switchSub('weather'),0)")}
+    ${browseCard('compass','water','Track','Animal Tracker','12 Australian animals — sign, water & danger.',"switchTab('guides');setTimeout(()=>switchSub('tracks'),0)")}`;
 }
 function miniCard(type,a){
   const acc=accentOf(type,a);
@@ -1351,18 +1483,27 @@ function banner(imgKey,title,sub){
    ============================================================ */
 let guidesSub='encyclopedia',encFilter='all';
 function renderGuides(){
+  const sb={encyclopedia:['ban-guides','Guides','Field-manual reference, fully offline.'],
+    knots:['ban-guides','Guides','Field-manual reference, fully offline.'],
+    plants:['ban-plants','Bush Tucker','Edible Australian plants — identify before you eat.'],
+    weather:['ban-weather','Weather Signs','Read the sky to stay ahead of the weather.'],
+    tracks:['ban-tracks','Animal Tracker','Read animal sign for water, food and danger.']}[guidesSub]||['ban-guides','Guides','Field-manual reference, fully offline.'];
   document.getElementById('screen-guides').innerHTML=`
-    ${banner('ban-guides','Guides','Field-manual reference, fully offline.')}
+    ${banner(sb[0],sb[1],sb[2])}
     <div class="searchbar" onclick="openSearch()">${ICON.search}<input placeholder="Search all content…" readonly style="pointer-events:none"></div>
     <div class="filter-row">
       <button class="filter-pill ${guidesSub==='encyclopedia'?'active':''}" onclick="switchSub('encyclopedia')">Encyclopedia</button>
       <button class="filter-pill ${guidesSub==='knots'?'active':''}" onclick="switchSub('knots')">Knots</button>
       <button class="filter-pill ${guidesSub==='plants'?'active':''}" onclick="switchSub('plants')">Bush Tucker</button>
+      <button class="filter-pill ${guidesSub==='weather'?'active':''}" onclick="switchSub('weather')">Weather</button>
+      <button class="filter-pill ${guidesSub==='tracks'?'active':''}" onclick="switchSub('tracks')">Tracks</button>
     </div>
     <div id="guides-body"></div>`;
   if(guidesSub==='encyclopedia')renderEncyclopedia();
   else if(guidesSub==='knots')renderKnots();
-  else renderPlants();
+  else if(guidesSub==='plants')renderPlants();
+  else if(guidesSub==='weather')renderWeather();
+  else renderTracks();
 }
 function switchSub(sub){guidesSub=sub;renderGuides();}
 function renderEncyclopedia(){
@@ -1382,13 +1523,14 @@ function fullCard(type,a){
     <div class="card-body">
       <div class="cat-label t-${acc}">${kickerOf(type,a)}</div>
       <div class="card-title">${titleOf(type,a)}</div>
-      ${a.summary?`<div class="card-sum">${a.summary}</div>`:(type==='knot'?`<div class="card-sum">${a.uses.slice(0,3).join(' · ')}</div>`:'')}
+      ${a.summary?`<div class="card-sum">${a.summary}</div>`:(type==='knot'?`<div class="card-sum">${a.uses.slice(0,3).join(' · ')}</div>`:(type==='weather'?`<div class="card-sum">${a.sign}</div>`:(type==='track'?`<div class="card-sum">${a.track}</div>`:'')))}
       <div class="card-meta">
         ${a.difficulty?`<span class="chip diff-${a.difficulty}">${a.difficulty}</span>`:''}
         ${type==='knot'?`<span class="chip">Strength ${a.strengthRating}/5</span>`:''}
         ${type==='fa'&&a.callEmergency?'<span class="chip solid-danger">Call 000</span>':''}
         ${type==='plant'?`<span class="chip">${a.states.length} states</span>`:''}
-        ${(type==='enc'&&a.australianNote)||(type==='fa'&&a.australianOnly)||type==='plant'?'<span class="chip">AU</span>':''}
+        ${type==='track'&&/deadly|deadly|kill|venomous|aggressive/i.test(a.danger)?'<span class="chip solid-danger">Caution</span>':''}
+        ${(type==='enc'&&a.australianNote)||(type==='fa'&&a.australianOnly)||type==='plant'||type==='track'?'<span class="chip">AU</span>':''}
       </div>
     </div>
     <button class="fav-star ${isFav(type,a.id)?'on':''}" onclick="event.stopPropagation();quickFav(this,'${type}','${a.id}')">${isFav(type,a.id)?ICON.starFill:ICON.star}</button>
@@ -1400,6 +1542,14 @@ function renderPlants(){
   const safety=`<div class="safety-bar">${ICON.warn}<div><div class="st">Identify before you eat</div>
     <div class="sd">Never eat any wild plant unless you have <strong>positively identified it</strong>. Many Australian plants are toxic and some mimic edible species. This guide is a starting reference, not a substitute for expert identification.</div></div></div>`;
   document.getElementById('guides-body').innerHTML=safety+PLANTS.map(p=>fullCard('plant',p)).join('');
+}
+function renderWeather(){
+  const intro=`<p class="page-sub" style="margin-bottom:var(--s2)">Read the sky to stay ahead of the weather. Combine several signs for a confident call — and remember weather generally tracks west to east across southern Australia.</p>`;
+  document.getElementById('guides-body').innerHTML=intro+WEATHER.map(w=>fullCard('weather',w)).join('');
+}
+function renderTracks(){
+  const intro=`<p class="page-sub" style="margin-bottom:var(--s2)">Reading animal sign helps you find water, food and — just as important — avoid danger. Tracks, scat and trails all tell a story.</p>`;
+  document.getElementById('guides-body').innerHTML=intro+TRACKS.map(t=>fullCard('track',t)).join('');
 }
 
 /* ============================================================
@@ -1444,6 +1594,8 @@ function openArticle(type,id){
   else if(type==='knot')html=knotArticleHtml(a);
   else if(type==='proj')html=projArticleHtml(a);
   else if(type==='plant')html=plantArticleHtml(a);
+  else if(type==='weather')html=weatherArticleHtml(a);
+  else if(type==='track')html=trackArticleHtml(a);
   const src=imgFor(type,a);
   const photo=src?`<div class="art-photo"><img src="${src}" alt="" loading="eager"></div>`:'';
   const head=`<button class="back-btn" onclick="switchTab('${articleReturnTab}')">${ICON.back} Back</button>`;
@@ -1633,6 +1785,36 @@ function plantArticleHtml(p){
     <div class="content"><p>${p.content}</p></div>
   </article>`;
 }
+function weatherArticleHtml(w){
+  const acc=accentOf('weather',w);
+  return `<article class="article">
+    <div class="article-head"><div style="flex:1">
+      <div class="section-label t-${acc}" style="margin-top:0">${kickerOf('weather',w)}</div>
+      <h1 style="margin-top:0">${w.name}</h1></div>${favButton('weather',w.id)}</div>
+    <div class="section-label">What you see</div><div class="content"><p>${w.sign}</p></div>
+    <div class="section-label">What it means</div><div class="content"><p>${w.means}</p></div>
+    <div class="${w.omen==='danger'?'caution-box':'tip-box'}">
+      <div class="label" ${w.omen==='danger'?'':'style="color:var(--warning)"'}>${w.omen==='danger'?ICON.warn+' Take action':'Action'}</div>
+      <div class="sd" style="font-size:.9rem;color:${w.omen==='danger'?'#e7bdbd':'var(--text-secondary)'}">${w.action}</div></div>
+    <div class="content"><p>${w.content}</p></div>
+  </article>`;
+}
+function trackArticleHtml(t){
+  const dangerKey=/deadly|kill|venomous|aggressive|spur/i.test(t.danger);
+  return `<article class="article">
+    <div class="article-head"><div style="flex:1">
+      <div class="section-label t-food" style="margin-top:0">Animal Sign</div>
+      <h1 style="margin-top:0">${t.name}</h1>
+      <div style="font-style:italic;color:var(--text-secondary);font-size:.92rem;margin-top:2px">${t.sci}</div></div>${favButton('track',t.id)}</div>
+    <div class="states-row"><span class="state-chip" style="background:rgba(90,134,166,.16);color:var(--water);border-color:rgba(90,134,166,.3)">${t.where}</span></div>
+    <div class="section-label">Tracks</div><div class="content"><p>${t.track}</p></div>
+    <div class="section-label">Other sign</div><div class="content"><p>${t.sign}</p></div>
+    <div class="section-label">Behaviour</div><div class="content"><p>${t.behaviour}</p></div>
+    <div class="tip-box"><div class="label">Why it matters</div>${t.value}</div>
+    <div class="${dangerKey?'caution-box':'notes-box'}">${dangerKey?`<div class="label">${ICON.warn} Danger</div>`:'<strong>Note: </strong>'}<span class="sd" style="font-size:.9rem;${dangerKey?'color:#e7bdbd':''}">${t.danger}</span></div>
+    <div class="content"><p>${t.content}</p></div>
+  </article>`;
+}
 function pstepTap(id,idx,li){toggleCheck(id,idx);const on=getChecks(id).includes(idx);
   li.classList.toggle('done',on);li.querySelector('.stepnum').innerHTML=on?ICON.check:findArticle('proj',id).steps[idx].step;updateProg(id);}
 
@@ -1647,6 +1829,8 @@ function buildSearchIndex(){
   KNOTS.forEach(a=>SEARCH_INDEX.push({type:'knot',id:a.id,title:a.name,kw:(a.name+' '+a.uses.join(' ')+' '+a.category+' knot').toLowerCase()}));
   PROJECTS.forEach(a=>SEARCH_INDEX.push({type:'proj',id:a.id,title:a.title,kw:(a.title+' '+a.category+' project').toLowerCase()}));
   PLANTS.forEach(a=>SEARCH_INDEX.push({type:'plant',id:a.id,title:a.name,kw:(a.name+' '+a.sci+' '+a.summary+' bush tucker edible plant food '+a.states.join(' ')).toLowerCase()}));
+  WEATHER.forEach(a=>SEARCH_INDEX.push({type:'weather',id:a.id,title:a.name,kw:(a.name+' '+a.sign+' '+a.means+' weather sky cloud forecast storm rain').toLowerCase()}));
+  TRACKS.forEach(a=>SEARCH_INDEX.push({type:'track',id:a.id,title:a.name,kw:(a.name+' '+a.sci+' '+a.track+' '+a.where+' animal track sign scat').toLowerCase()}));
 }
 function openSearch(){document.getElementById('search').classList.add('open');document.body.style.overflow='hidden';
   const inp=document.getElementById('searchInput');inp.value='';runSearch('');setTimeout(()=>inp.focus(),50);}

@@ -23,30 +23,6 @@
   "bytes": 50011,
   "query": "Bush tucker foraging Australia"
  },
- "cat-fire": {
-  "file": "File:Campfire and sparks in Anttoora 3.jpg",
-  "artist": "kallerna",
-  "license": "CC BY-SA 3.0",
-  "descurl": "https://commons.wikimedia.org/wiki/File%3ACampfire_and_sparks_in_Anttoora_3.jpg",
-  "bytes": 107123,
-  "query": "Campfire night"
- },
- "cat-water": {
-  "file": "File:Autumn-creek-rocks-stream - West Virginia - ForestWander.jpg",
-  "artist": "ForestWander",
-  "license": "CC BY-SA 3.0 us",
-  "descurl": "https://commons.wikimedia.org/wiki/File%3AAutumn-creek-rocks-stream_-_West_Virginia_-_ForestWander.jpg",
-  "bytes": 78042,
-  "query": "Forest creek stream rocks"
- },
- "cat-signalling": {
-  "file": "File:A downed US Air Force (USAF) aircrewman uses a hand smoke dispensor to signal rescue personnel during a fire power demonstration held near Indian Springs Auxiliary Field, Nevada (NV - DPLA - 489233cc36b2d69aa418494aa2500e25.jpeg",
-  "artist": "Department of Defense. American Forces Information Service. Defense Visual Information Center. 1994",
-  "license": "Public domain",
-  "descurl": "https://commons.wikimedia.org/wiki/File%3AA_downed_US_Air_Force_%28USAF%29_aircrewman_uses_a_hand_smoke_dispensor_to_signal_rescue_personnel_during_a_fire_power_demonstration_held_near_Indian_Springs_Auxiliary_Field%2C_Nevada_%28NV_-_DPLA_-_489233cc36b2d69aa418494aa2500e25.jpeg",
-  "bytes": 50806,
-  "query": "Signal fire smoke rescue"
- },
  "fa-snake-brown": {
   "file": "File:Pseudonaja textilis - Werrington Sydney 2023. g.jpg",
   "artist": "Xyxyzyz",
@@ -223,28 +199,604 @@
   "bytes": 53581,
   "query": "Open notebook fountain pen"
  },
- "cat-shelter": {
-  "file": "File:Lairig Leacach Bothy.jpg",
-  "artist": "Chris Eilbeck",
-  "license": "CC BY-SA 2.0",
-  "descurl": "https://commons.wikimedia.org/wiki/File%3ALairig_Leacach_Bothy.jpg",
-  "bytes": 55837,
-  "query": "Bivouac wilderness shelter"
+ "fire-ferro-rod": {
+  "file": "File:2Components-FireStone.JPG",
+  "artist": "Xofc",
+  "license": "CC BY-SA 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3A2Components-FireStone.JPG",
+  "bytes": 34709,
+  "query": "Ferrocerium rod sparks fire"
  },
- "cat-psychology": {
+ "fire-bow-drill": {
+  "file": "File:Friction Method.jpg",
+  "artist": "United States Armed Forces",
+  "license": "Public domain",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AFriction_Method.jpg",
+  "bytes": 48093,
+  "query": "Bow drill friction fire"
+ },
+ "fire-flint-steel": {
+  "file": "File:Flint Striker MET sf1977-419a.jpg",
+  "artist": "",
+  "license": "CC0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AFlint_Striker_MET_sf1977-419a.jpg",
+  "bytes": 26840,
+  "query": "Flint and steel fire striker"
+ },
+ "shelter-site-selection": {
+  "file": "File:A small tent with a blue tarp draped over it sits in a clearing between trees. (46645bde-1a56-4bca-bdcf-5d48330ee411).jpg",
+  "artist": "National Park Service",
+  "license": "Public domain",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AA_small_tent_with_a_blue_tarp_draped_over_it_sits_in_a_clearing_between_trees._%2846645bde-1a56-4bca-bdcf-5d48330ee411%29.jpg",
+  "bytes": 62636,
+  "query": "Forest campsite clearing tent"
+ },
+ "water-solar-still": {
+  "file": "File:Aboveground solar water still.jpg",
+  "artist": "United States Army",
+  "license": "Public domain",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AAboveground_solar_water_still.jpg",
+  "bytes": 33639,
+  "query": "Solar still water survival"
+ },
+ "water-purification": {
+  "file": "File:Anton Faymann 032 Auto Colour.jpg",
+  "artist": "Anton Faymann",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AAnton_Faymann_032_Auto_Colour.jpg",
+  "bytes": 60388,
+  "query": "Boiling water billy campfire"
+ },
+ "water-arid-signs": {
+  "file": "File:Burrowed & rippled sandstone (Parachilna Formation, Lower Cambrian; Three Sisters Range, South Australia) 3.jpg",
+  "artist": "James St. John",
+  "license": "CC BY 2.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ABurrowed_%26_rippled_sandstone_%28Parachilna_Formation%2C_Lower_Cambrian%3B_Three_Sisters_Range%2C_South_Australia%29_3.jpg",
+  "bytes": 101621,
+  "query": "Dry creek bed outback Australia"
+ },
+ "food-fishing": {
+  "file": "File:A man is fishing with a line from the banks of a river, as a Wellcome V0040514.jpg",
+  "artist": "Andrew Duncan",
+  "license": "CC BY 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AA_man_is_fishing_with_a_line_from_the_banks_of_a_river%2C_as_a_Wellcome_V0040514.jpg",
+  "bytes": 52147,
+  "query": "Hand line fishing river"
+ },
+ "food-caloric-priority": {
+  "file": "File:Foraged mushrooms - ready for identification.jpg",
+  "artist": "Netherzone",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AForaged_mushrooms_-_ready_for_identification.jpg",
+  "bytes": 57578,
+  "query": "Wild foraged food gathering"
+ },
+ "signal-mirror": {
+  "file": "File:Signal Mirror British Dinghy Heliograph 4inch 1943.jpg",
+  "artist": "Heliograph",
+  "license": "CC0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ASignal_Mirror_British_Dinghy_Heliograph_4inch_1943.jpg",
+  "bytes": 41699,
+  "query": "Signal mirror heliograph survival"
+ },
+ "signal-ground-air": {
+  "file": "File:Stranded mariners signal for help by writing 'SOS' in the sand -a.jpg",
+  "artist": "This file is a work of a sailor or employee of the U.S. Navy , taken or made as part of that person's official duties. As a work of the U.S.",
+  "license": "Public domain",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AStranded_mariners_signal_for_help_by_writing_%27SOS%27_in_the_sand_-a.jpg",
+  "bytes": 45141,
+  "query": "Ground rescue signal beach"
+ },
+ "signal-whistle": {
+  "file": "File:JCAT 101 in Comoros DVIDS363504.jpg",
+  "artist": "Petty Officer 2nd Class Timothy Wilson",
+  "license": "Public domain",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AJCAT_101_in_Comoros_DVIDS363504.jpg",
+  "bytes": 57690,
+  "query": "Emergency survival whistle"
+ },
+ "signal-smoke": {
+  "file": "File:Signal smoke at Firebase Ripcord.jpg",
+  "artist": "SP4 James Saller",
+  "license": "Public domain",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ASignal_smoke_at_Firebase_Ripcord.jpg",
+  "bytes": 39630,
+  "query": "Signal smoke fire"
+ },
+ "psych-panic": {
+  "file": "File:Menacing, frightening extasy.jpg",
+  "artist": "Sothisisnice",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AMenacing%2C_frightening_extasy.jpg",
+  "bytes": 37031,
+  "query": "Hiker resting rock alone"
+ },
+ "psych-decisions": {
+  "file": "File:Spring Basin Wilderness (BLM map).jpg",
+  "artist": "BLM Oregon & Washington",
+  "license": "CC BY 2.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ASpring_Basin_Wilderness_%28BLM_map%29.jpg",
+  "bytes": 59268,
+  "query": "Hiker compass map planning"
+ },
+ "psych-will": {
   "file": "File:Winters kiss - Flickr - Petersrockypics.jpg",
   "artist": "Petersrockypics",
   "license": "CC BY-SA 2.0",
   "descurl": "https://commons.wikimedia.org/wiki/File%3AWinters_kiss_-_Flickr_-_Petersrockypics.jpg",
-  "bytes": 48313,
-  "query": "Lone hiker mist mountain"
+  "bytes": 43376,
+  "query": "Lone hiker mountain sunrise"
  },
- "cat-food": {
-  "file": "File:Australian bush tucker, Alice Springs.jpg",
-  "artist": "Tourism NT",
-  "license": "Attribution",
-  "descurl": "https://commons.wikimedia.org/wiki/File%3AAustralian_bush_tucker%2C_Alice_Springs.jpg",
-  "bytes": 43164,
-  "query": "File:Australian bush tucker, Alice Springs.jpg"
+ "psych-group": {
+  "file": "File:2023 Red Reef Trail Volunteer Event (52645081324).jpg",
+  "artist": "BLMUtah",
+  "license": "Public domain",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3A2023_Red_Reef_Trail_Volunteer_Event_%2852645081324%29.jpg",
+  "bytes": 79564,
+  "query": "Group hikers helping trail"
+ },
+ "fa-heat": {
+  "file": "File:Fictional planet system that has habitable planet 1.png",
+  "artist": "Merikanto",
+  "license": "CC0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AFictional_planet_system_that_has_habitable_planet_1.png",
+  "bytes": 5485,
+  "query": "Hydration water hat sun heat"
+ },
+ "fa-fractures": {
+  "file": "File:Upper arm splint.jpg",
+  "artist": "U.S. Navy",
+  "license": "Public domain",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AUpper_arm_splint.jpg",
+  "bytes": 41650,
+  "query": "Arm splint first aid"
+ },
+ "fa-shock": {
+  "file": "File:15th BSB medics provide first aid training to AAFES employees DVIDS58219.jpg",
+  "artist": "Sgt. Robert Yde",
+  "license": "Public domain",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3A15th_BSB_medics_provide_first_aid_training_to_AAFES_employees_DVIDS58219.jpg",
+  "bytes": 41520,
+  "query": "First aid recovery position"
+ },
+ "fa-cpr": {
+  "file": "File:XII Manewry Ratownicze - first aid training (2025) 07 - CasPeR the CPR Dog Manikin.jpg",
+  "artist": "Klapka paradaja",
+  "license": "CC0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AXII_Manewry_Ratownicze_-_first_aid_training_%282025%29_07_-_CasPeR_the_CPR_Dog_Manikin.jpg",
+  "bytes": 52110,
+  "query": "CPR training manikin resuscitation"
+ },
+ "fa-drowning": {
+  "file": "File:Lifeguard August 2010-1.jpg",
+  "artist": "Alvesgaspar",
+  "license": "CC BY-SA 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ALifeguard_August_2010-1.jpg",
+  "bytes": 40457,
+  "query": "Lifeguard water rescue"
+ },
+ "fa-anaphylaxis": {
+  "file": "File:Epipen design (cropped).jpg",
+  "artist": "Chemistryroxpharmacysux",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AEpipen_design_%28cropped%29.jpg",
+  "bytes": 26149,
+  "query": "Adrenaline autoinjector epipen"
+ },
+ "proj-stretcher": {
+  "file": "File:Frank Goldsborough death in The Post-Star of Glens Falls, New York on 17 July 1930.jpg",
+  "artist": "Anonymous Unknown author",
+  "license": "Public domain",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AFrank_Goldsborough_death_in_The_Post-Star_of_Glens_Falls%2C_New_York_on_17_July_1930.jpg",
+  "bytes": 29178,
+  "query": "Improvised stretcher rescue carry"
+ },
+ "weather-red-sky": {
+  "file": "File:Red clouds over Mekong banks with dwellings and pirogues at sunrise in Don Det Laos.jpg",
+  "artist": "Basile Morin",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ARed_clouds_over_Mekong_banks_with_dwellings_and_pirogues_at_sunrise_in_Don_Det_Laos.jpg",
+  "bytes": 62918,
+  "query": "Red sky sunset clouds"
+ },
+ "weather-mares-tails": {
+  "file": "File:Cirrus uncinus clouds in the morning sky.jpg",
+  "artist": "ADARSHluck",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ACirrus_uncinus_clouds_in_the_morning_sky.jpg",
+  "bytes": 39741,
+  "query": "Cirrus clouds mares tails sky"
+ },
+ "weather-mackerel": {
+  "file": "File:Mackerel sky over Tuntorp 3.jpg",
+  "artist": "W.carter",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AMackerel_sky_over_Tuntorp_3.jpg",
+  "bytes": 43896,
+  "query": "Mackerel sky altocumulus"
+ },
+ "weather-halo": {
+  "file": "File:2024-03-01 - Cirrostratus - halo (22 deg) centered on sun - DSN2151-1.jpg",
+  "artist": "Franz van Duns",
+  "license": "CC BY 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3A2024-03-01_-_Cirrostratus_-_halo_%2822_deg%29_centered_on_sun_-_DSN2151-1.jpg",
+  "bytes": 14243,
+  "query": "22 degree halo sun"
+ },
+ "weather-lenticular": {
+  "file": "File:Mont Blanc from Les Arcs 1950.jpg",
+  "artist": "Dmitry A. Mottl",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AMont_Blanc_from_Les_Arcs_1950.jpg",
+  "bytes": 49916,
+  "query": "Lenticular cloud"
+ },
+ "weather-cumulonimbus": {
+  "file": "File:Cloud cumulonimbus at baltic sea(1).jpg",
+  "artist": "Arnold Paul",
+  "license": "CC BY-SA 2.5",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ACloud_cumulonimbus_at_baltic_sea%281%29.jpg",
+  "bytes": 33610,
+  "query": "Cumulonimbus thunderstorm cloud"
+ },
+ "weather-lowering": {
+  "file": "File:Dark clouds over Towers of Channelside, Tampa, FL.jpg",
+  "artist": "MrSwagger21",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ADark_clouds_over_Towers_of_Channelside%2C_Tampa%2C_FL.jpg",
+  "bytes": 44814,
+  "query": "Dark storm clouds approaching"
+ },
+ "weather-fog": {
+  "file": "File:Early morning mist across the valley - geograph.org.uk - 923121.jpg",
+  "artist": "Pauline Eccles",
+  "license": "CC BY-SA 2.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AEarly_morning_mist_across_the_valley_-_geograph.org.uk_-_923121.jpg",
+  "bytes": 19110,
+  "query": "Valley fog morning mist"
+ },
+ "track-kangaroo": {
+  "file": "File:Eastern Grey Kangaroo Feeding edited.jpg",
+  "artist": "Eastern_Grey_Kangaroo_Feeding.jpg : Toby Hudson derivative work: Durova ( talk )",
+  "license": "CC BY-SA 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AEastern_Grey_Kangaroo_Feeding_edited.jpg",
+  "bytes": 84163,
+  "query": "Eastern grey kangaroo"
+ },
+ "track-wallaby": {
+  "file": "File:Red-necked wallaby442.jpg",
+  "artist": "benjamint",
+  "license": "CC BY-SA 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ARed-necked_wallaby442.jpg",
+  "bytes": 65493,
+  "query": "Red-necked wallaby"
+ },
+ "track-wombat": {
+  "file": "File:Common wombat (Vombatus ursinus tasmaniensis) juvenile Maria Island.jpg",
+  "artist": "Charles J. Sharp",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ACommon_wombat_%28Vombatus_ursinus_tasmaniensis%29_juvenile_Maria_Island.jpg",
+  "bytes": 52719,
+  "query": "Common wombat"
+ },
+ "track-emu": {
+  "file": "File:Dromaius novaehollandiae (head) Battersea Park Children's Zoo.jpg",
+  "artist": "William Warby",
+  "license": "CC BY 2.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ADromaius_novaehollandiae_%28head%29_Battersea_Park_Children%27s_Zoo.jpg",
+  "bytes": 40992,
+  "query": "Emu Dromaius"
+ },
+ "track-dingo": {
+  "file": "File:Dingo (Canis lupus dingo) Kakadu 2.jpg",
+  "artist": "Charles J. Sharp",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ADingo_%28Canis_lupus_dingo%29_Kakadu_2.jpg",
+  "bytes": 58737,
+  "query": "Dingo Canis"
+ },
+ "track-echidna": {
+  "file": "File:Wild shortbeak echidna.jpg",
+  "artist": "User:Fir0002",
+  "license": "GFDL 1.2",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AWild_shortbeak_echidna.jpg",
+  "bytes": 84656,
+  "query": "Short-beaked echidna"
+ },
+ "track-possum": {
+  "file": "File:Brush tail possum 4-colour corr.jpg",
+  "artist": "user:benjamint444 modified by Tony Wills",
+  "license": "CC BY-SA 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ABrush_tail_possum_4-colour_corr.jpg",
+  "bytes": 48501,
+  "query": "Common brushtail possum"
+ },
+ "track-goanna": {
+  "file": "File:Goanna up the bottle tree (Lace monitor - Varanus varius) - panoramio.jpg",
+  "artist": "Sue Allen",
+  "license": "CC BY-SA 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AGoanna_up_the_bottle_tree_%28Lace_monitor_-_Varanus_varius%29_-_panoramio.jpg",
+  "bytes": 81531,
+  "query": "Lace monitor goanna Varanus varius"
+ },
+ "track-feral-pig": {
+  "file": "File:Feral Pigs (Sus scrofa) - Flickr - berniedup.jpg",
+  "artist": "Bernard DUPONT from FRANCE",
+  "license": "CC BY-SA 2.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AFeral_Pigs_%28Sus_scrofa%29_-_Flickr_-_berniedup.jpg",
+  "bytes": 53524,
+  "query": "Feral pig Sus scrofa"
+ },
+ "track-deer": {
+  "file": "File:Fallow Deer in the German wood.jpg",
+  "artist": "Michael Gäbler",
+  "license": "CC BY 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AFallow_Deer_in_the_German_wood.jpg",
+  "bytes": 65052,
+  "query": "Fallow deer"
+ },
+ "track-platypus": {
+  "file": "File:Duck-billed platypus (Ornithorhynchus anatinus) Scottsdale.jpg",
+  "artist": "Charles J. Sharp",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ADuck-billed_platypus_%28Ornithorhynchus_anatinus%29_Scottsdale.jpg",
+  "bytes": 36168,
+  "query": "Platypus"
+ },
+ "track-cassowary": {
+  "file": "File:Casuarius casuarius MHNT.ZOO.2010.11.1.9.jpg",
+  "artist": "Roger Culos",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ACasuarius_casuarius_MHNT.ZOO.2010.11.1.9.jpg",
+  "bytes": 41555,
+  "query": "Southern cassowary"
+ },
+ "fire-lay-types": {
+  "file": "File:Fire and logs at night (Unsplash).jpg",
+  "artist": "Sandis Helvigs sandishelvigs",
+  "license": "CC0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AFire_and_logs_at_night_%28Unsplash%29.jpg",
+  "bytes": 34330,
+  "query": "Campfire night logs"
+ },
+ "fire-wet-conditions": {
+  "file": "File:Campfire in forest.jpg",
+  "artist": "Crusier",
+  "license": "CC BY-SA 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ACampfire_in_forest.jpg",
+  "bytes": 56940,
+  "query": "Campfire smoke forest"
+ },
+ "fire-tinder-quality": {
+  "file": "File:2018 04 30-17.41.49.915-CDT.jpg",
+  "artist": "USFS",
+  "license": "Public domain",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3A2018_04_30-17.41.49.915-CDT.jpg",
+  "bytes": 26778,
+  "query": "Tinder fire"
+ },
+ "shelter-lean-to": {
+  "file": "File:Lean-to Torkilstöten 2012.jpg",
+  "artist": "Arild Vågen",
+  "license": "CC BY-SA 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ALean-to_Torkilst%C3%B6ten_2012.jpg",
+  "bytes": 62346,
+  "query": "Lean-to"
+ },
+ "shelter-debris-hut": {
+  "file": "File:Bushcraft shelter - geograph.org.uk - 6769569.jpg",
+  "artist": "David Lally",
+  "license": "CC BY-SA 2.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ABushcraft_shelter_-_geograph.org.uk_-_6769569.jpg",
+  "bytes": 85921,
+  "query": "Bushcraft shelter"
+ },
+ "shelter-tarp-configs": {
+  "file": "File:Forester Tent Folded Tarp (6262CE06).png",
+  "artist": "ModalPeak",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AForester_Tent_Folded_Tarp_%286262CE06%29.png",
+  "bytes": 18803,
+  "query": "Tarp tent"
+ },
+ "shelter-bivouac": {
+  "file": "File:Tents and Brass Monkey Bivouac, Lewis Pass, New Zealand 32.jpg",
+  "artist": "Michal Klajban",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ATents_and_Brass_Monkey_Bivouac%2C_Lewis_Pass%2C_New_Zealand_32.jpg",
+  "bytes": 63846,
+  "query": "Bivouac tent"
+ },
+ "water-finding": {
+  "file": "File:Equus quagga (Namutoni, 2012).jpg",
+  "artist": "Yathin S Krishnappa",
+  "license": "CC BY-SA 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AEquus_quagga_%28Namutoni%2C_2012%29.jpg",
+  "bytes": 36960,
+  "query": "Waterhole"
+ },
+ "water-rain-dew": {
+  "file": "File:Rainwater harvesting tank - flood management water butt.jpg",
+  "artist": "Southend-on-Sea Borough Council",
+  "license": "CC0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ARainwater_harvesting_tank_-_flood_management_water_butt.jpg",
+  "bytes": 54209,
+  "query": "Rainwater harvesting"
+ },
+ "water-filtration": {
+  "file": "File:Water Filtration Systems.png",
+  "artist": "Ivan Akira",
+  "license": "CC BY-SA 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AWater_Filtration_Systems.png",
+  "bytes": 54823,
+  "query": "Water filtration"
+ },
+ "water-improvised-filter": {
+  "file": "File:Home water filters, water purifiers, and bottled water in India.jpg",
+  "artist": "FacetsOfNonStickPans",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AHome_water_filters%2C_water_purifiers%2C_and_bottled_water_in_India.jpg",
+  "bytes": 46508,
+  "query": "Water filter bottle"
+ },
+ "food-snare-trap": {
+  "file": "File:Snare wires.jpg",
+  "artist": "Dpdrums",
+  "license": "Public domain",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ASnare_wires.jpg",
+  "bytes": 46077,
+  "query": "Wire snare"
+ },
+ "food-tracks": {
+  "file": "File:Deer Track.png",
+  "artist": "Mebigrouxboy",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ADeer_Track.png",
+  "bytes": 67409,
+  "query": "Deer tracks mud"
+ },
+ "food-preservation": {
+  "file": "File:Biltong from Namibia.jpg",
+  "artist": "Aisha.shipanga",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ABiltong_from_Namibia.jpg",
+  "bytes": 39543,
+  "query": "Biltong"
+ },
+ "signal-fire": {
+  "file": "File:Midsummer bonfire closeup.jpg",
+  "artist": "Janne Karaste",
+  "license": "CC BY-SA 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AMidsummer_bonfire_closeup.jpg",
+  "bytes": 66465,
+  "query": "Bonfire"
+ },
+ "psych-stop": {
+  "file": "File:Hiking trail to Biskupská kupa, Czechia.jpg",
+  "artist": "Pudelek",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AHiking_trail_to_Biskupsk%C3%A1_kupa%2C_Czechia.jpg",
+  "bytes": 100882,
+  "query": "Hiker forest"
+ },
+ "fa-bleeding": {
+  "file": "File:Fire Controlman applying tourniquet during first aid class aboard USS Benfold (DDG-65) 180628-N-GR120-0162.jpg",
+  "artist": "Mass Communication Specialist 2nd Class Anna Van Nuys",
+  "license": "CC BY-SA 2.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AFire_Controlman_applying_tourniquet_during_first_aid_class_aboard_USS_Benfold_%28DDG-65%29_180628-N-GR120-0162.jpg",
+  "bytes": 32148,
+  "query": "Tourniquet first aid"
+ },
+ "fa-burns": {
+  "file": "File:First Aid (7).jpg",
+  "artist": "Myousry6666",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AFirst_Aid_%287%29.jpg",
+  "bytes": 43592,
+  "query": "First aid"
+ },
+ "fa-hypothermia": {
+  "file": "File:EmergencyBlanket.jpg",
+  "artist": "Emergency Blanket",
+  "license": "CC BY-SA 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AEmergencyBlanket.jpg",
+  "bytes": 28324,
+  "query": "Emergency blanket"
+ },
+ "fa-snake-general": {
+  "file": "File:Improvised first aid - bandage on leg.jpg",
+  "artist": "Greg Younger from Fort Collins, USA",
+  "license": "CC BY-SA 2.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AImprovised_first_aid_-_bandage_on_leg.jpg",
+  "bytes": 74245,
+  "query": "Bandage leg"
+ },
+ "fa-pib": {
+  "file": "File:Adaptive compression bandage (01).jpg",
+  "artist": "Rasbak",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AAdaptive_compression_bandage_%2801%29.jpg",
+  "bytes": 35966,
+  "query": "Compression bandage"
+ },
+ "fa-eye": {
+  "file": "File:Emergency Shower and Eye Wash Station.jpg",
+  "artist": "Sorawit.pai",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AEmergency_Shower_and_Eye_Wash_Station.jpg",
+  "bytes": 15654,
+  "query": "Eyewash"
+ },
+ "proj-camp-chair": {
+  "file": "File:Man in Australia sitting in a camping chair with a tinnie (can of beer) and jar of vegemite.jpg",
+  "artist": "s2art",
+  "license": "CC BY-SA 2.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AMan_in_Australia_sitting_in_a_camping_chair_with_a_tinnie_%28can_of_beer%29_and_jar_of_vegemite.jpg",
+  "bytes": 55212,
+  "query": "Camping chair"
+ },
+ "proj-tripod-pot-hanger": {
+  "file": "File:Fire pot.jpg",
+  "artist": "Darakshanehaluddin",
+  "license": "CC0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AFire_pot.jpg",
+  "bytes": 74864,
+  "query": "Campfire cooking pot"
+ },
+ "proj-fishing-kit": {
+  "file": "File:Fishing hooks on white surface.jpg",
+  "artist": "daniel jaeger",
+  "license": "CC BY-SA 2.5",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AFishing_hooks_on_white_surface.jpg",
+  "bytes": 25531,
+  "query": "Fishing hook"
+ },
+ "proj-a-frame-tarp": {
+  "file": "File:Pup Tent at Fort Benning-Overstreet.jpg",
+  "artist": "IMLS Digital Collections & Content",
+  "license": "CC BY 2.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3APup_Tent_at_Fort_Benning-Overstreet.jpg",
+  "bytes": 39884,
+  "query": "Pup tent"
+ },
+ "proj-debris-shelter-build": {
+  "file": "File:Temporary wooden shelter on Lyndhurst Hill, New Forest - geograph.org.uk - 81283.jpg",
+  "artist": "Jim Champion",
+  "license": "CC BY-SA 2.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ATemporary_wooden_shelter_on_Lyndhurst_Hill%2C_New_Forest_-_geograph.org.uk_-_81283.jpg",
+  "bytes": 79029,
+  "query": "Forest shelter branches"
+ },
+ "proj-water-filter-build": {
+  "file": "File:Filtration Systems, Filtering Water.jpg",
+  "artist": "United States Armed Forces",
+  "license": "Public domain",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AFiltration_Systems%2C_Filtering_Water.jpg",
+  "bytes": 38060,
+  "query": "Survival water filter"
+ },
+ "weather-wind": {
+  "file": "File:Gale force storm wind damage, Badminton, Gloucestershire 1990 - geograph.org.uk - 6249512.jpg",
+  "artist": "Ray Bird",
+  "license": "CC BY-SA 2.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AGale_force_storm_wind_damage%2C_Badminton%2C_Gloucestershire_1990_-_geograph.org.uk_-_6249512.jpg",
+  "bytes": 92406,
+  "query": "Gale wind tree"
+ },
+ "ban-weather": {
+  "file": "File:Cumulonimbus sunset panorama, Albury NSW Australia.jpg",
+  "artist": "Thennicke",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3ACumulonimbus_sunset_panorama%2C_Albury_NSW_Australia.jpg",
+  "bytes": 36951,
+  "query": "Cumulonimbus cloud"
+ },
+ "ban-tracks": {
+  "file": "File:Footprints to follow at the beach of Gopalpur on the sea.jpg",
+  "artist": "Soulful sunshine",
+  "license": "CC BY-SA 4.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AFootprints_to_follow_at_the_beach_of_Gopalpur_on_the_sea.jpg",
+  "bytes": 78937,
+  "query": "Footprints sand beach"
  }
 }

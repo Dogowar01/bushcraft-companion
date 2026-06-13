@@ -2,7 +2,7 @@
    Simple cache-first strategy. Caches the app shell on install,
    serves from cache on fetch, falls back to network. */
 
-const CACHE = 'bushcraft-v7';
+const CACHE = 'bushcraft-v8';
 const ASSETS = [
   './',
   './index.html',
@@ -12,24 +12,20 @@ const ASSETS = [
   './icon-192.png',
   './icon-512.png',
   './apple-touch-icon.png',
-  './favicon-32.png'
+  './favicon-32.png',
+  './img/credits.json'
 ];
-// Bundled photos — best-effort precache (failure of any one must not abort install).
-const IMG = [
-  'ban-guides','ban-firstaid','ban-projects','ban-notes','ban-plants',
-  'cat-fire','cat-shelter','cat-water','cat-food','cat-signalling','cat-psychology',
-  'fa-snake-brown','fa-snake-tiger','fa-snake-taipan','fa-snake-rbb','fa-snake-deathadder',
-  'fa-spider-funnelweb','fa-spider-redback','fa-spider-whitetail',
-  'plant-quandong','plant-finger-lime','plant-macadamia','plant-bunya','plant-warrigal-greens',
-  'plant-pigface','plant-lilly-pilly','plant-native-raspberry','plant-kakadu-plum',
-  'plant-wattleseed','plant-river-mint','plant-bush-tomato'
-].map((n) => './img/' + n + '.jpg').concat(['./img/credits.json']);
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE).then(async (cache) => {
       await cache.addAll(ASSETS);
-      await Promise.allSettled(IMG.map((u) => cache.add(u)));
+      // Data-driven photo precache: every key in credits.json maps to ./img/<key>.jpg.
+      try {
+        const cr = await (await fetch('./img/credits.json')).json();
+        const imgs = Object.keys(cr).map((k) => './img/' + k + '.jpg');
+        await Promise.allSettled(imgs.map((u) => cache.add(u)));
+      } catch (e) { /* offline / first-load race — runtime caching will fill gaps */ }
     }).then(() => self.skipWaiting())
   );
 });
