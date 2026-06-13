@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bushcraft Companion</title>
+<meta name="description" content="The survival guide that works when nothing else does.">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1A1A17">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Bushcraft">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#1A1A17;
+  --surface:#252520;
+  --elevated:#2E2E28;
+  --border:#3A3A34;
+  --text-primary:#F0EDE6;
+  --text-secondary:#8C8A82;
+  --accent:#D4622A;
+  --nature:#6B8C5A;
+  --warning:#C9952A;
+  --danger:#B83B3B;
+  --success:#4A7C59;
+
+  --emergency-bg:#0D0D0B;
+
+  --s1:8px; --s2:16px; --s3:24px; --s4:32px; --s5:48px; --s6:64px;
+  --radius:6px;
+  --nav-h:64px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{
+  background:var(--bg);
+  color:var(--text-primary);
+  font-family:'Inter',system-ui,sans-serif;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overscroll-behavior-y:none;
+}
+
+/* Text-size accessibility setting */
+body[data-textsize="large"]{font-size:1.12rem;}
+body[data-textsize="xlarge"]{font-size:1.25rem;}
+
+h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;}
+
+.label{
+  font-family:'Inter',sans-serif;
+  font-weight:500;
+  font-size:.7rem;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--text-secondary);
+}
+
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+
+/* ---------- Layout ---------- */
+#app{
+  max-width:560px;
+  margin:0 auto;
+  min-height:100%;
+  padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom));
+}
+
+.screen{display:none;padding:var(--s2) var(--s2) var(--s4);animation:fade .18s ease;}
+.screen.active{display:block;}
+@keyframes fade{from{opacity:0;}to{opacity:1;}}
+
+.app-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:calc(var(--s2) + env(safe-area-inset-top)) var(--s2) var(--s2);
+  position:sticky;top:0;z-index:30;
+  background:linear-gradient(180deg,var(--bg) 70%,transparent);
+}
+.app-header .wordmark{
+  font-family:'Space Grotesk';font-weight:700;font-size:1.05rem;
+  text-transform:uppercase;letter-spacing:.08em;
+}
+.app-header .wordmark span{color:var(--accent);}
+
+/* ---------- Emergency floating button ---------- */
+.emergency-fab{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--accent);
+  color:#fff;
+  font-family:'Space Grotesk';font-weight:700;font-size:.72rem;
+  text-transform:uppercase;letter-spacing:.08em;
+  padding:9px 14px;border-radius:999px;
+  box-shadow:0 2px 12px rgba(212,98,42,.35);
+  min-height:40px;
+}
+.emergency-fab svg{width:16px;height:16px;}
+
+/* ---------- Section titles ---------- */
+.section-label{
+  font-family:'Inter';font-weight:500;font-size:.7rem;
+  text-transform:uppercase;letter-spacing:.12em;
+  color:var(--text-secondary);margin-bottom:var(--s1);
+}
+.page-title{
+  font-family:'Space Grotesk';font-weight:700;font-size:1.6rem;
+  text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;
+}
+.page-sub{color:var(--text-secondary);font-size:.9rem;margin-bottom:var(--s3);}
+
+/* ---------- Cards ---------- */
+.card{
+  display:block;background:var(--surface);
+  border-radius:var(--radius);
+  border-left:4px solid var(--border);
+  padding:14px 18px;margin-bottom:12px;
+  min-height:48px;
+  transition:background .12s,transform .06s;
+}
+.card:active{background:var(--elevated);transform:scale(.995);}
+.card .cat-label{
+  font-size:.62rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.14em;margin-bottom:3px;
+}
+.card .card-title{font-family:'Space Grotesk';font-weight:600;font-size:1.02rem;line-height:1.3;}
+.card .card-sum{color:var(--text-secondary);font-size:.85rem;margin-top:4px;}
+.card .card-meta{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
+
+.chip{
+  font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;
+  padding:3px 8px;border-radius:4px;background:var(--elevated);color:var(--text-secondary);
+}
+.chip.diff-beginner{color:var(--nature);}
+.chip.diff-intermediate{color:var(--warning);}
+.chip.diff-advanced{color:var(--accent);}
+
+/* category accent helpers */
+.c-fire{border-left-color:var(--accent);} .t-fire{color:var(--accent);}
+.c-shelter{border-left-color:var(--warning);} .t-shelter{color:var(--warning);}
+.c-water{border-left-color:#5A86A6;} .t-water{color:#5A86A6;}
+.c-food{border-left-color:var(--nature);} .t-food{color:var(--nature);}
+.c-signalling{border-left-color:var(--warning);} .t-signalling{color:var(--warning);}
+.c-psychology{border-left-color:#9B7FB0;} .t-psychology{color:#9B7FB0;}
+.c-knot{border-left-color:#5A86A6;} .t-knot{color:#5A86A6;}
+.c-project{border-left-color:var(--nature);} .t-project{color:var(--nature);}
+.c-critical{border-left-color:var(--danger);} .t-critical{color:var(--danger);}
+.c-urgent{border-left-color:var(--warning);} .t-urgent{color:var(--warning);}
+.c-standard{border-left-color:var(--nature);} .t-standard{color:var(--nature);}
+
+/* ---------- Home ---------- */
+.welcome{
+  background:var(--surface);border-radius:var(--radius);
+  border-left:4px solid var(--accent);
+  padding:var(--s3) var(--s2);margin-bottom:var(--s3);
+}
+.welcome h1{font-size:1.5rem;text-transform:uppercase;letter-spacing:.05em;font-weight:700;}
+.welcome .tagline{color:var(--text-secondary);font-size:.9rem;margin-top:6px;font-style:italic;}
+.welcome .offline-stat{
+  margin-top:var(--s2);display:inline-flex;align-items:center;gap:8px;
+  font-family:'Space Grotesk';font-weight:600;font-size:.8rem;
+  color:var(--nature);
+}
+.welcome .offline-stat .dot{width:7px;height:7px;border-radius:50%;background:var(--nature);box-shadow:0 0 8px var(--nature);}
+
+.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:var(--s4);}
+.quick-tile{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:12px 6px;display:flex;flex-direction:column;align-items:center;gap:7px;
+  min-height:84px;justify-content:center;text-align:center;
+}
+.quick-tile svg{width:24px;height:24px;}
+.quick-tile .qt-label{font-size:.66rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--text-secondary);}
+.quick-tile:active{background:var(--elevated);}
+
+.home-section{margin-bottom:var(--s4);}
+.empty-hint{color:var(--text-secondary);font-size:.85rem;padding:14px 0;}
+
+/* ---------- Article view ---------- */
+.article{padding-top:4px;}
+.back-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--text-secondary);font-size:.8rem;font-weight:500;
+  text-transform:uppercase;letter-spacing:.08em;
+  padding:8px 0;margin-bottom:8px;min-height:44px;
+}
+.back-btn svg{width:16px;height:16px;}
+.article h1{font-size:1.55rem;line-height:1.2;text-transform:uppercase;letter-spacing:.03em;margin:6px 0 10px;}
+.article .meta-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:var(--s3);}
+.article .content{max-width:65ch;}
+.article .content h3{font-family:'Space Grotesk';font-weight:600;font-size:1.05rem;margin:var(--s3) 0 8px;}
+.article .content p{margin-bottom:var(--s2);}
+.article .content ul{margin:0 0 var(--s2) 1.1em;}
+.article .content li{margin-bottom:6px;}
+.article .content strong{color:#fff;font-weight:600;}
+
+.au-note{
+  background:rgba(107,140,90,.12);border-left:3px solid var(--nature);
+  border-radius:4px;padding:12px 14px;margin:var(--s2) 0;font-size:.88rem;
+}
+.au-note .label{color:var(--nature);margin-bottom:4px;}
+
+/* ---------- First aid specific ---------- */
+.urgency-badge{
+  display:inline-block;font-family:'Space Grotesk';font-weight:700;
+  font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;
+  padding:5px 12px;border-radius:4px;
+}
+.urgency-critical{background:var(--danger);color:#fff;}
+.urgency-urgent{background:var(--warning);color:#1A1A17;}
+.urgency-standard{background:var(--nature);color:#fff;}
+
+.call-000{
+  background:var(--danger);color:#fff;border-radius:var(--radius);
+  padding:16px;margin:var(--s2) 0 var(--s3);text-align:center;
+}
+.call-000 .big{font-family:'Space Grotesk';font-weight:700;font-size:1.8rem;letter-spacing:.04em;}
+.call-000 .sub{font-size:.8rem;opacity:.92;margin-top:2px;text-transform:uppercase;letter-spacing:.08em;}
+.call-000 a{display:inline-block;margin-top:10px;background:#fff;color:var(--danger);
+  font-family:'Space Grotesk';font-weight:700;padding:10px 22px;border-radius:4px;min-height:48px;line-height:28px;}
+
+.steps-list{counter-reset:step;list-style:none;margin:var(--s2) 0;padding:0;}
+.steps-list li{
+  position:relative;background:var(--surface);border-radius:var(--radius);
+  padding:14px 16px 14px 52px;margin-bottom:10px;
+}
+.steps-list li::before{
+  counter-increment:step;content:counter(step);
+  position:absolute;left:12px;top:12px;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--accent);color:#fff;
+  font-family:'Space Grotesk';font-weight:700;font-size:.85rem;
+  display:flex;align-items:center;justify-content:center;
+}
+.steps-list li .instr{font-size:.95rem;}
+.steps-list li .step-warn{
+  margin-top:8px;font-size:.82rem;color:var(--warning);
+  display:flex;gap:6px;align-items:flex-start;
+}
+.steps-list li .step-warn::before{content:"\26A0";}
+
+.donot-box{
+  background:rgba(184,59,59,.10);border:1px solid rgba(184,59,59,.4);
+  border-radius:var(--radius);padding:14px 16px;margin:var(--s3) 0;
+}
+.donot-box .label{color:var(--danger);margin-bottom:8px;}
+.donot-box ul{list-style:none;}
+.donot-box li{color:#E59B9B;font-size:.9rem;margin-bottom:6px;display:flex;gap:8px;}
+.donot-box li::before{content:"\2717";color:var(--danger);font-weight:700;}
+
+.notes-box{background:var(--surface);border-radius:var(--radius);padding:12px 14px;margin:var(--s2) 0;font-size:.88rem;color:var(--text-secondary);}
+
+/* ---------- Knots ---------- */
+.dots{display:inline-flex;gap:3px;}
+.dots .dot{width:7px;height:7px;border-radius:50%;background:var(--border);}
+.dots .dot.on{background:var(--nature);}
+.ascii{
+  font-family:'SF Mono',ui-monospace,'Cascadia Code',Menlo,Consolas,monospace;
+  background:var(--emergency-bg);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px;white-space:pre;overflow-x:auto;font-size:.8rem;line-height:1.5;
+  color:var(--text-secondary);margin:var(--s2) 0;
+}
+.uses-row{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0;}
+.tip-box{background:rgba(201,149,42,.10);border-left:3px solid var(--warning);border-radius:4px;padding:12px 14px;margin:var(--s2) 0;font-size:.88rem;}
+.tip-box .label{color:var(--warning);margin-bottom:4px;}
+
+/* ---------- Projects ---------- */
+.materials-list{list-style:none;margin:var(--s1) 0 var(--s2);}
+.materials-list li{padding:8px 0;border-bottom:1px solid var(--border);font-size:.92rem;display:flex;gap:10px;}
+.materials-list li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--nature);margin-top:9px;flex:none;}
+.proj-step{background:var(--surface);border-radius:var(--radius);padding:14px 16px 14px 52px;margin-bottom:10px;position:relative;counter-increment:pstep;}
+.proj-steps{counter-reset:pstep;}
+.proj-step::before{content:counter(pstep);position:absolute;left:12px;top:12px;width:28px;height:28px;border-radius:50%;background:var(--nature);color:#fff;font-family:'Space Grotesk';font-weight:700;font-size:.85rem;display:flex;align-items:center;justify-content:center;}
+.proj-step .ps-title{font-weight:600;font-size:.95rem;}
+.proj-step .ps-detail{color:var(--text-secondary);font-size:.86rem;margin-top:4px;}
+
+/* ---------- Filters ---------- */
+.filter-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:var(--s2);scrollbar-width:none;}
+.filter-row::-webkit-scrollbar{display:none;}
+.filter-pill{
+  flex:none;border:1px solid var(--border);border-radius:999px;
+  padding:8px 16px;font-size:.78rem;font-weight:500;color:var(--text-secondary);
+  min-height:40px;text-transform:capitalize;
+}
+.filter-pill.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600;}
+
+/* ---------- Notes ---------- */
+.note-card{background:var(--surface);border-radius:var(--radius);border-left:4px solid var(--nature);padding:14px 16px;margin-bottom:12px;}
+.note-card .nc-title{font-family:'Space Grotesk';font-weight:600;font-size:1rem;}
+.note-card .nc-body{color:var(--text-secondary);font-size:.86rem;margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.note-card .nc-meta{display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap;}
+.note-card .nc-date{font-size:.7rem;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.06em;}
+
+.fab{
+  position:fixed;right:max(16px,calc(50% - 280px + 16px));
+  bottom:calc(var(--nav-h) + 16px + env(safe-area-inset-bottom));
+  width:56px;height:56px;border-radius:50%;
+  background:var(--accent);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 16px rgba(212,98,42,.4);z-index:40;
+}
+.fab svg{width:26px;height:26px;}
+
+/* Note editor (modal) */
+.modal-back{
+  position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.5);
+  display:none;align-items:flex-end;justify-content:center;
+}
+.modal-back.open{display:flex;}
+.note-editor{
+  background:var(--elevated);width:100%;max-width:560px;
+  border-radius:14px 14px 0 0;padding:var(--s3) var(--s2) calc(var(--s2) + env(safe-area-inset-bottom));
+  max-height:92vh;overflow-y:auto;
+}
+.note-editor h2{font-size:1.1rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:var(--s2);}
+.field{margin-bottom:var(--s2);}
+.field label{display:block;margin-bottom:6px;}
+.field input,.field textarea,.field select{
+  width:100%;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);color:var(--text-primary);
+  font-family:inherit;font-size:.95rem;padding:12px 14px;
+}
+.field textarea{min-height:160px;resize:vertical;line-height:1.6;}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--accent);}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border-radius:4px;padding:14px 24px;min-height:48px;
+  font-family:'Space Grotesk';font-weight:600;font-size:.92rem;width:100%;
+}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-ghost{border:1px solid var(--border);color:var(--text-primary);background:transparent;}
+.btn-danger{border:1px solid var(--danger);color:var(--danger);background:transparent;}
+.btn-row{display:flex;gap:10px;margin-top:var(--s2);}
+
+/* ---------- Bottom nav ---------- */
+.bottom-nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  background:var(--elevated);border-top:1px solid var(--border);
+  display:flex;justify-content:space-around;
+  padding-bottom:env(safe-area-inset-bottom);
+  max-width:560px;margin:0 auto;
+}
+.nav-btn{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:9px 0 8px;color:var(--text-secondary);min-height:var(--nav-h);justify-content:center;
+}
+.nav-btn svg{width:22px;height:22px;}
+.nav-btn .nav-label{font-size:.62rem;font-weight:500;text-transform:uppercase;letter-spacing:.04em;}
+.nav-btn.active{color:var(--accent);}
+
+/* ---------- Emergency Mode overlay ---------- */
+#emergency{
+  position:fixed;inset:0;z-index:100;background:var(--emergency-bg);
+  display:none;flex-direction:column;overflow-y:auto;
+  padding:calc(var(--s3) + env(safe-area-inset-top)) var(--s2) calc(var(--s3) + env(safe-area-inset-bottom));
+}
+#emergency.open{display:flex;}
+#emergency .em-header{font-family:'Space Grotesk';font-weight:700;font-size:1.9rem;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;}
+#emergency .em-sub{color:var(--text-secondary);font-size:.85rem;margin:4px 0 var(--s3);}
+.em-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.em-tile{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  min-height:96px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  padding:14px;text-align:center;
+}
+.em-tile.danger-tile{border-color:var(--danger);background:rgba(184,59,59,.10);}
+.em-tile svg{width:30px;height:30px;}
+.em-tile .em-label{font-family:'Space Grotesk';font-weight:600;font-size:.92rem;}
+.em-tile:active{background:var(--elevated);}
+.em-exit-wrap{margin-top:var(--s4);}
+.em-exit{border:1px solid var(--border);color:var(--text-secondary);border-radius:4px;padding:16px;width:100%;min-height:56px;font-family:'Space Grotesk';font-weight:600;text-transform:uppercase;letter-spacing:.08em;}
+.em-confirm{background:var(--danger);color:#fff;}
+
+/* Article (emergency-launched & first aid) inside emergency overlay reuse main article container */
+
+@media (max-width:340px){
+  .quick-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <!-- App header (hidden on home which has its own welcome) -->
+  <header class="app-header">
+    <div class="wordmark">BUSHCRAFT<span>·</span>COMPANION</div>
+    <button class="emergency-fab" onclick="openEmergency()" aria-label="Open Emergency Mode">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 22h20L12 2z"/><line x1="12" y1="9" x2="12" y2="14"/><circle cx="12" cy="18" r="0.6" fill="currentColor"/></svg>
+      Emergency
+    </button>
+  </header>
+
+  <!-- ============ SCREENS ============ -->
+  <section id="screen-home" class="screen active"></section>
+  <section id="screen-guides" class="screen"></section>
+  <section id="screen-firstaid" class="screen"></section>
+  <section id="screen-projects" class="screen"></section>
+  <section id="screen-notes" class="screen"></section>
+  <section id="screen-knots" class="screen"></section>
+  <section id="screen-article" class="screen"></section>
+</div>
+
+<!-- New-note FAB (only visible on notes screen) -->
+<button id="noteFab" class="fab" style="display:none" onclick="openNoteEditor()" aria-label="New note">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+</button>
+
+<!-- ============ BOTTOM NAV ============ -->
+<nav class="bottom-nav" id="nav"></nav>
+
+<!-- ============ EMERGENCY MODE ============ -->
+<div id="emergency"></div>
+
+<!-- ============ NOTE EDITOR MODAL ============ -->
+<div class="modal-back" id="noteModal">
+  <div class="note-editor">
+    <h2 id="noteEditorTitle">New Note</h2>
+    <input type="hidden" id="noteId">
+    <div class="field"><label class="label">Title</label><input id="noteTitle" placeholder="e.g. Camp at Lake Mackenzie"></div>
+    <div class="field"><label class="label">Type</label>
+      <select id="noteType">
+        <option value="general">General</option>
+        <option value="camp-log">Camp Log</option>
+        <option value="hunting">Hunting</option>
+        <option value="fishing">Fishing</option>
+        <option value="survival-journal">Survival Journal</option>
+      </select>
+    </div>
+    <div class="field"><label class="label">Body</label><textarea id="noteBody" placeholder="Notes, observations, conditions..."></textarea></div>
+    <div class="field"><label class="label">Tags (comma separated)</label><input id="noteTags" placeholder="camping, water, route"></div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="closeNoteEditor()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveNote()">Save</button>
+    </div>
+    <div class="btn-row" id="noteDeleteRow" style="display:none">
+      <button class="btn btn-danger" onclick="deleteCurrentNote()">Delete Note</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   BUSHCRAFT COMPANION — single-file app logic
+   Offline-first. No network calls at runtime (except first-load fonts).
+   ============================================================ */
+
+/* ---------- SVG icon helpers ---------- */
+const ICON = {
+  compass:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.2 7.8 13.4 13.4 7.8 16.2 10.6 10.6 16.2 7.8"/></svg>',
+  book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+  cross:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/></svg>',
+  hammer:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6l4 4"/><path d="M3 21l9-9"/><path d="M14.5 5.5 19 1l4 4-4.5 4.5z"/><path d="M11 8 8 5 5 8l3 3"/></svg>',
+  pencil:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>',
+  knot:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7c4 0 4 10 10 10"/><path d="M17 7C13 7 13 17 7 17"/></svg>',
+  droplet:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg>',
+  mappin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+  snake:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c5 0 5-7 0-7s-5-7 0-7 9 4 9 9a5 5 0 0 0 5 5"/><circle cx="5" cy="5" r="0.5" fill="currentColor"/></svg>',
+  heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/></svg>',
+  blood:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s5 6 5 10a5 5 0 0 1-10 0c0-4 5-10 5-10z"/><path d="M9 13a3 3 0 0 0 3 3"/></svg>',
+  flame:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 4 5 5 5 9a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-8z"/></svg>',
+  tent:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 20h18z"/><path d="M12 3v17"/><path d="M12 14l-4 6"/><path d="M12 14l4 6"/></svg>',
+  signal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 8-8"/><path d="M7 15a4 4 0 0 1 4-4"/><circle cx="12" cy="18" r="1.2" fill="currentColor"/><path d="M20 12a8 8 0 0 0-3-6.2"/></svg>',
+  sun:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg>',
+  back:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>',
+  injured:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6" r="2.5"/><path d="M12 9v6M9 11l3 1 3-1M10 21l2-4 2 4"/></svg>'
+};
+
+/* ============================================================
+   CONTENT DATA
+   ============================================================ */
+
+const CAT_LABELS = {fire:'Fire',shelter:'Shelter',water:'Water',food:'Food',signalling:'Signalling',psychology:'Survival Psychology'};
+
+const ENCYCLOPEDIA = [
+  /* ---------------- FIRE ---------------- */
+  {id:'fire-ferro-rod',category:'fire',title:'Ferro Rod Technique',summary:'Throw a 3000°C shower of sparks in any weather.',difficulty:'beginner',
+   content:`<p>A ferrocerium rod is the most reliable bushcraft ignition source. It works wet, in wind, at altitude, and after thousands of strikes.</p>
+   <h3>Method</h3>
+   <ul><li>Prepare a generous tinder bundle <strong>before</strong> you strike — fine, dry, fluffy material.</li>
+   <li>Hold the striker (or the spine of your knife — never the sharp edge) at roughly 45°.</li>
+   <li>Place the rod tip almost touching the tinder.</li>
+   <li>Keep the rod still and <strong>pull the rod back</strong> against a fixed striker, rather than slashing the striker forward. This stops you scattering the tinder pile.</li>
+   <li>Scrape firmly and slowly for a heavy shower of sparks directly into the tinder.</li></ul>
+   <h3>Best tinders for ferro sparks</h3>
+   <ul><li>Teased-out bark fibres (paperbark/melaleuca is excellent)</li><li>Dry grass heads, rolled and frayed</li><li>Cotton wool (carry some smeared with petroleum jelly)</li><li>Char cloth</li></ul>`,
+   tags:['fire','ignition','essential'],
+   australianNote:'Paperbark (Melaleuca) is widespread across Australia and its papery bark teases into superb tinder even after light rain.'},
+
+  {id:'fire-bow-drill',category:'fire',title:'Bow Drill Fire Starting',summary:'Friction fire from scratch — high skill, no tools.',difficulty:'advanced',
+   content:`<p>The bow drill is the most achievable friction-fire method. It is hard, demands the right materials, and is a genuine survival skill worth practising before you need it.</p>
+   <h3>Components</h3>
+   <ul><li><strong>Spindle:</strong> straight, dry softwood, ~20cm, thumb-thick.</li><li><strong>Fireboard:</strong> same wood, flat, ~2cm thick.</li><li><strong>Bow:</strong> a curved stick with cord (paracord, a bootlace).</li><li><strong>Bearing block (handhold):</strong> hardwood, stone, or bone with a socket.</li></ul>
+   <h3>Method</h3>
+   <ul><li>Cut a shallow socket in the fireboard; wrap the spindle once in the bow cord.</li><li>Load the spindle vertical, bearing block on top, foot pinning the board.</li><li>Saw the bow full-length, slowly, to seat the spindle and burn in the socket.</li><li>Cut a <strong>V-notch</strong> from the board edge into the socket — this collects the ember dust.</li><li>Place a leaf or bark under the notch. Bow fast and with downward pressure until smoke is steady and dust fills the notch.</li><li>Stop, tap the ember free onto the leaf, transfer to your tinder bundle, and blow it to flame.</li></ul>`,
+   tags:['fire','friction','primitive'],australianNote:'Dry grass-tree (Xanthorrhoea) flower stalks make an excellent lightweight spindle and bow-drill set across much of Australia.'},
+
+  {id:'fire-flint-steel',category:'fire',title:'Flint and Steel',summary:'Traditional spark ignition onto char material.',difficulty:'intermediate',
+   content:`<p>A hardened high-carbon steel struck against a sharp-edged stone (flint, quartz, chert, agate) shaves tiny burning steel particles. These are far cooler than ferro sparks, so you must catch them on <strong>char</strong>.</p>
+   <h3>Method</h3>
+   <ul><li>Hold a piece of char cloth on top of the flint edge, pinched under your thumb.</li><li>Strike down and across the sharp edge with the steel at a glancing angle.</li><li>A spark lands on the char and becomes a glowing orange ember.</li><li>Fold the char into a tinder bundle and blow gently to flame.</li></ul>
+   <p><strong>No char?</strong> Make it: place cloth or punk-wood scraps in a near-sealed tin in your fire; once the smoke stops, it's charred.</p>`,
+   tags:['fire','traditional','char'],australianNote:null},
+
+  {id:'fire-lay-types',category:'fire',title:'Fire Lay Types',summary:'Teepee, log cabin, star and long-fire — when to use each.',difficulty:'beginner',
+   content:`<h3>Teepee</h3><p>Tinder in the centre, kindling leaned into a cone, fuel added around it. Fast, hot flame — best for boiling water and getting a fire going quickly. Collapses inward as it burns.</p>
+   <h3>Log Cabin</h3><p>Fuel stacked in alternating squared layers around a teepee core. Stable, long-burning, good coal bed — best for cooking and sustained heat.</p>
+   <h3>Star (Indian) Fire</h3><p>Logs laid like spokes of a wheel, fed inward as they burn. Fuel-efficient; ideal when wood is scarce.</p>
+   <h3>Long Fire</h3><p>A line of fire parallel to your shelter, often with a reflector log behind. Warms the length of your body overnight.</p>`,
+   tags:['fire','technique'],australianNote:null},
+
+  {id:'fire-wet-conditions',category:'fire',title:'Fire Starting in Wet Conditions',summary:'Find dry fuel and build a fire after rain.',difficulty:'intermediate',
+   content:`<h3>Find dry fuel</h3><ul><li><strong>Standing dead wood</strong> beats anything off the ground — the ground holds moisture.</li><li>Snap small dead branches still attached to trees; if they bend, they're wet.</li><li>Split larger wood — the inner heartwood is dry even in rain.</li><li>Look under leaning logs, rock overhangs, and dense canopy.</li></ul>
+   <h3>Build a platform</h3><p>Lay a base of bark or thick sticks to keep the fire off wet ground. Build a small "feather" of fine shavings and process far more kindling than you think you need before you light.</p>
+   <h3>Protect the flame</h3><p>Shield from rain with your body, a tarp, or a lean of bark. Once established, a fire dries its own fuel — stack damp wood nearby to dry.</p>`,
+   tags:['fire','wet','advanced'],australianNote:'After rain, the fibrous dead bark of stringybark eucalypts often stays dry underneath and shreds into reliable tinder.'},
+
+  {id:'fire-tinder-quality',category:'fire',title:'Reading Tinder Quality',summary:'What makes tinder catch — and what wastes your spark.',difficulty:'beginner',
+   content:`<p>Good tinder is <strong>dry, fine, and full of air</strong>. The three together let a small spark or ember bloom into flame.</p>
+   <h3>Excellent tinder</h3><ul><li>Frayed bark fibres (paperbark, stringybark)</li><li>Dry grass, teased and bundled into a "bird's nest"</li><li>Seed down (e.g. bulrush/typha heads, thistle down)</li><li>Fine wood shavings / feather sticks</li><li>Char cloth and punk wood</li></ul>
+   <h3>The bird's nest</h3><p>Build a loose nest of coarse-to-fine material, ember in the centre. Cup it, lift it to head height, and blow steadily through it — rising heat ignites the bundle.</p>`,
+   tags:['fire','tinder'],australianNote:null},
+
+  /* ---------------- SHELTER ---------------- */
+  {id:'shelter-lean-to',category:'shelter',title:'Lean-To Shelter',summary:'Fast single-slope shelter against wind and rain.',difficulty:'beginner',
+   content:`<p>The lean-to is the quickest effective shelter. One sloped wall blocks wind and rain and reflects fire heat back onto you.</p>
+   <h3>Build</h3><ul><li>Lash a strong ridgepole between two trees (or onto forked supports) at hip-to-shoulder height.</li><li>Lean poles against the ridge at ~45°, close together, on the windward side.</li><li>Lattice with smaller sticks, then thatch with bark, leaves, grass, or fronds — bottom layers first, shingling upward.</li><li>Pile debris 20–30cm thick to shed rain.</li></ul>
+   <h3>Siting</h3><p>Open face away from prevailing wind, toward a long fire with a reflector behind it.</p>`,
+   tags:['shelter','quick','essential'],australianNote:null},
+
+  {id:'shelter-debris-hut',category:'shelter',title:'Debris Hut',summary:'Insulated cocoon for cold nights without gear.',difficulty:'intermediate',
+   content:`<p>The debris hut traps body heat in a tight, heavily insulated cocoon. It needs no cordage and works in genuinely cold conditions.</p>
+   <h3>Build</h3><ul><li>Prop one end of a ridgepole on a stump, rock, or fork — high enough to sit up at the entrance, tapering to your feet.</li><li>Lean ribbing sticks along both sides to form a wedge — just wide enough for your body. Smaller = warmer.</li><li>Lattice with finer sticks so debris won't fall through.</li><li>Pile leaf litter, ferns, and grass <strong>at least an arm's-length thick</strong> all over.</li><li>Stuff the inside with a thick mattress of dry debris — insulation under you matters most.</li></ul>
+   <p>Plug the entrance with a pack or debris bundle once inside.</p>`,
+   tags:['shelter','insulation','cold'],australianNote:'Bracken fern and shed eucalypt leaves make abundant, fast-gathered insulation in much of temperate Australia.'},
+
+  {id:'shelter-tarp-configs',category:'shelter',title:'Tarp Shelter Configurations',summary:'A-frame, lean-to, plough point and more from one tarp.',difficulty:'beginner',
+   content:`<h3>A-Frame</h3><p>Ridgeline between two trees, tarp draped over, corners pegged out. All-round rain protection.</p>
+   <h3>Lean-To</h3><p>One edge high on a ridgeline, opposite edge pegged to the ground. Open front for fire and views; back to the wind.</p>
+   <h3>Plough Point</h3><p>One corner tied high, the opposite spread and pegged low — a fast, wind-shedding wedge needing only one anchor.</p>
+   <h3>Body Bag / Burrito</h3><p>In extreme weather, wrap the tarp around your bedding entirely, leaving a breathing gap. Maximum protection, minimum setup.</p>
+   <p><strong>Always</strong> pitch with a taut ridgeline (a taut-line or trucker's hitch helps) and angle surfaces to shed water away from you.</p>`,
+   tags:['shelter','tarp','camping'],australianNote:null},
+
+  {id:'shelter-bivouac',category:'shelter',title:'Emergency Bivouac',summary:'Last-resort overnight cover with almost nothing.',difficulty:'beginner',
+   content:`<p>A bivouac (bivvy) is improvised emergency cover for one night. The priority is <strong>insulation from the ground</strong> and blocking wind — not comfort.</p>
+   <h3>Options</h3><ul><li>Crawl into a thick pile of dry leaves/grass — a "leaf burrito" — covering yourself completely.</li><li>Use natural shelter: rock overhangs, hollow logs, the lee of a fallen trunk, dense scrub.</li><li>A space blanket or bin liner reflects body heat — wear it against insulation, not bare skin (condensation chills you).</li></ul>
+   <p>Get off the cold ground at all costs: bark, boughs, a pack, or a thick debris mattress.</p>`,
+   tags:['shelter','emergency'],australianNote:null},
+
+  {id:'shelter-site-selection',category:'shelter',title:'Site Selection Principles',summary:'Choose where to camp before you build.',difficulty:'beginner',
+   content:`<p>A good site does half the work. Assess before you commit effort to building.</p>
+   <h3>Check for</h3><ul><li><strong>Widow-makers:</strong> never camp under dead branches or leaning trees — eucalypts drop limbs without warning, even in still weather.</li><li><strong>Water flow:</strong> avoid dry creek beds and depressions that flood; stay above flood lines.</li><li><strong>Wind:</strong> use natural windbreaks; avoid exposed ridgelines and cold-air-pooling valley bottoms.</li><li><strong>Resources:</strong> near (but not on) water, with firewood and building materials at hand.</li><li><strong>Ground:</strong> flat, dry, debris for insulation. Clear flammable litter before lighting a fire.</li></ul>`,
+   tags:['shelter','planning','safety'],australianNote:'Eucalypts are notorious for shedding heavy limbs ("widow-makers") with no warning. Never site a camp or fire directly beneath a large gum.'},
+
+  /* ---------------- WATER ---------------- */
+  {id:'water-finding',category:'water',title:'Finding Water Sources in the Bush',summary:'Read the land to locate water fast.',difficulty:'beginner',
+   content:`<h3>Follow the landscape</h3><ul><li>Water flows downhill — head for valleys, gullies, and the base of slopes.</li><li>Green, lush vegetation in a dry landscape signals water near the surface.</li><li>Converging animal tracks and bird flight at dawn/dusk often lead to water.</li><li>Insects (especially bees) stay within a few kilometres of water.</li></ul>
+   <h3>Where to dig</h3><p>In a dry creek bed, dig at the <strong>outside of bends</strong> and the lowest point — water collects there last. Let muddy seep water settle and clear.</p>
+   <p><strong>Always treat</strong> found water (boil or filter + purify) unless you have no choice.</p>`,
+   tags:['water','sourcing','essential'],australianNote:'In arid Australia, look for water at the base of rocky outcrops, in rock holes (gnammas), and where river red gums grow — they mark sub-surface water.'},
+
+  {id:'water-solar-still',category:'water',title:'Solar Still Construction',summary:'Distil drinkable water from soil and plants.',difficulty:'intermediate',
+   content:`<p>A solar still uses sun heat to evaporate moisture from the ground/vegetation and condense it as pure water. Yield is small — a supplement, not a sole source.</p>
+   <h3>Build</h3><ul><li>Dig a bowl-shaped hole ~1m wide in a sunny spot, ideally damp soil.</li><li>Place a clean container in the centre bottom.</li><li>Pile green vegetation around the container (not in it) to add moisture.</li><li>Stretch plastic sheet over the hole, sealing the edges with soil.</li><li>Put a small stone in the centre of the sheet so it dips directly over the container.</li></ul>
+   <p>Sun heats the air; moisture condenses on the underside of the plastic and runs to the low point, dripping into the container. A length of tubing lets you drink without dismantling it.</p>`,
+   tags:['water','distillation'],australianNote:null},
+
+  {id:'water-rain-dew',category:'water',title:'Collecting Rain and Dew',summary:'The cleanest water needs the least treatment.',difficulty:'beginner',
+   content:`<h3>Rain</h3><ul><li>Rig a tarp or poncho as a funnel into a container. A small dip in the centre channels flow.</li><li>Wide leaves and bark sheets can guide runoff into a vessel.</li><li>Rainwater caught directly (not run off a dirty roof/ground) is generally safe to drink untreated.</li></ul>
+   <h3>Dew</h3><ul><li>At dawn, tie clean cloth or grass bundles around your ankles and walk through dewy grass; wring the water out.</li><li>Mop dew off smooth non-toxic leaves, tarps, and metal surfaces.</li></ul>`,
+   tags:['water','collection'],australianNote:null},
+
+  {id:'water-filtration',category:'water',title:'Water Filtration Methods',summary:'Filtering removes sediment — not pathogens.',difficulty:'beginner',
+   content:`<p>Understand the difference: <strong>filtering</strong> removes dirt, sediment and some larger nasties; <strong>purifying</strong> (boiling/chemical) kills the microorganisms that make you ill. Do both where possible — filter first, then purify.</p>
+   <h3>Simple field filter</h3><p>Pour water through layered cloth to remove sediment, then purify. Pre-filtering clears the water so chemical treatment works better and boiling is less foul.</p>`,
+   tags:['water','filter'],australianNote:null},
+
+  {id:'water-improvised-filter',category:'water',title:'Improvised Filtration (Sand/Charcoal/Cloth)',summary:'Build a layered filter from natural materials.',difficulty:'intermediate',
+   content:`<h3>Build a layered filter</h3><p>Use a container with a hole in the bottom (a bottle with the base cut off, inverted, works well). Layer from <strong>bottom to top</strong>:</p>
+   <ul><li>Cloth or grass (stops fine material washing out)</li><li>Fine sand</li><li>Crushed charcoal from your fire (adsorbs toxins, improves taste/smell)</li><li>Coarse sand</li><li>Small gravel / pebbles</li><li>Cloth on top to spread the pour</li></ul>
+   <p>Pour dirty water in the top; clearer water drips out the bottom. <strong>This does not purify water</strong> — you must still boil or chemically treat the output.</p>`,
+   tags:['water','filter','diy'],australianNote:null},
+
+  {id:'water-purification',category:'water',title:'Water Purification',summary:'Boiling and chemical treatment to kill pathogens.',difficulty:'beginner',
+   content:`<h3>Boiling — the gold standard</h3><p>Bring water to a <strong>rolling boil</strong>. At a rolling boil, pathogens are killed effectively at sea level; if in doubt, hold it boiling for one minute. Boiling kills bacteria, viruses and protozoa but does not remove chemical contamination.</p>
+   <h3>Chemical treatment</h3><ul><li>Water purification tablets (follow the packet dose and wait time).</li><li>Unscented household bleach as a last resort: a couple of drops per litre, mix, and stand 30 minutes; the water should smell faintly of chlorine.</li></ul>
+   <p>Filter cloudy water before chemical treatment — sediment shields microbes and weakens the dose.</p>`,
+   tags:['water','purify','essential'],australianNote:null},
+
+  {id:'water-arid-signs',category:'water',title:'Signs of Water in Arid Terrain',summary:'Where to look when the land looks dry.',difficulty:'intermediate',
+   content:`<ul><li><strong>Rock holes (gnammas):</strong> depressions in granite outcrops trap rainwater for weeks; check shaded faces and bases.</li><li><strong>River red gums:</strong> these trees mark watercourses and sub-surface water even in dry creek beds.</li><li><strong>Animal pads:</strong> converging trails, especially of kangaroos and emus, often funnel toward water at dawn and dusk.</li><li><strong>Bird behaviour:</strong> finches and pigeons fly straight and low to water near dusk.</li><li><strong>Damp sand:</strong> dig at the outside of dry creek bends and in shaded gullies.</li></ul>`,
+   tags:['water','arid','australia'],australianNote:'In the Australian interior, never travel between water sources without a margin of reserve. Rock holes and soaks known to traditional owners can be lifesavers but unreliable — plan conservatively.'},
+
+  /* ---------------- FOOD ---------------- */
+  {id:'food-snare-trap',category:'food',title:'Snare and Trap Basics',summary:'Passive traps work while you rest.',difficulty:'intermediate',
+   content:`<p>Trapping conserves energy — set many traps and let them work while you do other tasks. <strong>Know the law:</strong> trapping wildlife is restricted and is justified only in a genuine survival emergency.</p>
+   <h3>Simple wire snare</h3><ul><li>Form a small noose from flexible wire; fix the standing end firmly.</li><li>Set it on an active animal trail or den entrance, sized to the animal's head.</li><li>Use "funnels" of sticks to guide the animal into the loop.</li></ul>
+   <h3>Principles</h3><ul><li>Set traps where animals already travel — runs, burrows, water edges.</li><li>Mask your scent; handle sets minimally.</li><li>Quantity over quality: ten simple sets beat one perfect one.</li><li>Check regularly for welfare and to beat scavengers.</li></ul>`,
+   tags:['food','trapping'],australianNote:'Most Australian native animals are protected. Trapping is for genuine life-or-death survival only — otherwise illegal.'},
+
+  {id:'food-tracks',category:'food',title:'Reading Animal Tracks',summary:'Identify Australian species by their sign.',difficulty:'intermediate',
+   content:`<h3>Common Australian sign</h3><ul><li><strong>Kangaroo/wallaby:</strong> paired long hind-foot prints; tail drag when moving slowly. Trails lead to water and grazing.</li><li><strong>Wombat:</strong> distinctive cubic droppings on rocks/logs; wide burrow entrances.</li><li><strong>Emu:</strong> large three-toed prints; droppings full of seeds.</li><li><strong>Feral pig/deer:</strong> cloven prints; rooting and wallows near water.</li></ul>
+   <h3>Reading a trail</h3><ul><li>Freshness: sharp edges and moisture mean recent; crumbling edges mean old.</li><li>Direction and gait tell you where the animal was heading and how fast.</li><li>Follow trails toward water at dawn/dusk.</li></ul>`,
+   tags:['food','tracking','australia'],australianNote:null},
+
+  {id:'food-fishing',category:'food',title:'Improvised Fishing Methods',summary:'Catch fish with minimal kit.',difficulty:'intermediate',
+   content:`<h3>Hand line</h3><p>A hook (improvised from wire, a thorn, bone, or a ring-pull), line (paracord inner strands, fishing line), and bait. Fish dawn and dusk near structure — snags, undercut banks, weed edges.</p>
+   <h3>Other methods</h3><ul><li><strong>Trotline:</strong> a baited line with multiple hooks left set across a likely spot.</li><li><strong>Fish trap:</strong> a funnel of stones or sticks in a stream that channels fish into a holding pen.</li><li><strong>Gorge hook:</strong> a small sharpened sliver baited so it lodges sideways in the throat when swallowed.</li></ul>`,
+   tags:['food','fishing'],australianNote:'A recreational fishing licence is normally required in most Australian states. Survival necessity is the only exception.'},
+
+  {id:'food-preservation',category:'food',title:'Food Preservation Without Refrigeration',summary:'Make a catch last in the field.',difficulty:'intermediate',
+   content:`<h3>Drying</h3><p>Cut meat or fish into thin strips, hang in moving air and sun, or low over a smoky fire. Dry until leathery and brittle (jerky). Low fat keeps best.</p>
+   <h3>Smoking</h3><p>Cold/warm smoke over a slow, smoky fire for hours both dries and adds preservative compounds. Build a simple smoke tepee over green-leaf smoke.</p>
+   <h3>Cool storage</h3><p>Keep food in the coldest available spot — a flowing creek, a deep shaded hole, or a wet-cloth evaporative "Coolgardie" wrap in dry breezy air.</p>`,
+   tags:['food','preservation'],australianNote:'The Coolgardie safe — a wet-cloth evaporative cooler — is an Australian goldfields invention that works well in hot, dry, breezy conditions.'},
+
+  {id:'food-caloric-priority',category:'food',title:'Caloric Priority in Survival',summary:'Don\'t burn more energy than you gain.',difficulty:'beginner',
+   content:`<p>In short-term survival, food is rarely the first priority — you can survive weeks without it. The danger is spending precious energy and water chasing low-return food.</p>
+   <h3>Rules of return</h3><ul><li><strong>Water and warmth first.</strong> Dehydration and cold kill long before hunger.</li><li>Favour high-calorie, low-effort foods: trapped small game, fish, eggs, and where confidently identified, energy-dense plants.</li><li>Passive methods (traps, set lines) beat active hunting for energy economy.</li><li>Never eat a plant or fungus you can't identify with certainty — the risk-to-reward is terrible.</li></ul>`,
+   tags:['food','strategy','essential'],australianNote:'Many Australian plants and fungi are toxic and easily confused with edibles. Without certain identification, the calories are never worth the risk.'},
+
+  /* ---------------- SIGNALLING ---------------- */
+  {id:'signal-mirror',category:'signalling',title:'Mirror Signalling Technique',summary:'A flash visible for tens of kilometres.',difficulty:'beginner',
+   content:`<p>A signal mirror is one of the most effective rescue tools — a flash can be seen far beyond shouting or whistle range, even from aircraft.</p>
+   <h3>Aiming method</h3><ul><li>Hold the mirror near your face and reflect sunlight onto your other hand held out in front.</li><li>Make a "V" with two fingers and frame your target (aircraft, vehicle, distant searchers) in the V.</li><li>Tilt the mirror until the bright spot of light crosses the V — the flash is now on target.</li><li>Sweep slowly across the horizon when you have no specific target; aircraft may see it before you see them.</li></ul>
+   <p>Any shiny surface works: a phone screen, CD, polished tin, knife blade, or glasses.</p>`,
+   tags:['signal','rescue','essential'],australianNote:null},
+
+  {id:'signal-ground-air',category:'signalling',title:'Ground-to-Air Signal Patterns',summary:'Internationally recognised symbols for aircraft.',difficulty:'beginner',
+   content:`<p>Make symbols <strong>large</strong> (each line ~6m+), high-contrast, and in the open. Use rocks, logs, trodden snow/sand, or gear. Standard ground-to-air codes:</p>
+   <ul><li><strong>V</strong> — Require assistance.</li><li><strong>X</strong> — Require medical assistance.</li><li><strong>→ (arrow)</strong> — Proceeding in this direction.</li><li><strong>Y</strong> — Yes / affirmative.</li><li><strong>N</strong> — No / negative.</li></ul>
+   <p>Contrast and shadow make symbols visible from the air — build them up so they cast shadow, or use materials that stand out against the ground.</p>`,
+   tags:['signal','rescue'],australianNote:null},
+
+  {id:'signal-whistle',category:'signalling',title:'Whistle Signals',summary:'Three blasts means help — carry a whistle always.',difficulty:'beginner',
+   content:`<p>A whistle carries far further than your voice and costs almost no energy. It works in fog and darkness when visual signals fail.</p>
+   <h3>International code</h3><ul><li><strong>Three blasts</strong> (repeated) = distress / need help.</li><li><strong>One blast</strong> = "Where are you?" / locating.</li><li><strong>Two blasts</strong> = "Come to me" / recall.</li></ul>
+   <p>Blasts in threes, then pause and repeat. Conserve breath — short sharp blasts carry better than long ones.</p>`,
+   tags:['signal','whistle','essential'],australianNote:null},
+
+  {id:'signal-smoke',category:'signalling',title:'Smoke Signals',summary:'Visible by day for many kilometres.',difficulty:'beginner',
+   content:`<p>Smoke is a powerful daytime signal. The aim is a sudden, contrasting column searchers will notice.</p>
+   <h3>Method</h3><ul><li>Keep a fire ready to "flash" — pile green vegetation, leaves, or damp material beside it.</li><li>When you hear/see aircraft, throw the green material on for thick <strong>white</strong> smoke.</li><li>For <strong>dark</strong> smoke against snow or pale ground, add rubber, oil, or plastic.</li><li>Three fires in a triangle or line is a recognised distress pattern.</li></ul>`,
+   tags:['signal','smoke'],australianNote:'Be extremely careful with signal fires during total fire bans, which are common across Australia in summer. Only light when genuinely in distress and clear flammable ground first.'},
+
+  {id:'signal-fire',category:'signalling',title:'Building a Signal Fire',summary:'A beacon that lights fast when help appears.',difficulty:'beginner',
+   content:`<p>A signal fire must ignite instantly the moment you spot rescuers — you won't have time to build from scratch.</p>
+   <h3>Prepare in advance</h3><ul><li>Build the fire lay on high, open ground visible from far off.</li><li>Keep dry tinder and kindling protected and ready at its base.</li><li>Stockpile green boughs nearby to dump on for smoke by day.</li><li>By night, a bright flame is the signal — keep extra dry fuel to flare it up.</li></ul>
+   <p>Three signal fires in a triangle or straight line is the international distress arrangement.</p>`,
+   tags:['signal','fire','rescue'],australianNote:null},
+
+  /* ---------------- PSYCHOLOGY ---------------- */
+  {id:'psych-stop',category:'psychology',title:'The STOP Principle',summary:'The first thing to do when things go wrong.',difficulty:'beginner',
+   content:`<p>The moment you realise you're lost or in trouble, the most dangerous thing you can do is keep moving and burning energy in panic. Instead — <strong>STOP</strong>.</p>
+   <h3>S — Stop</h3><p>Halt. Sit down. Do not take another step. Acknowledge that you are in a survival situation.</p>
+   <h3>T — Think</h3><p>What do you have? What are the immediate threats (weather, injury, water)? What got you here?</p>
+   <h3>O — Observe</h3><p>Assess your surroundings, resources, weather, time of day, and your own physical state.</p>
+   <h3>P — Plan</h3><p>Make a deliberate plan based on priorities (usually: protection, then location/rescue, then water, then food). Act calmly.</p>
+   <p>If lost, the general advice is usually to <strong>stay put</strong> — a stationary person is far easier to find, and you have likely told someone your plans.</p>`,
+   tags:['psychology','mindset','essential'],australianNote:null},
+
+  {id:'psych-panic',category:'psychology',title:'Managing Panic in the Field',summary:'Control the body to control the mind.',difficulty:'beginner',
+   content:`<p>Panic kills judgement. It floods you with adrenaline, narrows your thinking, and drives the energy-wasting, dangerous decisions that turn an incident into a tragedy.</p>
+   <h3>Break the panic loop</h3><ul><li><strong>Controlled breathing:</strong> slow box-breathing — in for 4, hold 4, out 4, hold 4 — physically lowers arousal.</li><li><strong>Anchor to a task:</strong> give your hands a simple job (build a fire, sort your kit). Action restores a sense of control.</li><li><strong>Name it:</strong> "I'm scared, and that's normal." Acknowledging fear reduces its grip.</li><li><strong>Focus on the next step only</strong>, not the whole crisis.</li></ul>`,
+   tags:['psychology','panic'],australianNote:null},
+
+  {id:'psych-decisions',category:'psychology',title:'Decision Making Under Stress',summary:'Make good calls when it counts.',difficulty:'intermediate',
+   content:`<h3>Principles</h3><ul><li><strong>Slow down to speed up:</strong> a few minutes spent thinking saves hours of wasted effort. Rarely is a survival decision so urgent it can't take a breath.</li><li><strong>Prioritise by lethality:</strong> address what will kill you soonest first (the survival "rule of threes": ~3 minutes without air, ~3 hours without shelter in harsh weather, ~3 days without water, ~3 weeks without food).</li><li><strong>Reversible vs irreversible:</strong> be cautious with decisions you can't undo, like leaving a known location.</li><li><strong>Conserve resources:</strong> energy, water, daylight, and morale are all finite — spend them deliberately.</li></ul>`,
+   tags:['psychology','decisions'],australianNote:null},
+
+  {id:'psych-will',category:'psychology',title:'The Will to Survive',summary:'The single biggest factor in survival.',difficulty:'beginner',
+   content:`<p>Survival records repeatedly show that the strongest predictor of who lives is not fitness or kit — it's the <strong>determination to keep going</strong>. People with reasons to live, and the stubbornness to act on them, survive situations that overwhelm the better-equipped.</p>
+   <h3>Feed the will</h3><ul><li>Hold onto a reason: family, a goal, a promise to get home.</li><li>Set tiny, achievable goals — make it to nightfall, then to morning.</li><li>Maintain routine and small comforts; they preserve morale.</li><li>Refuse to accept defeat. Hope is a survival resource — protect it like water.</li></ul>`,
+   tags:['psychology','mindset','essential'],australianNote:null},
+
+  {id:'psych-group',category:'psychology',title:'Group Dynamics in Survival',summary:'A group survives — or fails — together.',difficulty:'intermediate',
+   content:`<h3>Make the group an asset</h3><ul><li><strong>Leadership:</strong> agree on a clear decision-maker early to avoid paralysis and conflict.</li><li><strong>Share the load:</strong> assign roles by ability (fire, water, shelter, first aid, lookout). Everyone contributes; no one sits idle.</li><li><strong>Morale is shared:</strong> one person's panic spreads — so does one person's calm. Lead by steadiness.</li><li><strong>Look after the weakest:</strong> the group moves at the pace of, and is only as safe as, its most vulnerable member.</li><li><strong>Stay together:</strong> splitting up multiplies risk and makes rescue harder.</li></ul>`,
+   tags:['psychology','group'],australianNote:null}
+];
+
+/* ============================================================
+   FIRST AID
+   ============================================================ */
+const FIRST_AID = [
+  {id:'fa-bleeding',category:'bleeding',title:'Severe Bleeding',urgency:'critical',australianOnly:false,callEmergency:true,
+   summary:'Stop life-threatening blood loss immediately.',
+   steps:[
+     {step:1,instruction:'Apply firm, direct pressure straight onto the wound with a pad or your hand.',warning:null},
+     {step:2,instruction:'Lay the patient down and raise the injured limb above heart level if possible.',warning:null},
+     {step:3,instruction:'Keep pressing. If blood soaks through, add more padding on top — do not remove the first dressing.',warning:'Removing soaked dressings disrupts forming clots.'},
+     {step:4,instruction:'Bind a firm pressure bandage over the pad to maintain pressure.',warning:null},
+     {step:5,instruction:'For catastrophic limb bleeding that pressure will not control, apply a tourniquet high on the limb and note the time.',warning:'Only for life-threatening limb bleeding. Once on, do not loosen it — record the time applied.'},
+     {step:6,instruction:'Treat for shock: keep them warm, still, and reassured. Monitor breathing.',warning:null}
+   ],
+   doNot:['Do not remove a dressing once blood has soaked through it.','Do not remove an embedded object — pad around it and bandage in place.','Do not give food or drink.'],
+   notes:'For a deeply penetrating wound to the torso, packing the wound firmly with cloth and maintaining hard pressure may be needed.',
+   content:'Severe external bleeding can be fatal within minutes. Direct, sustained pressure controls the great majority of bleeds.'},
+
+  {id:'fa-burns',category:'burns',title:'Burns',urgency:'urgent',australianOnly:false,callEmergency:false,
+   summary:'Cool the burn, cover it, and watch for shock.',
+   steps:[
+     {step:1,instruction:'Remove the patient from the source of the burn and stop the burning.',warning:null},
+     {step:2,instruction:'Cool the burn under cool running water for 20 minutes.',warning:'20 minutes of cool running water is the single most important treatment — effective even up to 3 hours after the burn.'},
+     {step:3,instruction:'Remove jewellery and loose clothing near the burn before swelling starts — but leave anything stuck to the skin.',warning:'Do not peel off clothing that is melted or stuck to the burn.'},
+     {step:4,instruction:'Cover loosely with a clean, non-stick dressing or cling film laid over (not wrapped tight).',warning:null},
+     {step:5,instruction:'Keep the patient warm overall and treat for shock; seek medical help for anything beyond a small superficial burn.',warning:null}
+   ],
+   doNot:['Do not use ice or iced water — it deepens the injury.','Do not apply butter, oil, creams, or toothpaste.','Do not burst blisters.','Do not use cotton wool or fluffy dressings directly on the burn.'],
+   notes:'Call 000 for burns to the face, hands, feet, genitals, or airway; burns larger than a 20-cent coin that are deep; or any burn on a child.',
+   content:'Classify roughly by depth — superficial (red, painful), partial-thickness (blisters), full-thickness (white/charred, may be painless). Deeper, larger, or sensitive-area burns need urgent care.'},
+
+  {id:'fa-hypothermia',category:'hypothermia',title:'Hypothermia',urgency:'urgent',australianOnly:false,callEmergency:false,
+   summary:'Recognise and rewarm a dangerously cold person.',
+   steps:[
+     {step:1,instruction:'Move the person out of cold, wind, and wet into shelter.',warning:null},
+     {step:2,instruction:'Replace wet clothing with dry layers; insulate from the ground.',warning:'Cold transfers rapidly into the body through the ground — insulate underneath.'},
+     {step:3,instruction:'Rewarm gradually: blankets, dry insulation, and shared body heat. Cover the head.',warning:null},
+     {step:4,instruction:'If conscious and able to swallow, give warm sweet drinks (no alcohol).',warning:null},
+     {step:5,instruction:'Handle a severely hypothermic person gently and keep them horizontal.',warning:'Rough handling of a severely cold patient can trigger cardiac arrest.'},
+     {step:6,instruction:'Seek emergency help for moderate-to-severe cases (confusion, slurred speech, loss of shivering, collapse).',warning:null}
+   ],
+   doNot:['Do not give alcohol — it worsens heat loss.','Do not rub the limbs vigorously.','Do not apply direct intense heat (fire, hot water) to the skin.','Do not assume someone is dead until warm and unresponsive — "not dead until warm and dead".'],
+   notes:'Watch for the "umbles": stumbles, mumbles, fumbles, grumbles — early warning signs of cold affecting brain and muscle.',
+   content:'Hypothermia is a dangerous drop in core temperature. Shivering, then confusion and clumsiness, then loss of shivering and collapse as it worsens.'},
+
+  {id:'fa-heat',category:'heat',title:'Heat Stroke vs Heat Exhaustion',urgency:'critical',australianOnly:false,callEmergency:true,
+   summary:'Tell them apart — heat stroke is a 000 emergency.',
+   steps:[
+     {step:1,instruction:'Move the person to shade or a cool place and stop activity.',warning:null},
+     {step:2,instruction:'Heat exhaustion (sweating, pale, weak, dizzy, nauseous): lay them down, raise legs, cool them, and give water/electrolytes if conscious.',warning:null},
+     {step:3,instruction:'Heat stroke (hot dry or flushed skin, confusion, collapse, very high temperature): treat as a life-threatening emergency — CALL 000.',warning:'Altered consciousness or confusion in the heat means heat stroke until proven otherwise.'},
+     {step:4,instruction:'Cool aggressively: water over the body, fan, wet cloths, ice packs to neck, armpits, and groin.',warning:null},
+     {step:5,instruction:'Monitor airway and breathing; place an unconscious breathing patient on their side.',warning:null}
+   ],
+   doNot:['Do not give fluids to a confused or unconscious person.','Do not delay cooling while waiting for the ambulance — cool first.','Do not give salt tablets.'],
+   notes:'Heat exhaustion can progress to heat stroke. If someone is not improving with rest and cooling, escalate.',
+   content:'Heat exhaustion is serious but recoverable with rest and cooling. Heat stroke — the body losing its ability to regulate temperature — is rapidly fatal without aggressive cooling and medical care.'},
+
+  {id:'fa-snake-general',category:'snakes',title:'Snake Bite — General Protocol',urgency:'critical',australianOnly:false,callEmergency:true,
+   summary:'Pressure Immobilisation Bandaging and stay still.',
+   steps:[
+     {step:1,instruction:'Keep the patient absolutely still and calm. Movement spreads venom.',warning:null},
+     {step:2,instruction:'Call 000 immediately.',warning:null},
+     {step:3,instruction:'Apply a Pressure Immobilisation Bandage (PIB) — see the dedicated PIB guide.',warning:'Do NOT wash the bite — venom on the skin helps identify the snake for antivenom.'},
+     {step:4,instruction:'Splint and immobilise the bitten limb completely.',warning:null},
+     {step:5,instruction:'Keep the patient lying down and still; bring transport to them, not them to transport.',warning:null}
+   ],
+   doNot:['Do not wash the bite site.','Do not cut, suck, or try to draw out venom.','Do not apply a tourniquet.','Do not try to catch or kill the snake.','Do not let the patient walk around.'],
+   notes:'In Australia, treat every snake bite as potentially venomous. Bites may be painless and leave little mark.',
+   content:'Australian elapid venoms spread through the lymphatic system. Pressure immobilisation slows that spread and buys time to reach antivenom.'},
+
+  {id:'fa-pib',category:'snakes',title:'Pressure Immobilisation Bandaging (PIB)',urgency:'critical',australianOnly:true,callEmergency:true,
+   summary:'The correct technique for snake and funnel-web bites.',
+   steps:[
+     {step:1,instruction:'Keep the patient still. Apply a broad pressure bandage over the bite site itself first.',warning:'Do not wash the bite first.'},
+     {step:2,instruction:'Bandage firmly over the bite — as tight as for a sprained ankle, not so tight it cuts off circulation.',warning:null},
+     {step:3,instruction:'Then bandage from the fingers/toes all the way up the entire limb, as far as you can go.',warning:'Cover as much of the limb as possible, including over clothing if needed.'},
+     {step:4,instruction:'Apply a second bandage up the limb over the first for firm, even pressure.',warning:null},
+     {step:5,instruction:'Splint the limb so it cannot bend or move at all.',warning:null},
+     {step:6,instruction:'Mark the bite location on the bandage with a pen. Keep the patient completely still and wait for help.',warning:null}
+   ],
+   doNot:['Do not wash the bite.','Do not remove the bandage once applied — leave it for medical staff.','Do not apply a tourniquet.','Do not let the patient move the limb or walk.'],
+   notes:'PIB is for bites to a limb. For a bite on the trunk, apply firm pressure with a bandage but do not restrict chest breathing. PIB is also used for funnel-web spider and some other envenomations — but NOT for redback spider bites.',
+   content:'Bandages should be firm and even. You should still be able to slip a finger under the edge — circulation must be maintained.'},
+
+  {id:'fa-snake-brown',category:'snakes',title:'Eastern Brown Snake Bite',urgency:'critical',australianOnly:true,callEmergency:true,
+   summary:'Australia\'s deadliest snake by bite numbers.',
+   steps:[
+     {step:1,instruction:'Keep the patient completely still and lying down. Reassure them.',warning:'Even small amounts of movement can speed venom spread.'},
+     {step:2,instruction:'Call 000 immediately.',warning:null},
+     {step:3,instruction:'Apply Pressure Immobilisation Bandaging to the bitten limb and splint it.',warning:'Do not wash the bite — venom residue helps select the right antivenom.'},
+     {step:4,instruction:'Monitor closely for collapse, difficulty breathing, or cardiac arrest, which can occur rapidly.',warning:null},
+     {step:5,instruction:'Be ready to start CPR if the patient becomes unresponsive and is not breathing normally.',warning:null}
+   ],
+   doNot:['Do not wash the bite.','Do not cut or suck the wound.','Do not apply a tourniquet.','Do not move the patient unnecessarily.'],
+   notes:'Eastern Browns are fast, widespread across eastern Australia, and their venom causes collapse, clotting failure and cardiac arrest. Bites can be nearly painless.',
+   content:'The Eastern Brown is responsible for the majority of snakebite deaths in Australia. Treat every suspected bite as a critical emergency.'},
+
+  {id:'fa-snake-tiger',category:'snakes',title:'Tiger Snake Bite',urgency:'critical',australianOnly:true,callEmergency:true,
+   summary:'Highly venomous; common in southern wetlands.',
+   steps:[
+     {step:1,instruction:'Keep the patient still and calm; lie them down.',warning:null},
+     {step:2,instruction:'Call 000 immediately.',warning:null},
+     {step:3,instruction:'Apply Pressure Immobilisation Bandaging and splint the limb.',warning:'Do not wash the bite site.'},
+     {step:4,instruction:'Watch for muscle weakness, drooping eyelids, difficulty breathing, and dark urine.',warning:null},
+     {step:5,instruction:'Be prepared to perform CPR if breathing stops.',warning:null}
+   ],
+   doNot:['Do not wash the bite.','Do not cut, suck, or apply a tourniquet.','Do not let the patient move.'],
+   notes:'Tiger snakes favour wetlands, creeks and dams across southern Australia and Tasmania. Venom causes paralysis and muscle/kidney damage.',
+   content:'Tiger snake venom is strongly neurotoxic and can cause progressive paralysis. Effective antivenom exists — rapid PIB and transport are key.'},
+
+  {id:'fa-snake-taipan',category:'snakes',title:'Taipan Bite',urgency:'critical',australianOnly:true,callEmergency:true,
+   summary:'The most venomous land snake — extreme emergency.',
+   steps:[
+     {step:1,instruction:'Keep the patient absolutely still; any movement is dangerous.',warning:null},
+     {step:2,instruction:'Call 000 immediately and state a suspected taipan bite.',warning:null},
+     {step:3,instruction:'Apply Pressure Immobilisation Bandaging and splint without delay.',warning:'Do not wash the bite.'},
+     {step:4,instruction:'Monitor airway and breathing constantly — paralysis can develop fast.',warning:null},
+     {step:5,instruction:'Begin CPR immediately if the patient stops breathing normally.',warning:null}
+   ],
+   doNot:['Do not wash the bite.','Do not cut or suck.','Do not apply a tourniquet.','Do not move the patient.'],
+   notes:'Taipans are found in northern and central Australia (Coastal Taipan) and the channel country (Inland Taipan). Venom is extraordinarily potent — neurotoxic and clotting-destroying.',
+   content:'Without antivenom a taipan bite is usually fatal. Survival depends on immediate PIB, rapid transport, and antivenom.'},
+
+  {id:'fa-snake-rbb',category:'snakes',title:'Red-Bellied Black Snake Bite',urgency:'critical',australianOnly:true,callEmergency:true,
+   summary:'Common in the east; rarely fatal but treat seriously.',
+   steps:[
+     {step:1,instruction:'Keep the patient still and calm; lie them down.',warning:null},
+     {step:2,instruction:'Call 000.',warning:null},
+     {step:3,instruction:'Apply Pressure Immobilisation Bandaging and splint the limb.',warning:'Do not wash the bite.'},
+     {step:4,instruction:'Watch for local pain and swelling, nausea, sweating, and general unwellness.',warning:null},
+     {step:5,instruction:'Monitor and reassure while awaiting transport.',warning:null}
+   ],
+   doNot:['Do not wash the bite.','Do not cut, suck, or apply a tourniquet.'],
+   notes:'Red-bellied blacks are common near water in eastern Australia. Bites are serious but human deaths are very rare; still requires hospital assessment.',
+   content:'Venom causes local tissue effects, anticoagulant action and general symptoms. Always assess in hospital — never assume a bite is trivial.'},
+
+  {id:'fa-snake-deathadder',category:'snakes',title:'Death Adder Bite',urgency:'critical',australianOnly:true,callEmergency:true,
+   summary:'Ambush snake with fast-acting neurotoxin.',
+   steps:[
+     {step:1,instruction:'Keep the patient completely still and lying down.',warning:null},
+     {step:2,instruction:'Call 000 immediately.',warning:null},
+     {step:3,instruction:'Apply Pressure Immobilisation Bandaging and splint the limb.',warning:'Do not wash the bite.'},
+     {step:4,instruction:'Watch closely for drooping eyelids, blurred vision, and progressive paralysis.',warning:null},
+     {step:5,instruction:'Be ready to support breathing and perform CPR.',warning:null}
+   ],
+   doNot:['Do not wash the bite.','Do not cut, suck, or apply a tourniquet.','Do not let the patient move.'],
+   notes:'Death adders are sit-and-wait ambush predators, well camouflaged in leaf litter. Their neurotoxin can cause paralysis but responds well to antivenom.',
+   content:'Unlike most Australian snakes, death adders do not flee and may be stepped on. PIB and antivenom are highly effective.'},
+
+  {id:'fa-spider-funnelweb',category:'spiders',title:'Funnel-Web Spider Bite',urgency:'critical',australianOnly:true,callEmergency:true,
+   summary:'Medical emergency — use PIB and call 000.',
+   steps:[
+     {step:1,instruction:'Keep the patient still and calm; lie them down.',warning:null},
+     {step:2,instruction:'Call 000 immediately.',warning:null},
+     {step:3,instruction:'Apply Pressure Immobilisation Bandaging to the bitten limb and splint it — same technique as for snake bite.',warning:'Funnel-web bites ARE treated with PIB, unlike redback bites.'},
+     {step:4,instruction:'Monitor for sweating, drooling, muscle twitching, fast heartbeat, and difficulty breathing.',warning:null},
+     {step:5,instruction:'Be prepared to perform CPR. Antivenom is highly effective.',warning:null}
+   ],
+   doNot:['Do not wash the bite.','Do not apply a tourniquet.','Do not delay calling 000.'],
+   notes:'Sydney and other funnel-web species (eastern Australia) deliver one of the most dangerous spider venoms in the world. Males are especially toxic and wander in warmer months.',
+   content:'Symptoms can develop within minutes. Pressure immobilisation plus rapid transport to antivenom is life-saving.'},
+
+  {id:'fa-spider-redback',category:'spiders',title:'Redback Spider Bite',urgency:'urgent',australianOnly:true,callEmergency:false,
+   summary:'Very painful — but do NOT use a pressure bandage.',
+   steps:[
+     {step:1,instruction:'Reassure the patient and keep them still.',warning:null},
+     {step:2,instruction:'Apply an ice pack or cold compress to the bite to relieve pain.',warning:'Do NOT apply a pressure immobilisation bandage to a redback bite — it makes the pain worse and is not needed.'},
+     {step:3,instruction:'Seek medical advice. Monitor for spreading pain, sweating, nausea and muscle weakness.',warning:null},
+     {step:4,instruction:'Call 000 if symptoms are severe, the patient is a child, or there is collapse or breathing difficulty.',warning:null}
+   ],
+   doNot:['Do not apply a pressure immobilisation bandage.','Do not apply a tourniquet.'],
+   notes:'Redback venom acts slowly. There is usually time to reach hospital. Antivenom may be given for severe cases.',
+   content:'Redbacks are found Australia-wide, often around buildings and outdoor furniture. Bites are intensely painful but deaths are now extremely rare.'},
+
+  {id:'fa-spider-whitetail',category:'spiders',title:'White-Tail Spider Bite',urgency:'standard',australianOnly:true,callEmergency:false,
+   summary:'Painful but generally not dangerous.',
+   steps:[
+     {step:1,instruction:'Wash the bite site with soap and water.',warning:null},
+     {step:2,instruction:'Apply a cold pack to reduce pain and swelling.',warning:null},
+     {step:3,instruction:'Keep the area clean and monitor for infection over the following days.',warning:null},
+     {step:4,instruction:'Seek medical advice if pain is severe or the area becomes increasingly red, swollen, or infected.',warning:null}
+   ],
+   doNot:['Do not apply a pressure immobilisation bandage.','Do not panic — serious complications are rare and skin ulceration claims are largely unproven.'],
+   notes:'White-tails are common in homes across southern and eastern Australia. Most bites cause only local pain and itching.',
+   content:'Despite their reputation, white-tail bites usually result in nothing more than transient local pain and a small mark.'},
+
+  {id:'fa-fractures',category:'fractures',title:'Fractures and Sprains',urgency:'urgent',australianOnly:false,callEmergency:false,
+   summary:'Immobilise, support, and protect from movement.',
+   steps:[
+     {step:1,instruction:'Steady and support the injured part in the position found.',warning:'Do not try to straighten or push back a deformed or bone-protruding limb.'},
+     {step:2,instruction:'Control any bleeding and cover open fractures with a clean dressing.',warning:null},
+     {step:3,instruction:'Immobilise with a splint extending beyond the joints above and below the injury; pad it well.',warning:null},
+     {step:4,instruction:'For a sprain, use RICE: Rest, Ice, Compression, Elevation.',warning:null},
+     {step:5,instruction:'Check circulation beyond the splint (warmth, colour, feeling) before and after splinting.',warning:'A splint applied too tight can cut off circulation — loosen if the limb goes cold, pale or numb.'},
+     {step:6,instruction:'Seek medical help; call 000 for major fractures, spinal injury, or shock.',warning:null}
+   ],
+   doNot:['Do not move a suspected spinal injury unless in immediate danger.','Do not give food or drink in case surgery is needed.','Do not bind a splint so tightly it stops circulation.'],
+   notes:'Improvised splints: straight sticks, trekking poles, rolled mats, or binding the injured leg to the good one.',
+   content:'Signs of a fracture: pain, swelling, deformity, inability to use the part, and sometimes a grating sensation. When unsure, treat as a fracture.'},
+
+  {id:'fa-shock',category:'shock',title:'Shock',urgency:'critical',australianOnly:false,callEmergency:true,
+   summary:'A life-threatening drop in circulation.',
+   steps:[
+     {step:1,instruction:'Treat the underlying cause (e.g. stop severe bleeding).',warning:null},
+     {step:2,instruction:'Lay the patient down and raise their legs if no leg/spine injury.',warning:null},
+     {step:3,instruction:'Keep them warm with blankets or clothing; loosen tight clothing.',warning:null},
+     {step:4,instruction:'Reassure them and keep them still. Call 000.',warning:null},
+     {step:5,instruction:'Monitor breathing and response; place an unconscious breathing patient on their side.',warning:null}
+   ],
+   doNot:['Do not give food or drink, even if they ask.','Do not apply direct heat (hot water bottles).','Do not leave the patient alone.'],
+   notes:'Signs of shock: pale, cold, clammy skin; rapid weak pulse; rapid shallow breathing; nausea; confusion or restlessness; eventual collapse.',
+   content:'Shock is inadequate blood flow to the body\'s tissues, often from blood loss, severe burns, or dehydration. It is a medical emergency requiring 000.'},
+
+  {id:'fa-cpr',category:'cpr',title:'CPR (Adult)',urgency:'critical',australianOnly:false,callEmergency:true,
+   summary:'DRSABCD — restart breathing and circulation.',
+   steps:[
+     {step:1,instruction:'D — Danger: check the area is safe for you and the patient.',warning:null},
+     {step:2,instruction:'R — Response: ask their name and squeeze their shoulders. No response — continue.',warning:null},
+     {step:3,instruction:'S — Send for help: call 000 (put it on speaker) and send for a defibrillator (AED).',warning:null},
+     {step:4,instruction:'A — Airway: open the mouth, clear any obstruction, tilt the head back gently and lift the chin.',warning:null},
+     {step:5,instruction:'B — Breathing: look, listen and feel for normal breathing for up to 10 seconds.',warning:'Occasional gasping is NOT normal breathing — start CPR.'},
+     {step:6,instruction:'C — CPR: if not breathing normally, give 30 chest compressions then 2 breaths, repeat. Push hard and fast in the centre of the chest, about 1/3 chest depth, ~100–120 per minute.',warning:'Allow full chest recoil between compressions. Minimise interruptions.'},
+     {step:7,instruction:'D — Defibrillation: attach an AED as soon as it arrives and follow its voice prompts.',warning:null}
+   ],
+   doNot:['Do not stop CPR except to allow a defibrillator to assess, if the patient recovers, or until help takes over.','Do not delay compressions worrying about technique — any CPR is better than none.'],
+   notes:'Ratio 30:2 for adults. If unwilling or unable to give breaths, continuous chest compressions alone are still valuable. Follow current ARC guidelines.',
+   content:'Cardiac arrest survival depends on early CPR and early defibrillation. Start immediately and keep going — swap operators every ~2 minutes to maintain quality.'},
+
+  {id:'fa-drowning',category:'drowning',title:'Drowning / Near Drowning',urgency:'critical',australianOnly:false,callEmergency:true,
+   summary:'Get them out, check breathing, start CPR.',
+   steps:[
+     {step:1,instruction:'Safely remove the person from the water without endangering yourself.',warning:'Do not become a second victim — use a reaching or throwing aid where possible.'},
+     {step:2,instruction:'Call 000.',warning:null},
+     {step:3,instruction:'Check response and breathing (DRSABCD). If not breathing normally, start CPR with 5 initial rescue breaths, then 30:2.',warning:'Drowning CPR begins with breaths because it is an oxygen-deprivation emergency.'},
+     {step:4,instruction:'Turn the patient on their side if water/vomit obstructs the airway, then continue.',warning:null},
+     {step:5,instruction:'Keep them warm; all near-drowning patients need hospital assessment even if they seem recovered.',warning:'Secondary drowning can occur hours later — always seek medical assessment.'}
+   ],
+   doNot:['Do not attempt to "drain water" from the lungs by pressing the abdomen.','Do not assume recovery — get medical assessment.'],
+   notes:'Cold-water drowning patients have survived long submersion — continue resuscitation and do not give up early.',
+   content:'Drowning is primarily a lack of oxygen. Rapid rescue, rescue breaths, and CPR give the best chance of survival.'},
+
+  {id:'fa-eye',category:'eye',title:'Eye Injuries',urgency:'urgent',australianOnly:false,callEmergency:false,
+   summary:'Protect the eye; never press on it.',
+   steps:[
+     {step:1,instruction:'For a foreign body: do not rub. Flush gently with clean water or saline.',warning:null},
+     {step:2,instruction:'For chemical splash: flush continuously with clean water for at least 15–20 minutes, eyelids held open.',warning:'Flush immediately and for longer with chemicals — minutes matter for the eye.'},
+     {step:3,instruction:'For an embedded object: do NOT remove it. Pad around it and cover both eyes to stop movement.',warning:'Cover both eyes — the injured eye moves when the good one does.'},
+     {step:4,instruction:'For a blow to the eye: apply a cold compress gently, without pressure on the eyeball.',warning:null},
+     {step:5,instruction:'Seek medical help; call 000 for penetrating injury, chemical burns, or sudden vision loss.',warning:null}
+   ],
+   doNot:['Do not rub the eye.','Do not remove an embedded object.','Do not apply pressure to the eyeball.'],
+   notes:'Keep the patient calm and still — anxiety and eye movement worsen many eye injuries.',
+   content:'The eye is delicate and slow to heal. When in doubt, cover lightly and get professional care.'},
+
+  {id:'fa-anaphylaxis',category:'allergy',title:'Allergic Reaction / Anaphylaxis',urgency:'critical',australianOnly:false,callEmergency:true,
+   summary:'Adrenaline first, then 000 — every minute counts.',
+   steps:[
+     {step:1,instruction:'Recognise anaphylaxis: difficulty breathing, swelling of tongue/throat, wheeze, widespread hives, collapse.',warning:null},
+     {step:2,instruction:'Lay the person flat (sit up only if breathing is hard; do not stand them up).',warning:'Standing or walking a person in anaphylaxis can cause fatal collapse.'},
+     {step:3,instruction:'Give adrenaline immediately with their auto-injector (e.g. EpiPen) into the outer mid-thigh.',warning:'Give adrenaline first, before calling — it is the priority treatment.'},
+     {step:4,instruction:'Call 000.',warning:null},
+     {step:5,instruction:'A further dose can be given after 5 minutes if no improvement and a second injector is available.',warning:null},
+     {step:6,instruction:'Be ready to start CPR if the person becomes unresponsive and stops breathing normally.',warning:null}
+   ],
+   doNot:['Do not stand the person up or let them walk.','Do not delay adrenaline to use an inhaler or antihistamine first.','Do not assume mild symptoms won\'t escalate.'],
+   notes:'Common triggers: bee/ant/wasp stings, certain foods (nuts, shellfish), and medications. Jack jumper ants are a notable anaphylaxis cause in southern Australia.',
+   content:'Anaphylaxis is a severe, rapidly progressing allergic reaction. Adrenaline is the only first-line treatment — give it without hesitation.'}
+];
+
+/* ============================================================
+   KNOTS
+   ============================================================ */
+const KNOTS = [
+  {id:'bowline',name:'Bowline',category:'essential',strengthRating:5,difficulty:'intermediate',
+   uses:['rescue loop','anchor point','tying to a tree'],
+   steps:['Form a small loop ("the hole") in the standing part of the rope.','Pass the working end up through the loop from underneath.','Take the working end around behind the standing part ("the tree").','Bring the working end back down through the small loop ("the hole").','Hold the loop you want and pull the standing part to tighten.'],
+   tips:'The rabbit comes up through the hole, around the tree, and back down the hole. Forms a secure fixed loop that won\'t slip or jam.',
+   asciiDiagram:`   standing
+      |
+      |   ___
+      |  /   \\   <- fixed loop
+   ===O===   |
+      \\______/
+        ^ working end up through,
+          round, and back down`},
+
+  {id:'clove-hitch',name:'Clove Hitch',category:'camping',strengthRating:3,difficulty:'beginner',
+   uses:['attaching to a post','starting/ending lashings','guy lines'],
+   steps:['Wrap the rope around the post once.','Cross over the standing part and wrap around the post a second time.','Tuck the working end under the second wrap (the diagonal).','Pull both ends to tighten.'],
+   tips:'Fast and adjustable, but can slip under a varying load — add a half hitch for security. Great for starting a lashing.',
+   asciiDiagram:`  | post |
+  |  /\\  |
+  | /  \\ |  two wraps,
+  |/    \\|  cross in middle,
+  |\\    /|  tuck under
+  | \\  / |`},
+
+  {id:'taut-line',name:'Taut-Line Hitch',category:'camping',strengthRating:3,difficulty:'beginner',
+   uses:['adjustable tent guy lines','tarp tension','any line you need to tighten'],
+   steps:['Pass the working end around the anchor (peg/tree).','Make two wraps around the standing part, working back toward the anchor (inside the loop).','Make one more wrap around the standing part outside, above the first two.','Tighten; slide the hitch along the standing part to adjust tension, and it grips under load.'],
+   tips:'The friction hitch that made tents tight before plastic sliders. Slide to adjust, holds firm when loaded.',
+   asciiDiagram:null},
+
+  {id:'figure-eight',name:'Figure-Eight',category:'rescue',strengthRating:5,difficulty:'beginner',
+   uses:['stopper knot','climbing/rescue anchor (on a bight)','prevents rope pulling through'],
+   steps:['Make a loop, passing the working end over the standing part.','Continue the working end around and behind the standing part.','Bring it through the original loop to form an "8" shape.','Dress neatly and tighten.'],
+   tips:'A reliable stopper that\'s easy to inspect and unties more easily than an overhand after loading. The figure-eight-on-a-bight makes a strong, checkable loop.',
+   asciiDiagram:`    __
+   /  \\
+   \\  /
+   /  \\
+   \\__/   the "8"`},
+
+  {id:'sheet-bend',name:'Sheet Bend',category:'essential',strengthRating:4,difficulty:'beginner',
+   uses:['joining two ropes','joining ropes of different thickness','extending a line'],
+   steps:['Form a bight (U-shape) in the thicker rope.','Pass the thinner rope\'s working end up through the bight.','Wrap it around behind both legs of the bight.','Tuck the working end back under itself (the part crossing the bight), not under the bight.','Pull to tighten — both short ends should finish on the same side.'],
+   tips:'The go-to knot for joining two ropes, especially different sizes. Double the final tuck (double sheet bend) for slippery or very uneven ropes.',
+   asciiDiagram:null},
+
+  {id:'reef-knot',name:'Reef Knot (Square Knot)',category:'camping',strengthRating:2,difficulty:'beginner',
+   uses:['joining two ropes of equal thickness','tying bandages','bundling/securing (non-critical)'],
+   steps:['Pass the left end over and under the right.','Then pass the (now) right end over and under the left.','Remember: left over right, then right over left.','Pull all four strands to tighten into a flat square.'],
+   tips:'Good for tying bundles and bandages, NOT for joining loads — it can capsize and slip. Never trust it for life loads; use a sheet bend to join ropes instead.',
+   asciiDiagram:null},
+
+  {id:'timber-hitch',name:'Timber Hitch',category:'bushcraft',strengthRating:3,difficulty:'beginner',
+   uses:['dragging logs','starting a diagonal lashing','hauling timber'],
+   steps:['Pass the working end around the log.','Wrap the working end around the standing part.','Twist the working end back around itself three or more times (with the lay of the rope).','Pull the standing part — the hitch tightens against the log and grips under tension.'],
+   tips:'Holds firmly while there\'s tension and unties easily once slack. Ideal for dragging logs or starting a square/diagonal lashing.',
+   asciiDiagram:null},
+
+  {id:'half-hitch',name:'Half Hitch',category:'utility',strengthRating:2,difficulty:'beginner',
+   uses:['quick tie-off','securing other knots','temporary fastening'],
+   steps:['Pass the working end around the object or standing part.','Bring it back through the loop just formed.','Tighten. For security, add a second half hitch (two half hitches).'],
+   tips:'Rarely used alone — two half hitches makes a secure, adjustable attachment, and a half hitch finishes off many other knots.',
+   asciiDiagram:null},
+
+  {id:'rolling-hitch',name:'Rolling Hitch',category:'utility',strengthRating:3,difficulty:'intermediate',
+   uses:['attaching a rope to another rope or pole','taking load off a tensioned line','lengthwise pull'],
+   steps:['Wrap the working end around the main rope/pole twice, on the side the pull will come from.','Each wrap crosses over the standing part toward the load.','Add a half hitch on the other side of the wraps and tuck.','Tighten — it grips when pulled along the rope\'s length.'],
+   tips:'Grips against a lengthwise pull where a clove hitch would slide. Useful to relieve tension on a loaded line so you can work on it.',
+   asciiDiagram:null},
+
+  {id:'truckers-hitch',name:"Trucker's Hitch",category:'4wd-camping',strengthRating:4,difficulty:'intermediate',
+   uses:['securing loads','tensioning ridgelines','strapping gear to a roof rack'],
+   steps:['Anchor one end of the rope.','Form a loop midway down the rope (a slippery/figure-eight loop that won\'t jam).','Pass the working end around the anchor point and back up through the loop.','Pull down to create a 2:1 (or 3:1) mechanical advantage and cinch tight.','Lock it off with two half hitches around the taut lines.'],
+   tips:'The most useful load-securing knot there is — gives you pulley-like tension. Use a loop that won\'t jam so you can release it easily later.',
+   asciiDiagram:null},
+
+  {id:'prusik',name:'Prusik Knot',category:'rescue',strengthRating:4,difficulty:'intermediate',
+   uses:['ascending a rope','self-rescue','adjustable friction grip'],
+   steps:['Use a loop of cord thinner than the main rope (a closed prusik loop).','Wrap the loop around the main rope, passing it through itself.','Repeat the wrap 2–3 times, keeping the turns neat and parallel.','Dress the wraps; pull the loop down — it grips the rope under load and slides when unweighted.'],
+   tips:'A friction hitch that locks under load and slides when relaxed — the basis of rope ascending and many self-rescue systems. Use cord noticeably thinner than the host rope.',
+   asciiDiagram:null},
+
+  {id:'fishermans',name:"Fisherman's Knot",category:'fishing',strengthRating:4,difficulty:'beginner',
+   uses:['joining two fishing lines','joining thin cord','reliable join in slippery line'],
+   steps:['Lay the two lines alongside each other, ends pointing opposite ways.','Tie an overhand knot with the first line\'s end around the second line.','Tie a second overhand knot with the second line\'s end around the first line.','Pull the standing parts — the two knots slide together and jam tight.'],
+   tips:'Two simple overhand knots that draw together into a strong join. Use a double fisherman\'s (two wraps each) for slippery synthetic or fishing line.',
+   asciiDiagram:null}
+];
+
+/* ============================================================
+   PROJECTS
+   ============================================================ */
+const PROJECTS = [
+  {id:'camp-chair',title:'Bush Camp Chair',category:'camp-comfort',difficulty:'intermediate',timeMinutes:45,
+   materials:['2× sturdy forked branches or stakes','2× long side rails (~1m straight branches)','Several cross branches for the seat','Cordage or paracord for lashing'],
+   steps:[
+     {step:1,title:'Drive in two anchor stakes',detail:'Set two forked or notched stakes into firm ground, leaning slightly back, about shoulder-width apart.'},
+     {step:2,title:'Lay the side rails',detail:'Rest two long rails from the ground up into the forks/notches to form the angled seat-and-back frame.'},
+     {step:3,title:'Lash the joints',detail:'Securely lash each rail to its stake with a square lashing so the frame can\'t spread.'},
+     {step:4,title:'Build the seat',detail:'Lay cross branches across the rails and lash or weave them to form a seat and back surface.'},
+     {step:5,title:'Pad and test',detail:'Add a layer of soft boughs or a mat. Test gently with weight before committing fully.'}
+   ],
+   tips:'Strong lashings are everything. Use seasoned hardwood for the load-bearing parts; avoid brittle dead branches for the frame.'},
+
+  {id:'tripod-pot-hanger',title:'Tripod Pot Hanger',category:'camp-cooking',difficulty:'beginner',timeMinutes:20,
+   materials:['3× straight branches, 1.2–1.5m long','Paracord or natural cordage','1× hooked branch or notched stick to hang the pot'],
+   steps:[
+     {step:1,title:'Select three branches',detail:'Choose three straight branches of similar length. Use hardwood where possible; avoid green eucalypt that may sag or burn.'},
+     {step:2,title:'Lash the tops together',detail:'Lay the three side by side and bind near one end with a tripod (figure-of-eight) lashing, leaving it loose enough to spread.'},
+     {step:3,title:'Spread into a tripod',detail:'Stand the bundle up and splay the legs into a stable tripod straddling your fire.'},
+     {step:4,title:'Hang the pot',detail:'Hang a hooked or notched stick from the lashing apex; suspend your pot from it over the flames.'},
+     {step:5,title:'Adjust the height',detail:'Move the legs in or out, or use a longer hanging stick, to raise or lower the pot over the heat.'}
+   ],
+   tips:'A longer hanging branch gives you better height control over the fire. Keep the lashing high enough that flames don\'t reach the cord.'},
+
+  {id:'fishing-kit',title:'Improvised Fishing Line and Hook',category:'food',difficulty:'beginner',timeMinutes:30,
+   materials:['Inner strands of paracord, or any strong thin line','A thorn, bone sliver, wire, or safety pin for a hook','A small stick or stone for a float/sinker','Bait (worms, grubs, insects)'],
+   steps:[
+     {step:1,title:'Prepare the line',detail:'Pull the inner strands from paracord, or use any strong fishing line. Knot lengths together with a fisherman\'s knot if needed.'},
+     {step:2,title:'Make a hook',detail:'Fashion a hook from a strong thorn, a sharpened bone or wood sliver (a "gorge"), bent wire, or a safety pin.'},
+     {step:3,title:'Rig the line',detail:'Tie the hook on securely. Add a small stone as a sinker and a buoyant stick as a float if you have them.'},
+     {step:4,title:'Bait and set',detail:'Bait with worms, grubs or insects. Fish near structure — snags, undercut banks and weed edges — at dawn and dusk.'},
+     {step:5,title:'Consider a set line',detail:'Tie the line to a springy branch over the water and leave it to fish while you do other tasks.'}
+   ],
+   tips:'A gorge hook (a small sharpened sliver tied in the middle) lodges sideways in the fish\'s throat when swallowed — simple and effective. Remember a fishing licence is normally required outside genuine survival.'},
+
+  {id:'a-frame-tarp',title:'A-Frame Tarp Setup',category:'shelter',difficulty:'beginner',timeMinutes:15,
+   materials:['1× tarp','Ridgeline cord (~5m paracord)','4–6 tent pegs or improvised stakes','2 trees or 2 poles'],
+   steps:[
+     {step:1,title:'Run a ridgeline',detail:'Tie a taut ridgeline between two trees at about chest height. Use a taut-line or trucker\'s hitch at one end to get it drum-tight.'},
+     {step:2,title:'Drape the tarp',detail:'Hang the tarp centrally over the ridgeline so both sides fall evenly.'},
+     {step:3,title:'Peg the corners',detail:'Stake out all four corners, pulling each taut to form steep, even A-frame walls that shed rain.'},
+     {step:4,title:'Tension the sides',detail:'Adjust pegs and guy-outs until the fabric is wrinkle-free; taut fabric sheds water and won\'t flap.'},
+     {step:5,title:'Storm-proof it',detail:'In wind, lower the ridgeline and steepen the sides; close one end to the weather.'}
+   ],
+   tips:'Pitch with the lowest end and a closed side toward the wind. A taut ridgeline is the difference between a dry night and a sagging puddle.'},
+
+  {id:'stretcher',title:'Improvised Stretcher',category:'first-aid',difficulty:'intermediate',timeMinutes:25,
+   materials:['2× strong poles ~2.5m','2–3 jackets/shirts OR a tarp/blanket','Cordage (optional, for lashing)'],
+   steps:[
+     {step:1,title:'Test the poles',detail:'Choose two strong, straight poles and flex-test them — they must take a person\'s weight without cracking.'},
+     {step:2,title:'Jacket method',detail:'Zip up 2–3 jackets and thread a pole through each sleeve set, sleeves turned inward, jackets back-to-back. The bodies form the bed.'},
+     {step:3,title:'Tarp method',detail:'Alternatively, lay the poles on a tarp/blanket, fold the material over each pole and back across — the casualty\'s weight locks the wraps in place.'},
+     {step:4,title:'Test before loading',detail:'Lift the empty stretcher and apply weight to confirm it holds before placing the patient on it.'},
+     {step:5,title:'Carry steadily',detail:'Use at least two carriers (ideally four), move in step, and keep the patient level and secure.'}
+   ],
+   tips:'Always test an improvised stretcher with weight before trusting it with an injured person. For suspected spinal injury, do not move the patient unless they are in immediate danger.'},
+
+  {id:'debris-shelter-build',title:'Debris Shelter Construction',category:'shelter',difficulty:'intermediate',timeMinutes:90,
+   materials:['1× long ridgepole (longer than your height)','1× support (stump, rock, low fork)','Many ribbing sticks','Large quantity of leaf litter, ferns, grass'],
+   steps:[
+     {step:1,title:'Set the ridgepole',detail:'Prop one end of a sturdy ridgepole on a stump, rock or low fork; the other rests on the ground. Sit-up height at the entrance, tapering to your feet.'},
+     {step:2,title:'Add ribbing',detail:'Lean shorter sticks along both sides of the ridgepole to form a tight wedge — just wide enough for your body. Smaller = warmer.'},
+     {step:3,title:'Lattice the ribs',detail:'Lay finer sticks crosswise over the ribbing so piled debris won\'t fall through onto you.'},
+     {step:4,title:'Pile on debris',detail:'Heap leaf litter, ferns and grass at least an arm\'s length thick over the whole frame. Thicker means warmer and more waterproof.'},
+     {step:5,title:'Insulate inside',detail:'Stuff the interior with a thick, dry debris mattress — insulation beneath you matters most against the cold ground.'},
+     {step:6,title:'Plug the entrance',detail:'Block the doorway with a pack or a bundle of debris once you\'re inside to trap body heat.'}
+   ],
+   tips:'A debris shelter traps body heat — keep it small and tight. The biggest beginner mistake is too little debris; pile on far more than feels necessary.'},
+
+  {id:'water-filter-build',title:'Improvised Water Filter (Layered)',category:'water',difficulty:'beginner',timeMinutes:20,
+   materials:['A container (bottle with base cut off, or a cloth cone)','Clean cloth or grass','Fine sand','Crushed charcoal from your fire','Coarse sand and small gravel'],
+   steps:[
+     {step:1,title:'Prepare the container',detail:'Invert a bottle with its base cut off, or hang a fabric cone. Make a small hole/outlet at the narrow bottom.'},
+     {step:2,title:'Lay the bottom layer',detail:'Pack cloth or grass at the very bottom so finer material doesn\'t wash straight out.'},
+     {step:3,title:'Add fine sand and charcoal',detail:'Add a layer of fine sand, then a generous layer of crushed charcoal from your fire to adsorb toxins and improve taste.'},
+     {step:4,title:'Add coarse layers',detail:'Top with coarse sand, then small gravel. Lay a final cloth on top to spread the pour.'},
+     {step:5,title:'Filter, then PURIFY',detail:'Pour dirty water in the top and collect the clearer output. This removes sediment only — you MUST still boil or chemically treat the water before drinking.'}
+   ],
+   tips:'Run the first batch through twice and discard it to settle the charcoal dust. Filtering is NOT purifying — always boil or treat the output before drinking.'}
+];
+
+/* ============================================================
+   EMERGENCY TILES
+   ============================================================ */
+const EMERGENCY_TILES = [
+  {label:'I Need Water',icon:'droplet',danger:false,goto:()=>openArticle('enc','water-finding')},
+  {label:'I Am Lost',icon:'mappin',danger:false,goto:()=>openArticle('enc','psych-stop')},
+  {label:'Injured Person',icon:'injured',danger:true,goto:()=>{closeEmergency();switchTab('firstaid');}},
+  {label:'Snake Bite',icon:'snake',danger:true,goto:()=>openArticle('fa','fa-pib')},
+  {label:'Heart Stopped',icon:'heart',danger:true,goto:()=>openArticle('fa','fa-cpr')},
+  {label:'Severe Bleeding',icon:'blood',danger:true,goto:()=>openArticle('fa','fa-bleeding')},
+  {label:'Start a Fire',icon:'flame',danger:false,goto:()=>openArticle('enc','fire-ferro-rod')},
+  {label:'Build Shelter',icon:'tent',danger:false,goto:()=>openArticle('enc','shelter-lean-to')},
+  {label:'Signal Rescue',icon:'signal',danger:false,goto:()=>openArticle('enc','signal-mirror')},
+  {label:'Heat Stroke',icon:'sun',danger:true,goto:()=>openArticle('fa','fa-heat')}
+];
+
+/* ============================================================
+   STATE / STORAGE
+   ============================================================ */
+const LS = {
+  get(k,def){try{const v=localStorage.getItem(k);return v===null?def:JSON.parse(v);}catch(e){return def;}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+};
+
+function initInstall(){
+  if(!localStorage.getItem('bc_installed')){LS.set('bc_installed',new Date().toISOString());}
+  if(localStorage.getItem('bc_premium')===null){LS.set('bc_premium',false);}
+}
+function daysOffline(){
+  const start=LS.get('bc_installed',new Date().toISOString());
+  const d=Math.floor((Date.now()-new Date(start).getTime())/86400000)+1;
+  return d;
+}
+function pushRecent(type,id){
+  let r=LS.get('bc_recent',[]);
+  r=r.filter(x=>!(x.type===type&&x.id===id));
+  r.unshift({type,id});
+  r=r.slice(0,5);
+  LS.set('bc_recent',r);
+}
+
+/* lookup helpers */
+function findArticle(type,id){
+  if(type==='enc')return ENCYCLOPEDIA.find(a=>a.id===id);
+  if(type==='fa')return FIRST_AID.find(a=>a.id===id);
+  if(type==='knot')return KNOTS.find(a=>a.id===id);
+  if(type==='proj')return PROJECTS.find(a=>a.id===id);
+  return null;
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+const TABS=[
+  {id:'home',label:'Home',icon:'compass'},
+  {id:'guides',label:'Guides',icon:'book'},
+  {id:'firstaid',label:'First Aid',icon:'cross'},
+  {id:'projects',label:'Projects',icon:'hammer'},
+  {id:'notes',label:'Notes',icon:'pencil'}
+];
+let currentTab='home';
+let articleReturnTab='home';
+
+function renderNav(){
+  document.getElementById('nav').innerHTML=TABS.map(t=>
+    `<button class="nav-btn ${t.id===currentTab?'active':''}" onclick="switchTab('${t.id}')">
+      ${ICON[t.icon]}<span class="nav-label">${t.label}</span>
+    </button>`).join('');
+}
+
+function switchTab(tab){
+  currentTab=tab;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+tab).classList.add('active');
+  document.getElementById('noteFab').style.display = tab==='notes'?'flex':'none';
+  renderNav();
+  window.scrollTo(0,0);
+  if(tab==='home')renderHome();
+  if(tab==='guides')renderGuides();
+  if(tab==='firstaid')renderFirstAid();
+  if(tab==='projects')renderProjects();
+  if(tab==='notes')renderNotes();
+}
+
+/* ============================================================
+   HOME
+   ============================================================ */
+function renderHome(){
+  const recent=LS.get('bc_recent',[]);
+  const recentHtml = recent.length ? recent.map(r=>{
+    const a=findArticle(r.type,r.id);
+    if(!a)return'';
+    const title=a.title||a.name;
+    const cat=a.category||(r.type==='knot'?'knot':'project');
+    return `<a class="card c-${homeAccent(r.type,cat)}" onclick="openArticle('${apiType(r.type)}','${r.id}')">
+      <div class="cat-label t-${homeAccent(r.type,cat)}">${recentKicker(r.type,cat)}</div>
+      <div class="card-title">${title}</div></a>`;
+  }).join('') : `<div class="empty-hint">Articles you read will appear here for quick access offline.</div>`;
+
+  const quick=[
+    {label:'Water',icon:'droplet',t:'enc',id:'water-finding'},
+    {label:'Lost',icon:'mappin',t:'enc',id:'psych-stop'},
+    {label:'Injured',icon:'cross',t:'fa',id:'fa-bleeding'},
+    {label:'Snake',icon:'snake',t:'fa',id:'fa-pib'}
+  ];
+
+  document.getElementById('screen-home').innerHTML=`
+    <div class="welcome">
+      <h1>Bushcraft Companion</h1>
+      <div class="tagline">"Knowledge weighs nothing."</div>
+      <div class="offline-stat"><span class="dot"></span>Day ${daysOffline()} — fully offline & ready</div>
+    </div>
+
+    <div class="section-label">Common Emergencies</div>
+    <div class="quick-grid">
+      ${quick.map(q=>`<button class="quick-tile" onclick="openArticle('${q.t}','${q.id}')">
+        ${ICON[q.icon]}<span class="qt-label">${q.label}</span></button>`).join('')}
+    </div>
+
+    <div class="home-section">
+      <div class="section-label">Recently Viewed</div>
+      ${recentHtml}
+    </div>
+
+    <div class="home-section">
+      <div class="section-label">Browse</div>
+      <a class="card c-fire" onclick="switchTab('guides')"><div class="cat-label t-fire">Encyclopedia</div><div class="card-title">Survival Guides</div><div class="card-sum">Fire, shelter, water, food, signalling, mindset.</div></a>
+      <a class="card c-knot" onclick="switchTab('guides');setTimeout(()=>switchSub('knots'),0)"><div class="cat-label t-knot">Reference</div><div class="card-title">Knot Library</div><div class="card-sum">12 essential knots with step-by-step instructions.</div></a>
+      <a class="card c-critical" onclick="switchTab('firstaid')"><div class="cat-label t-critical">Emergency</div><div class="card-title">First Aid</div><div class="card-sum">ARC-aligned protocols, AU snake & spider bites.</div></a>
+      <a class="card c-project" onclick="switchTab('projects')"><div class="cat-label t-project">Build</div><div class="card-title">Bushcraft Projects</div><div class="card-sum">Practical builds from shelter to fishing kit.</div></a>
+    </div>`;
+}
+function homeAccent(type,cat){
+  if(type==='fa')return faAccent(cat);
+  if(type==='knot')return 'knot';
+  if(type==='proj')return 'project';
+  return cat; // encyclopedia category
+}
+function recentKicker(type,cat){
+  if(type==='fa')return 'First Aid';
+  if(type==='knot')return 'Knot';
+  if(type==='proj')return 'Project';
+  return CAT_LABELS[cat]||cat;
+}
+function apiType(t){return t;} // recent stored types already match openArticle keys
+
+/* ============================================================
+   GUIDES (Encyclopedia + Knots sub-tab)
+   ============================================================ */
+let guidesSub='encyclopedia';
+let encFilter='all';
+
+function renderGuides(){
+  document.getElementById('screen-guides').innerHTML=`
+    <div class="page-title">Guides</div>
+    <div class="page-sub">Field-manual reference, fully offline.</div>
+    <div class="filter-row">
+      <button class="filter-pill ${guidesSub==='encyclopedia'?'active':''}" onclick="switchSub('encyclopedia')">Encyclopedia</button>
+      <button class="filter-pill ${guidesSub==='knots'?'active':''}" onclick="switchSub('knots')">Knots</button>
+    </div>
+    <div id="guides-body"></div>`;
+  if(guidesSub==='encyclopedia')renderEncyclopedia();
+  else renderKnots();
+}
+function switchSub(sub){guidesSub=sub;renderGuides();}
+
+function renderEncyclopedia(){
+  const cats=['all','fire','shelter','water','food','signalling','psychology'];
+  const filterHtml=`<div class="filter-row">${cats.map(c=>
+    `<button class="filter-pill ${encFilter===c?'active':''}" onclick="setEncFilter('${c}')">${c==='all'?'All':CAT_LABELS[c]}</button>`).join('')}</div>`;
+  const items=ENCYCLOPEDIA.filter(a=>encFilter==='all'||a.category===encFilter);
+  const list=items.map(a=>cardHtml(a,'enc')).join('');
+  document.getElementById('guides-body').innerHTML=filterHtml+list;
+}
+function setEncFilter(c){encFilter=c;renderEncyclopedia();}
+
+function cardHtml(a,type){
+  const cat=a.category;
+  const kicker=CAT_LABELS[cat]||cat;
+  return `<a class="card c-${cat}" onclick="openArticle('${type}','${a.id}')">
+    <div class="cat-label t-${cat}">${kicker}</div>
+    <div class="card-title">${a.title}</div>
+    <div class="card-sum">${a.summary||''}</div>
+    <div class="card-meta">
+      ${a.difficulty?`<span class="chip diff-${a.difficulty}">${a.difficulty}</span>`:''}
+      ${a.australianNote?`<span class="chip">AU</span>`:''}
+    </div></a>`;
+}
+
+function renderKnots(){
+  const list=KNOTS.map(k=>`
+    <a class="card c-knot" onclick="openArticle('knot','${k.id}')">
+      <div class="cat-label t-knot">${k.category.replace('-',' / ')}</div>
+      <div class="card-title">${k.name}</div>
+      <div class="card-sum">${k.uses.slice(0,3).join(' · ')}</div>
+      <div class="card-meta">
+        <span class="chip diff-${k.difficulty}">${k.difficulty}</span>
+        <span class="chip">Strength ${k.strengthRating}/5</span>
+      </div></a>`).join('');
+  document.getElementById('guides-body').innerHTML=list;
+}
+
+/* ============================================================
+   FIRST AID
+   ============================================================ */
+function faAccent(cat){
+  // map to urgency colour via the article when rendering; for cards use urgency
+  return 'critical';
+}
+function renderFirstAid(){
+  const order=['bleeding','burns','hypothermia','heat','snakes','spiders','fractures','shock','cpr','drowning','eye','allergy'];
+  const grouped={};
+  FIRST_AID.forEach(a=>{(grouped[a.category]=grouped[a.category]||[]).push(a);});
+  let html=`<div class="page-title">First Aid</div>
+    <div class="page-sub">Emergency protocols aligned with Australian Resuscitation Council guidance. In any emergency, call <strong style="color:var(--accent)">000</strong>.</div>`;
+  order.forEach(cat=>{
+    if(!grouped[cat])return;
+    grouped[cat].forEach(a=>{ html+=faCard(a); });
+  });
+  document.getElementById('screen-firstaid').innerHTML=html;
+}
+function faCard(a){
+  const u=a.urgency;
+  return `<a class="card c-${u}" onclick="openArticle('fa','${a.id}')">
+    <div class="cat-label t-${u}">${u}</div>
+    <div class="card-title">${a.title}</div>
+    <div class="card-sum">${a.summary||''}</div>
+    <div class="card-meta">
+      ${a.callEmergency?`<span class="chip" style="color:#fff;background:var(--danger)">Call 000</span>`:''}
+      ${a.australianOnly?`<span class="chip">AU</span>`:''}
+    </div></a>`;
+}
+
+/* ============================================================
+   PROJECTS
+   ============================================================ */
+let projFilter='all';
+function renderProjects(){
+  const diffs=['all','beginner','intermediate','advanced'];
+  const filterHtml=`<div class="filter-row">${diffs.map(d=>
+    `<button class="filter-pill ${projFilter===d?'active':''}" onclick="setProjFilter('${d}')">${d}</button>`).join('')}</div>`;
+  const items=PROJECTS.filter(p=>projFilter==='all'||p.difficulty===projFilter);
+  const list=items.map(p=>`
+    <a class="card c-project" onclick="openArticle('proj','${p.id}')">
+      <div class="cat-label t-project">${p.category.replace('-',' ')}</div>
+      <div class="card-title">${p.title}</div>
+      <div class="card-meta">
+        <span class="chip diff-${p.difficulty}">${p.difficulty}</span>
+        <span class="chip">${p.timeMinutes} min</span>
+      </div></a>`).join('');
+  document.getElementById('screen-projects').innerHTML=
+    `<div class="page-title">Projects</div><div class="page-sub">Practical bushcraft builds.</div>`+filterHtml+list;
+}
+function setProjFilter(d){projFilter=d;renderProjects();}
+
+/* ============================================================
+   ARTICLE VIEW
+   ============================================================ */
+function openArticle(type,id){
+  const a=findArticle(type,id);
+  if(!a)return;
+  // track recent (store with key matching openArticle's type)
+  pushRecent(type,id);
+  articleReturnTab = (type==='fa')?'firstaid':(type==='proj')?'projects':(type==='knot')?'guides':'guides';
+  // if emergency overlay open, close it so article shows
+  closeEmergency();
+  let html;
+  if(type==='enc')html=encArticleHtml(a);
+  else if(type==='fa')html=faArticleHtml(a);
+  else if(type==='knot')html=knotArticleHtml(a);
+  else if(type==='proj')html=projArticleHtml(a);
+
+  const screen=document.getElementById('screen-article');
+  screen.innerHTML=`<button class="back-btn" onclick="switchTab('${articleReturnTab}')">${ICON.back} Back</button>`+html;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  screen.classList.add('active');
+  document.getElementById('noteFab').style.display='none';
+  // highlight no nav tab as active-article, keep return tab highlighted
+  currentTab=articleReturnTab;renderNav();
+  window.scrollTo(0,0);
+}
+
+function encArticleHtml(a){
+  const cat=a.category;
+  return `<article class="article">
+    <div class="section-label t-${cat}">${CAT_LABELS[cat]||cat}</div>
+    <h1>${a.title}</h1>
+    <div class="meta-row">
+      ${a.difficulty?`<span class="chip diff-${a.difficulty}">${a.difficulty}</span>`:''}
+      ${a.tags?a.tags.map(t=>`<span class="chip">${t}</span>`).join(''):''}
+    </div>
+    <div class="content">${a.content}</div>
+    ${a.australianNote?`<div class="au-note"><div class="label">Australian Note</div>${a.australianNote}</div>`:''}
+  </article>`;
+}
+
+function faArticleHtml(a){
+  const steps=a.steps.map(s=>`<li><div class="instr">${s.instruction}</div>${s.warning?`<div class="step-warn">${s.warning}</div>`:''}</li>`).join('');
+  const dn=a.doNot&&a.doNot.length?`<div class="donot-box"><div class="label">Do Not</div><ul>${a.doNot.map(d=>`<li>${d.replace(/^Do not /i,'Do not ')}</li>`).join('')}</ul></div>`:'';
+  return `<article class="article">
+    <span class="urgency-badge urgency-${a.urgency}">${a.urgency}</span>
+    <h1>${a.title}</h1>
+    <div class="meta-row">${a.australianOnly?'<span class="chip">Australia</span>':''}</div>
+    ${a.callEmergency?`<div class="call-000"><div class="big">CALL 000</div><div class="sub">Emergency services — Australia</div><a href="tel:000">Call now</a></div>`:''}
+    ${a.summary?`<p style="color:var(--text-secondary);margin-bottom:8px">${a.summary}</p>`:''}
+    <div class="section-label">Steps</div>
+    <ul class="steps-list">${steps}</ul>
+    ${dn}
+    ${a.notes?`<div class="notes-box"><strong>Field notes:</strong> ${a.notes}</div>`:''}
+    ${a.content?`<div class="content"><p>${a.content}</p></div>`:''}
+  </article>`;
+}
+
+function knotArticleHtml(k){
+  const dots=`<span class="dots">${[1,2,3,4,5].map(i=>`<span class="dot ${i<=k.strengthRating?'on':''}"></span>`).join('')}</span>`;
+  const steps=k.steps.map((s,i)=>`<li><div class="instr">${s}</div></li>`).join('');
+  return `<article class="article">
+    <div class="section-label t-knot">${k.category.replace('-',' / ')}</div>
+    <h1>${k.name}</h1>
+    <div class="meta-row">
+      <span class="chip diff-${k.difficulty}">${k.difficulty}</span>
+      <span class="chip">Strength ${dots}</span>
+    </div>
+    <div class="uses-row">${k.uses.map(u=>`<span class="chip">${u}</span>`).join('')}</div>
+    <div class="section-label" style="margin-top:16px">Tying Steps</div>
+    <ul class="steps-list">${steps}</ul>
+    ${k.asciiDiagram?`<div class="section-label">Diagram</div><pre class="ascii">${k.asciiDiagram}</pre>`:''}
+    ${k.tips?`<div class="tip-box"><div class="label">Tip</div>${k.tips}</div>`:''}
+  </article>`;
+}
+
+function projArticleHtml(p){
+  const mats=p.materials.map(m=>`<li>${m}</li>`).join('');
+  const steps=p.steps.map(s=>`<div class="proj-step"><div class="ps-title">${s.title}</div>${s.detail?`<div class="ps-detail">${s.detail}</div>`:''}</div>`).join('');
+  return `<article class="article">
+    <div class="section-label t-project">${p.category.replace('-',' ')}</div>
+    <h1>${p.title}</h1>
+    <div class="meta-row">
+      <span class="chip diff-${p.difficulty}">${p.difficulty}</span>
+      <span class="chip">${p.timeMinutes} min</span>
+    </div>
+    <div class="section-label" style="margin-top:16px">Materials</div>
+    <ul class="materials-list">${mats}</ul>
+    <div class="section-label">Steps</div>
+    <div class="proj-steps">${steps}</div>
+    ${p.tips?`<div class="tip-box"><div class="label">Tip</div>${p.tips}</div>`:''}
+  </article>`;
+}
+
+/* ============================================================
+   EMERGENCY MODE
+   ============================================================ */
+function buildEmergency(){
+  const tiles=EMERGENCY_TILES.map((t,i)=>
+    `<button class="em-tile ${t.danger?'danger-tile':''}" onclick="EMERGENCY_TILES[${i}].goto()">
+      ${ICON[t.icon]}<span class="em-label">${t.label}</span></button>`).join('');
+  document.getElementById('emergency').innerHTML=`
+    <div class="em-header">EMERGENCY MODE</div>
+    <div class="em-sub">Tap what you need. In a life-threatening emergency, call <strong style="color:#fff">000</strong>.</div>
+    <div class="em-grid">${tiles}</div>
+    <div class="em-exit-wrap">
+      <button class="em-exit" id="emExitBtn" onclick="emExitTap()">✕ Exit Emergency Mode</button>
+    </div>`;
+}
+let emExitArmed=false;
+function emExitTap(){
+  const btn=document.getElementById('emExitBtn');
+  if(!emExitArmed){
+    emExitArmed=true;
+    btn.classList.add('em-confirm');
+    btn.textContent='Tap again to confirm exit';
+    return;
+  }
+  closeEmergency();
+}
+function openEmergency(){
+  buildEmergency();
+  emExitArmed=false;
+  document.getElementById('emergency').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeEmergency(){
+  emExitArmed=false;
+  document.getElementById('emergency').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* ============================================================
+   NOTES
+   ============================================================ */
+const NOTE_TYPE_LABEL={'general':'General','camp-log':'Camp Log','hunting':'Hunting','fishing':'Fishing','survival-journal':'Survival Journal'};
+function getNotes(){return LS.get('bc_notes',[]);}
+function saveNotes(n){LS.set('bc_notes',n);}
+
+function renderNotes(){
+  const notes=getNotes().sort((a,b)=>new Date(b.updatedAt)-new Date(a.updatedAt));
+  let body;
+  if(!notes.length){
+    body=`<div class="empty-hint">No notes yet. Tap <strong>+</strong> to log a camp, a route, a catch, or anything worth remembering. Notes stay on this device — no cloud, no account.</div>`;
+  }else{
+    body=notes.map(n=>`
+      <div class="note-card" onclick="openNoteEditor('${n.id}')">
+        <div class="nc-title">${escapeHtml(n.title||'Untitled')}</div>
+        <div class="nc-body">${escapeHtml(n.body||'')}</div>
+        <div class="nc-meta">
+          <span class="chip">${NOTE_TYPE_LABEL[n.type]||'General'}</span>
+          ${(n.tags||[]).slice(0,3).map(t=>`<span class="chip">${escapeHtml(t)}</span>`).join('')}
+          <span class="nc-date">${fmtDate(n.updatedAt)}</span>
+        </div></div>`).join('');
+  }
+  document.getElementById('screen-notes').innerHTML=
+    `<div class="page-title">Notes</div><div class="page-sub">Offline field journal. ${notes.length} note${notes.length===1?'':'s'}.</div>`+body;
+}
+
+function openNoteEditor(id){
+  const modal=document.getElementById('noteModal');
+  const delRow=document.getElementById('noteDeleteRow');
+  if(id){
+    const n=getNotes().find(x=>x.id===id);
+    if(!n)return;
+    document.getElementById('noteEditorTitle').textContent='Edit Note';
+    document.getElementById('noteId').value=n.id;
+    document.getElementById('noteTitle').value=n.title||'';
+    document.getElementById('noteType').value=n.type||'general';
+    document.getElementById('noteBody').value=n.body||'';
+    document.getElementById('noteTags').value=(n.tags||[]).join(', ');
+    delRow.style.display='flex';
+  }else{
+    document.getElementById('noteEditorTitle').textContent='New Note';
+    document.getElementById('noteId').value='';
+    document.getElementById('noteTitle').value='';
+    document.getElementById('noteType').value='general';
+    document.getElementById('noteBody').value='';
+    document.getElementById('noteTags').value='';
+    delRow.style.display='none';
+  }
+  modal.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeNoteEditor(){
+  document.getElementById('noteModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+function saveNote(){
+  const id=document.getElementById('noteId').value;
+  const title=document.getElementById('noteTitle').value.trim();
+  const body=document.getElementById('noteBody').value.trim();
+  const type=document.getElementById('noteType').value;
+  const tags=document.getElementById('noteTags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  if(!title && !body){closeNoteEditor();return;}
+  const now=new Date().toISOString();
+  let notes=getNotes();
+  if(id){
+    notes=notes.map(n=>n.id===id?{...n,title,body,type,tags,updatedAt:now}:n);
+  }else{
+    notes.push({id:'n'+Date.now(),title:title||'Untitled',body,type,tags,createdAt:now,updatedAt:now});
+  }
+  saveNotes(notes);
+  closeNoteEditor();
+  renderNotes();
+}
+function deleteCurrentNote(){
+  const id=document.getElementById('noteId').value;
+  if(!id){closeNoteEditor();return;}
+  if(!confirm('Delete this note? This cannot be undone.'))return;
+  saveNotes(getNotes().filter(n=>n.id!==id));
+  closeNoteEditor();
+  renderNotes();
+}
+
+/* ---------- utils ---------- */
+function escapeHtml(s){return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function fmtDate(iso){
+  try{const d=new Date(iso);return d.toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'});}catch(e){return'';}
+}
+
+/* close modal when tapping the dark backdrop */
+document.getElementById('noteModal').addEventListener('click',function(e){if(e.target===this)closeNoteEditor();});
+
+/* ============================================================
+   SETTINGS (text size) — applied from bc_settings
+   ============================================================ */
+function applySettings(){
+  const s=LS.get('bc_settings',{theme:'dark',nightMode:true,textSize:'normal'});
+  document.body.setAttribute('data-textsize',s.textSize||'normal');
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+initInstall();
+applySettings();
+renderNav();
+switchTab('home');
+
+/* Service worker registration */
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});
+}
+
+/*
+  TODO: v2
+  - Survival challenges / gamification / badges (bc_challenges key reserved)
+  - Plant / animal / tree / mushroom identification field guides
+  - Compass / navigation / map tools (device APIs)
+  - Weather indicator reference module
+  - AI Survival Advisor (API integration)
+  - Knot animations (canvas/SVG)
+  - Payment gateway integration (bc_premium flag reserved)
+  - Regional expansion packs (NA / NZ / Europe)
+  - Notes sync / backup
+  - Global search across all content
+*/
+</script>
+</body>
+</html>
