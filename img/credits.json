@@ -184,12 +184,12 @@
   "query": "Mentha australis"
  },
  "ban-firstaid": {
-  "file": "File:First-aid kit, \"Outfit. First-aid. Large. For Fighting Vehicles\".JPG",
-  "artist": "KingaNBM",
-  "license": "CC BY-SA 4.0",
-  "descurl": "https://commons.wikimedia.org/wiki/File%3AFirst-aid_kit%2C_%22Outfit._First-aid._Large._For_Fighting_Vehicles%22.JPG",
-  "bytes": 57081,
-  "query": "First aid kit bandage"
+  "file": "File:131111-F-XA056-064 (10836650286).jpg",
+  "artist": "U.S. Air Forces in Europe (public domain)",
+  "license": "Public domain",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3A131111-F-XA056-064_%2810836650286%29.jpg",
+  "bytes": 1661911,
+  "query": "First aid training casualty assessment Cutlass Express 2013"
  },
  "ban-notes": {
   "file": "File:PelikanTwistStyle.jpg",
@@ -688,20 +688,20 @@
   "query": "Tourniquet first aid"
  },
  "fa-burns": {
-  "file": "File:First Aid (7).jpg",
-  "artist": "Myousry6666",
-  "license": "CC BY-SA 4.0",
-  "descurl": "https://commons.wikimedia.org/wiki/File%3AFirst_Aid_%287%29.jpg",
-  "bytes": 43592,
-  "query": "First aid"
+  "file": "File:Scaldburn.jpg",
+  "artist": "Author (own work)",
+  "license": "CC BY-SA 3.0",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AScaldburn.jpg",
+  "bytes": 90655,
+  "query": "Scald burn wound hand first aid"
  },
  "fa-hypothermia": {
-  "file": "File:EmergencyBlanket.jpg",
-  "artist": "Emergency Blanket",
-  "license": "CC BY-SA 3.0",
-  "descurl": "https://commons.wikimedia.org/wiki/File%3AEmergencyBlanket.jpg",
-  "bytes": 28324,
-  "query": "Emergency blanket"
+  "file": "File:Emergency blanket 20110709.jpg",
+  "artist": "Public domain",
+  "license": "Public domain",
+  "descurl": "https://commons.wikimedia.org/wiki/File%3AEmergency_blanket_20110709.jpg",
+  "bytes": 141790,
+  "query": "Emergency space blanket survival hypothermia"
  },
  "fa-snake-general": {
   "file": "File:Improvised first aid - bandage on leg.jpg",

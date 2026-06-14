@@ -2,7 +2,7 @@
    Simple cache-first strategy. Caches the app shell on install,
    serves from cache on fetch, falls back to network. */
 
-const CACHE = 'bushcraft-v10';
+const CACHE = 'bushcraft-v11';
 const ASSETS = [
   './',
   './index.html',
